@@ -1,7 +1,9 @@
 # Toolforge deploy repository
 
-This is currently a repository to play with different approaches on how to deploy toolforge in production.
+This repository hosts the per-component code to deploy an instance of toolforge.
 
-Will update the code once we find a good enough approach and start using it.
+To get started, run
 
-For now different strategies will be using different branches. 
+```
+./depoly.sh --help
+```
