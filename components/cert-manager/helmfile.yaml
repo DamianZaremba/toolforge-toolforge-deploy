@@ -1,0 +1,35 @@
+repositories:
+  - name: wmf-stable
+    url: https://helm-charts.wikimedia.org/stable
+  - name: stakater
+    url: https://stakater.github.io/stakater-charts
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+releases:
+  - name: reloader
+    namespace: cert-manager
+    createNamespace: true
+    chart: stakater/reloader
+    version: v1.0.5
+    values:
+      - chart-values/reloader.yaml
+  # reloader chart does not support PSP! so we need to apply it manually
+  - name: reloader-psp
+    namespace: cert-manager
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - chart-values/reloader-psp.yaml
+  - name: cert-manager
+    namespace: cert-manager
+    createNamespace: true
+    chart: jetstack/cert-manager
+    version: v1.11.0
+    values:
+      - chart-values/cert-manager.yaml
+
+environments:
+  toolsbeta: {}
+  tools: {}
+  local: {}

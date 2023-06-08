@@ -1,0 +1,17 @@
+installCRDs: true
+global:
+  podSecurityPolicy:
+    enabled: true
+    useAppArmor: false
+
+image:
+  repository: docker-registry.tools.wmflabs.org/cert-manager/controller
+webhook:
+  image:
+    repository: docker-registry.tools.wmflabs.org/cert-manager/webhook
+cainjector:
+  image:
+    repository: docker-registry.tools.wmflabs.org/cert-manager/cainjector
+startupapicheck:
+  image:
+    repository: docker-registry.tools.wmflabs.org/cert-manager/ctr

@@ -1,0 +1,4 @@
+reloader:
+  deployment:
+    image:
+      name: docker-registry.tools.wmflabs.org/cert-manager/stakater-reloader
