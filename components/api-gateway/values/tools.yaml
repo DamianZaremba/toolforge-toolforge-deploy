@@ -1,0 +1,22 @@
+chartVersion: 0.1.1
+chartRepository: tools
+backends:
+  - name: jobs-api
+    path: /jobs
+    target:
+      namespace: jobs-api
+      service: jobs-api
+      port: 8443
+  - name: builds-api
+    path: /builds
+    target:
+      namespace: builds-api
+      service: builds-api
+      port: 8443
+
+nginx:
+  replicas: 2
+
+certificates:
+  extraNames:
+    - api.svc.tools.eqiad1.wikimedia.cloud

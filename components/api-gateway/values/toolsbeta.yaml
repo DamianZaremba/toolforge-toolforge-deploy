@@ -1,0 +1,26 @@
+backends:
+  - name: jobs-api
+    path: /jobs
+    target:
+      namespace: jobs-api
+      service: jobs-api
+      port: 8443
+  - name: builds-api
+    path: /builds
+    target:
+      namespace: builds-api
+      service: builds-api
+      port: 8443
+  - name: envvars-api
+    path: /envvars
+    target:
+      namespace: envvars-api
+      service: envvars-api
+      port: 8443
+
+nginx:
+  replicas: 2
+
+certificates:
+  extraNames:
+    - api.svc.toolsbeta.eqiad1.wikimedia.cloud
