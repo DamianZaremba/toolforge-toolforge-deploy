@@ -1,0 +1,5 @@
+chartVersion: 0.1.0-dev.mr1
+chartRepository: toolsbeta
+replicas: 1
+harbor:
+  host: toolsbeta-harbor.wmcloud.org

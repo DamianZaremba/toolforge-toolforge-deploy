@@ -1,0 +1,4 @@
+chartVersion: 0.1.0
+chartRepository: tools
+harbor:
+  host: tools-harbor.wmcloud.org
