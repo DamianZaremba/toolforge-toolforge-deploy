@@ -1,21 +1,24 @@
-chartVersion: 0.1.1-dev.mr8
+chartVersion: 0.1.2-dev.mr9
 chartRepository: toolsbeta
-# Please edit this file according to what you have deployed on your local cluster.
-# Leaving empty so basic deploy does not fail right away
-backends: []
-# Examples of entries:
-#   - name: jobs-api
-#     path: /jobs
-#     target:
-#       namespace: jobs-api
-#       service: jobs-api
-#       port: 8443
-#   - name: builds-api
-#     path: /builds
-#     target:
-#       namespace: builds-api
-#       service: builds-api
-#       port: 8443
+backends:
+  - name: jobs-api
+    path: /jobs
+    target:
+      namespace: jobs-api
+      service: jobs-api
+      port: 8443
+  - name: builds-api
+    path: /builds
+    target:
+      namespace: builds-api
+      service: builds-api
+      port: 8443
+  - name: envvars-api
+    path: /envvars
+    target:
+      namespace: envvars-api
+      service: envvars-api
+      port: 8443
 
 certificates:
   extraNames:
