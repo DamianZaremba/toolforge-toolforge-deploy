@@ -1,0 +1,131 @@
+<mxfile host="65bd71144e">
+    <diagram id="LKbLOsZnP0aAuwJLBHS4" name="Page-1">
+        <mxGraphModel dx="723" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#8089B5;fontColor=#ffffff;strokeColor=#001DBC;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="80" width="810" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7BB5C9;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="240" width="560" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillStyle=solid;fillColor=#3E573D;fontColor=#ffffff;strokeColor=#2D7600;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="510" width="810" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="76" target="77">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" value="Create envvar&lt;br&gt;Read envvar&lt;br&gt;Update envvar&lt;br&gt;Delete envvar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="80">
+                    <mxGeometry x="0.2387" y="-2" relative="1" as="geometry">
+                        <mxPoint x="-42" y="-9" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="76" value="Envvars cli" style="rounded=1;whiteSpace=wrap;html=1;container=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="520" width="120" height="60" as="geometry">
+                        <mxRectangle x="80" y="390" width="100" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="96" style="edgeStyle=none;html=1;" edge="1" parent="1" source="77" target="95">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="Reads&lt;br&gt;Creates&lt;br&gt;Deletes&lt;br&gt;Updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="96">
+                    <mxGeometry x="-0.1813" y="1" relative="1" as="geometry">
+                        <mxPoint x="14" y="-32" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="77" value="Envvars API" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="Envvars Admission controller" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="86" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="83" target="91">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="565" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="103" value="Create webservice&lt;br&gt;pod" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="86">
+                    <mxGeometry x="0.3579" y="1" relative="1" as="geometry">
+                        <mxPoint x="-75" y="138" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="83" value="Webservice cli" style="rounded=1;whiteSpace=wrap;html=1;container=1;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="530" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="87" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="84" target="91">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="602.6470588235295" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="104" value="Create job&lt;br&gt;pod" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="87">
+                    <mxGeometry x="0.3933" y="-1" relative="1" as="geometry">
+                        <mxPoint x="69" y="144" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="84" value="toolforge jobs cli" style="rounded=1;whiteSpace=wrap;html=1;container=1;" vertex="1" parent="1">
+                    <mxGeometry x="600" y="530" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="89" value="Pod" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="720" y="250" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="91" target="78">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="Sends pod creation&lt;br&gt;request to&lt;br&gt;(to be modified/validated)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="92">
+                    <mxGeometry x="-0.1882" relative="1" as="geometry">
+                        <mxPoint x="-2" y="50" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="93" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="91" target="89">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="Creates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="93">
+                    <mxGeometry x="-0.3125" y="2" relative="1" as="geometry">
+                        <mxPoint x="40" y="4" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="91" value="K8s controller" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="510" y="120" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="95" target="78">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="Reads" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="97">
+                    <mxGeometry x="0.208" y="-3" relative="1" as="geometry">
+                        <mxPoint x="-23" y="-2" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="95" value="K8s Secret" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="Toolforge bastion" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;" vertex="1" parent="1">
+                    <mxGeometry x="350" y="510" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="K8s cluster" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="80" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="K8s cluster (user namespace)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillStyle=solid;" vertex="1" parent="1">
+                    <mxGeometry x="430" y="330" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="" style="edgeStyle=none;html=1;startArrow=none;startFill=0;endArrow=classic;endFill=1;" edge="1" parent="1" source="111" target="76">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillStyle=solid;fillColor=#7BB5C9;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="640" width="35" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="" style="edgeStyle=none;html=1;startArrow=none;startFill=0;endArrow=classic;endFill=1;" edge="1" parent="1" source="114" target="83">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="575" y="620" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="115" value="" style="edgeStyle=none;html=1;startArrow=none;startFill=0;endArrow=classic;endFill=1;" edge="1" parent="1" source="114" target="84">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillStyle=solid;fillColor=#7BB5C9;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="635" width="40" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

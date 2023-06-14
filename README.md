@@ -19,3 +19,12 @@ Every chart version is bound to it's own image tag.
 
 This is implemented in the cicd/gitlab-ci repository:
 https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/
+
+## Documentation for the services:
+
+See:
+
+- [General toolforge](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin)
+- [Jobs service](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes/Jobs_framework)
+- [Build service](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Build_Service)
+- [Envvars service](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Envvars_Service)
