@@ -1,8 +1,7 @@
-chartVersion: 0.0.1
+chartVersion: 0.1.0
 chartRepository: toolsbeta
 image:
   name: toolsbeta-harbor.wmcloud.org/toolforge/builds-api
-  tag: d84a2c60
 
 config:
   harborRepository: toolsbeta-harbor.wmcloud.org
