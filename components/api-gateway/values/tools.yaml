@@ -13,6 +13,12 @@ backends:
       namespace: builds-api
       service: builds-api
       port: 8443
+  - name: envvars-api
+    path: /envvars
+    target:
+      namespace: envvars-api
+      service: envvars-api
+      port: 8443
 
 nginx:
   replicas: 2
