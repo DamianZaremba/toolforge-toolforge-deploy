@@ -1,4 +1,4 @@
-chartVersion: 0.3.0
+chartVersion: 0.3.1
 chartRepository: tools
 image:
   name: tools-harbor.wmcloud.org/toolforge/builds-api
