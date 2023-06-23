@@ -1,10 +1,7 @@
 chartVersion: 0.3.1
 chartRepository: tools
-image:
-  name: tools-harbor.wmcloud.org/toolforge/builds-api
 
 config:
-  harborRepository: tools-harbor.wmcloud.org
   builder: tools-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
   okBuildsToKeep: 4
   failedBuildsToKeep: 2

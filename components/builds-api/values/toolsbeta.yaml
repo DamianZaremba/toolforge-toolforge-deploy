@@ -1,7 +1,5 @@
 chartVersion: 0.3.1
 chartRepository: toolsbeta
-image:
-  name: toolsbeta-harbor.wmcloud.org/toolforge/builds-api
 
 config:
   harborRepository: toolsbeta-harbor.wmcloud.org
