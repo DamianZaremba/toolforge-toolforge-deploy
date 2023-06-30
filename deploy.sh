@@ -57,11 +57,12 @@ main() {
     cd "$base_dir/components/$component"
 
     deploy_environment=${1:-}
-    shift
     project=$(cat /etc/wmcs-project 2>/dev/null || echo "local")
 
     if [[ "$deploy_environment" == "" ]]; then
-            deploy_environment="$project"
+        deploy_environment="$project"
+    else
+        shift
     fi
 
     valuesfile="values/$deploy_environment.yaml"
