@@ -1,0 +1,123 @@
+## nginx configuration
+## Ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/index.md
+##
+
+controller:
+  name: controller
+  replicaCount: 3
+  image:
+    tag: "v1.4.0"
+    digest: sha256:e9552a8ef46680e12f539e6ce853f5fd4282b4bd5fc5c73062642c54bb00429b
+    repository: docker-registry.tools.wmflabs.org/nginx-ingress-controller
+    pullPolicy: IfNotPresent
+    # www-data -> uid 101
+    runAsUser: 101
+    allowPrivilegeEscalation: true
+
+  # Use Toolforge privileged PSP
+  existingPsp: "privileged-psp"
+
+  # T294330: snippet annotations are insecure
+  allowSnippetAnnotations: false
+
+  config:
+    # T241310: pass the incoming X-Forwarded-* headers to upstreams
+    use-forwarded-headers: "true"
+    # T243580: set default client_max_body_size to match dynamicproxy's setting
+    proxy-body-size: 128M
+    # T245426: set proxy_read_timeout to match dynamicproxy's setting
+    proxy-read-timeout: "3600"
+
+  electionID: ingress-controller-gen2-leader
+
+  extraArgs:
+    default-backend-service: tool-fourohfour/fourohfour
+
+  kind: Deployment
+
+  ## Node tolerations for server scheduling to nodes with taints
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  ##
+  tolerations:
+    - key: "ingressgen2"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
+
+  ## Affinity and anti-affinity
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          preference:
+            matchExpressions:
+              - key: kubernetes.io/role
+                operator: In
+                values:
+                  - ingressgen2
+
+  minAvailable: 1
+
+  # Define requests resources to avoid probe issues due to CPU utilization in busy nodes
+  # ref: https://github.com/kubernetes/ingress-nginx/issues/4735#issuecomment-551204903
+  # Ideally, there should be no limits.
+  # https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/
+  resources:
+    limits:
+      cpu: 2
+      memory: 3G
+    requests:
+      cpu: 1
+      memory: 2G
+
+  service:
+    enabled: true
+
+    enableHttp: true
+    enableHttps: false
+
+    ports:
+      http: 80
+
+    targetPorts:
+      http: http
+
+    type: NodePort
+
+    nodePorts:
+      http: 30002
+      tcp:
+        80: 30002
+      udp: {}
+
+  # Note, this has nothing to do with the Toolforge specific webhooks.
+  admissionWebhooks:
+    enabled: false
+
+  metrics:
+    port: 10254
+    enabled: true
+
+  ingressClassResource:
+    name: "toolforge"
+    default: true
+  # https://phabricator.wikimedia.org/T292771#7455219
+  watchIngressWithoutClass: true
+
+defaultBackend:
+  # We run our own (tool-fourohfour).
+  enabled: false
+
+rbac:
+  create: true
+  scope: false
+
+podSecurityPolicy:
+  enabled: true
+
+serviceAccount:
+  create: true
+  name: ""
+  automountServiceAccountToken: true

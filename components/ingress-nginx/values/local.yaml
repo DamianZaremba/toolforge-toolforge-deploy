@@ -1,0 +1,3 @@
+chartVersion: 4.3.0
+controller:
+  replicaCount: 1

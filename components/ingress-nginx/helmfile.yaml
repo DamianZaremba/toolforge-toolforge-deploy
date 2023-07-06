@@ -1,0 +1,27 @@
+repositories:
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
+
+releases:
+  - name: ingress-nginx-gen2
+    namespace: ingress-nginx-gen2
+    createNamespace: true
+    chart: ingress-nginx/ingress-nginx
+    version: "{{ .Values.chartVersion }}"
+    values:
+      - values.yaml
+      - values/{{ .Environment.Name }}.yaml
+
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
