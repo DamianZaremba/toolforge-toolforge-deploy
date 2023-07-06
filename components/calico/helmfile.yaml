@@ -1,0 +1,30 @@
+repositories:
+  - name: toolsbeta
+    url: toolsbeta-harbor.wmcloud.org/toolforge
+    oci: true
+  - name: tools
+    url: tools-harbor.wmcloud.org/toolforge
+    oci: true
+
+releases:
+  - name: calico
+    chart: "{{ .Values.chartRepository }}/calico"
+    version: "{{ .Values.chartVersion }}"
+    namespace: kube-system
+    createNamespace: true
+    values:
+      - values/{{ .Environment.Name }}.yaml*
+
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
