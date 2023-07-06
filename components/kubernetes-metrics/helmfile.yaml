@@ -1,0 +1,75 @@
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
+  - name: metrics-server
+    url: https://kubernetes-sigs.github.io/metrics-server
+  - name: wmf-stable
+    url: https://helm-charts.wikimedia.org/stable
+  - name: toolsbeta
+    url: toolsbeta-harbor.wmcloud.org/toolforge
+    oci: true
+  - name: tools
+    url: tools-harbor.wmcloud.org/toolforge
+    oci: true
+
+releases:
+  # this first chart serves two purposes:
+  #  * first, it installs various components into the cluster
+  #  * second, it creates the 'metrics' namespace for other charts to use
+  - name: wmcs-metrics
+    chart: "{{ .Values.chartRepository }}/wmcs-k8s-metrics"
+    version: "{{ .Values.chartVersion }}"
+    namespace: metrics
+    createNamespace: true
+    values:
+      - values/{{ .Environment.Name }}.yaml*
+
+  - name: kube-state-metrics
+    namespace: metrics
+    chart: prometheus-community/kube-state-metrics
+    version: v4.1.0
+    values:
+      - values/common/kube-state-metrics.yaml
+      # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.yaml*
+
+  - name: metrics-server-api-certs
+    namespace: metrics
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - values/common/metrics-server-api-certs.yaml
+      # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.yaml*
+
+  - name: metrics-server
+    namespace: metrics
+    chart: metrics-server/metrics-server
+    version: v3.8.3
+    values:
+      - values/common/metrics-server.yaml
+      # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.yaml*
+
+  - name: metrics-server-psp
+    namespace: metrics
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - values/common/metrics-server-psp.yaml
+      # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.yaml*
+
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*

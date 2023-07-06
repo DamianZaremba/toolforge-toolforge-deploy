@@ -1,0 +1,27 @@
+image:
+  repository: docker-registry.tools.wmflabs.org/metrics-server
+
+extraVolumes:
+  - name: metrics-server-api-tls
+    secret:
+      secretName: metrics-server-api-tls
+extraVolumeMounts:
+  - name: metrics-server-api-tls
+    mountPath: /etc/tls
+    readOnly: true
+
+deploymentAnnotations:
+  secret.reloader.stakater.com/reload: metrics-server-api-tls
+
+args:
+  - '--kubelet-insecure-tls'
+  - '--tls-cert-file=/etc/tls/tls.crt'
+  - '--tls-private-key-file=/etc/tls/tls.key'
+
+apiService:
+  insecureSkipTLSVerify: false
+  annotations:
+    cert-manager.io/inject-ca-from: "metrics/metrics-server-api-tls"
+
+metrics:
+  enabled: true

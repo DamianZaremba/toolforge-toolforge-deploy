@@ -1,0 +1,20 @@
+resources:
+  - apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: metrics-server-api-tls
+    spec:
+      selfSigned: {}
+  - apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: metrics-server-api-tls
+    spec:
+      dnsNames:
+        - "metrics-server.metrics.svc"
+      secretName: metrics-server-api-tls
+      revisionHistoryLimit: 1
+      issuerRef:
+        name: metrics-server-api-tls
+        kind: Issuer
+        group: cert-manager.io
