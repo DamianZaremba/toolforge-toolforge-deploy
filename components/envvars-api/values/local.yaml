@@ -1,6 +1,6 @@
 # Update to your mr version tag
-chartVersion: 0.0.21-20230703133743-30bb8619
-chartRepository: tools
+chartVersion: 0.0.22-20230710124735-c3a7ee79
+chartRepository: toolsbeta
 replicas: 1
 config:
   debug: true
