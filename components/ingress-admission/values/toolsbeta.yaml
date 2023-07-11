@@ -1,0 +1,5 @@
+chartVersion: 0.0.38-20230711100225-1433b2d6
+chartRepository: toolsbeta
+
+domains:
+  - beta.toolforge.org
