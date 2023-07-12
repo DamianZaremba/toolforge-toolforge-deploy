@@ -1,3 +1,6 @@
+chartVersion: 0.0.16-20230712092907-1bb08813
+chartRepo: toolsbeta
+
 backends:
   - name: jobs-api
     path: /jobs

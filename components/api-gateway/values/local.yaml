@@ -1,5 +1,5 @@
-chartVersion: 0.1.2-dev.mr9
-chartRepository: toolsbeta
+chartVersion: 0.0.16-20230712092907-1bb08813
+chartRepository: tools
 backends:
   - name: jobs-api
     path: /jobs
