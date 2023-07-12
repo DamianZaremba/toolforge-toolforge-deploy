@@ -6,7 +6,7 @@ replicas: 1
 config:
   debug: true
   # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
-  harborRepository: {{ exec "../helpers/get_harbor_ip.sh" (list) }}
+  harborRepository: {{ exec "../../helpers/get_harbor_ip.sh" (list) }}
   builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
   okBuildsToKeep: 1
   failedBuildsToKeep: 2

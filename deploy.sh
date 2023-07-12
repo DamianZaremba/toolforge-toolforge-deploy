@@ -3,11 +3,20 @@
 set -o errexit
 set -o pipefail
 set -o nounset
+shopt -s extglob
 
-COMPONENTS=$(ls components)
+cd components
+COMPONENTS=(!(helpers))
+cd -
 
 
 help() {
+    local components_string=""
+    local component
+    for component in "${COMPONENTS[@]}"; do
+        components_string+="
+                * $component"
+    done
     cat <<EOH
     Usage: $0 <COMPONENT> [ENVIRONMENT] [HELMFILE_OPTIONS]
 
@@ -15,13 +24,13 @@ help() {
 
     Arguments:
         COMPONENT
-            The toolforge component to deploy, one of: $COMPONENTS
+            The toolforge component to deploy, one of: $components_string
 
         ENVIRONMENT
             The environment to deploy on, might depend on the component, but usually should be one of:
-            * local
-            * toolsbeta
-            * tools
+                * local
+                * toolsbeta
+                * tools
 
             Will read it from /etc/wmcs-project if that file is available.
 
@@ -46,10 +55,10 @@ main() {
     # this script without having to cd to the deployment directory
     base_dir=$(dirname "$(realpath -s "$0")")
 
-    component="${1:?No component passed, choose one of: $COMPONENTS}"
+    component="${1:?No component passed, choose one of: ${COMPONENTS[@]}}"
     shift
     if ! [[ -d components/$component ]]; then
-        echo "The component '$component' was not found, choose one of: $COMPONENTS"
+        echo "The component '$component' was not found, choose one of: ${COMPONENTS[*]}"
         help
         return 1
     fi
