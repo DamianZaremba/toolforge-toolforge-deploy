@@ -1,0 +1,5 @@
+chartVersion: 0.0.34-20230905125923-e3bf08b5
+chartRepository: tools
+allowedRegistries:
+  - "docker-registry.tools.wmflabs.org"
+  - "tools-harbor.wmcloud.org"
