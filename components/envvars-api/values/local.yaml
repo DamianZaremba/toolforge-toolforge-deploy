@@ -4,3 +4,5 @@ chartRepository: toolsbeta
 replicas: 1
 config:
   debug: true
+certificates:
+  internalClusterDomain: cluster.local
