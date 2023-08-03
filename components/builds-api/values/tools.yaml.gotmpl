@@ -7,3 +7,6 @@ config:
   failedBuildsToKeep: 2
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+
+certificates:
+  internalClusterDomain: tools.local

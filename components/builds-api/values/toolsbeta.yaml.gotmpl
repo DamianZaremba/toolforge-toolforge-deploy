@@ -6,3 +6,6 @@ config:
   builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+
+certificates:
+  internalClusterDomain: toolsbeta.local
