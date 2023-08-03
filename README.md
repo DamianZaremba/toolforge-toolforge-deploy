@@ -20,6 +20,30 @@ Every chart version is bound to it's own image tag.
 This is implemented in the cicd/gitlab-ci repository:
 https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/
 
+
+## Secrets
+The secrets are pulled from a yaml file, by default it's /etc/toolforge-deploy/secrets.yaml (populated by puppet on the control nodes).
+
+You can specify an alternative file with the env var SECRETS_FILE=/my/custom/secrets.yaml when running the deploy.sh script:
+```
+SECRETS_FILE=$PWD/test_secrets.yaml ./deploy.sh builds-api
+```
+
+In the values files templates (*.yaml.gotmpl) you can get a secret with:
+```
+myVariable: {{ exec "../../helpers/get_secret.sh" (list "mySecret") }}
+```
+
+And you can try getting a secret manually by running the script directly:
+```
+> components/helpers/get_secret.sh mySecret
+```
+
+Note that if the secret does not exist, the template generation will fail with a not-very-clear error from helmfile:
+```
+in ./helmfile.yaml: error during helmfile.yaml.part.0 parsing: template: stringTemplate:11:22: executing "stringTemplate" at <.Values.chartRepository>: map has no entry for key "chartRepository"
+```
+
 ## Documentation for the services:
 
 See:

@@ -5,3 +5,5 @@ config:
   builder: tools-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
   okBuildsToKeep: 4
   failedBuildsToKeep: 2
+  harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
+  harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
