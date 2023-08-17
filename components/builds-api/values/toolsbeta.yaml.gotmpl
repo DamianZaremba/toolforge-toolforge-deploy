@@ -2,7 +2,7 @@ chartVersion: 0.0.78-20230714093723-c24ec061
 chartRepository: toolsbeta
 
 config:
-  harborRepository: toolsbeta-harbor.wmcloud.org
+  harborRepository: https://toolsbeta-harbor.wmcloud.org
   builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
