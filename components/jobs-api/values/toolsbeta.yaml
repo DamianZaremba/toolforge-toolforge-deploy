@@ -1,4 +1,9 @@
-chartVersion: 0.0.215-20230707150008-214e5a03
+chartVersion: 0.0.220-20230829085816-9f2d4478
 chartRepository: toolsbeta
 harbor:
   host: toolsbeta-harbor.wmcloud.org
+webservice:
+  image:
+    name: "toolsbeta-harbor.wmcloud.org/toolforge/jobs-api"
+certificates:
+  internalClusterDomain: "toolsbeta.local"
