@@ -3,4 +3,4 @@ chartRepository: tools
 harbor:
   host: tools-harbor.wmcloud.org
 certificates:
-  internalClusterDomain: "toolsbeta.local"
+  internalClusterDomain: "tools.local"
