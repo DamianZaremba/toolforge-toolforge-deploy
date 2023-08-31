@@ -1,0 +1,6 @@
+chartVersion: 0.0.96-20230913163640-71380cbe
+chartRepository: tools
+harbor:
+  host: tools-harbor.wmcloud.org
+image:
+  args: ["/app/maintain_kubeusers_cli.py"]
