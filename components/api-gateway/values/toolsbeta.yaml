@@ -1,4 +1,4 @@
-chartVersion: 0.0.16-20230712092907-1bb08813
+chartVersion: 0.0.17-20230831092149-cf3e484f
 chartRepository: toolsbeta
 backends:
   - name: jobs-api
@@ -24,5 +24,6 @@ nginx:
   replicas: 2
 
 certificates:
+  internalClusterDomain: toolsbeta.local
   extraNames:
     - api.svc.toolsbeta.eqiad1.wikimedia.cloud

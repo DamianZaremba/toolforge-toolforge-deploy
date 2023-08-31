@@ -1,26 +1,8 @@
-chartVersion: 0.0.16-20230712092907-1bb08813
+chartVersion: 0.0.17-20230831092149-cf3e484f
 chartRepository: tools
-backends:
-  - name: jobs-api
-    path: /jobs
-    target:
-      namespace: jobs-api
-      service: jobs-api
-      port: 8443
-  - name: builds-api
-    path: /builds
-    target:
-      namespace: builds-api
-      service: builds-api
-      port: 8443
-  - name: envvars-api
-    path: /envvars
-    target:
-      namespace: envvars-api
-      service: envvars-api
-      port: 8443
 
 certificates:
+  internalClusterDomain: cluster.local
   extraNames:
     # this is useful in the lima-kilo kind context, harmless if not
     - toolforge-control-plane
