@@ -1,0 +1,9 @@
+chartVersion: 0.0.71-20230925092749-d9db0354
+chartRepository: toolsbeta
+
+withLocalVolume: true
+repository:
+  username: "robot$tekton"
+  password: "Dummyr0botpass"
+  # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
+  url: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}

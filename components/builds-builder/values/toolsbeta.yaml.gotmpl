@@ -1,0 +1,7 @@
+chartVersion: 0.0.71-20230925092749-d9db0354
+chartRepository: toolsbeta
+
+repository:
+  username: {{ exec "../../helpers/get_secret.sh" (list "harborImageBuilderUsername") }}
+  password: {{ exec "../../helpers/get_secret.sh" (list "harborImageBuilderPassword") }}
+  url: toolsbeta-harbor.wmcloud.org
