@@ -1,4 +1,4 @@
-chartVersion: 0.0.63-20230712120152-2ef80a7c
+chartVersion: 0.0.65-20230914081704-15b4e9c2
 chartRepository: toolsbeta
 config:
   # see https://wikitech.wikimedia.org/wiki/Wikimedia_Cloud_Services_team/EnhancementProposals/Decision_record_T330102_What_buildpacks_to_allow_and_include_for_toolforge_build_service_beta
