@@ -27,6 +27,8 @@ controller:
     proxy-body-size: 128M
     # T245426: set proxy_read_timeout to match dynamicproxy's setting
     proxy-read-timeout: "3600"
+    # T346322: render http connection error pages via the default backend
+    custom-http-errors: "503"
 
   electionID: ingress-controller-gen2-leader
 
