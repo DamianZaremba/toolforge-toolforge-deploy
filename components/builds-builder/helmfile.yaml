@@ -12,6 +12,8 @@ releases:
     version: "{{ .Values.chartVersion }}"
     namespace: builds-builder
     createNamespace: true
+    # needed otherwise helm diff crashes as the crds are not yet insalled
+    disableValidationOnInstall: true
     values:
       - values/{{ .Environment.Name }}.yaml*
 
