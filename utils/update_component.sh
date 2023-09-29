@@ -35,7 +35,7 @@ get_latest_tag() {
     tmpdir=$(mktemp -d)
     git init "$tmpdir" >/dev/null
     git --git-dir="${tmpdir}/.git" remote add origin "$repo" >/dev/null
-    git --git-dir="${tmpdir}/.git" ls-remote --tags origin | awk '{print $2}' | sort -n | tail -n 1 | sed -e 's/refs\/tags\///'
+    git --git-dir="${tmpdir}/.git" ls-remote --tags origin | awk '{print $2}' | sort -V | tail -n 1 | sed -e 's/refs\/tags\///'
     rm -rf "$tmpdir"
 }
 
