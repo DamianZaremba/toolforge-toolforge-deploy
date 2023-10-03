@@ -6,6 +6,20 @@ set -o pipefail
 set -o nounset
 shopt -s extglob
 
+GREP=grep
+if ! grep --version | grep -q 'GNU'; then
+    if command -v ggrep; then
+        GREP=ggrep
+    else
+        cat <<EOT
+You don't seem to be running GNU grep, some parts if this script might not work.
+The easiest workaround is probably for Mac users to just 'brew install grep'
+EOT
+        exit 1
+    fi
+fi
+
+
 cd components
 COMPONENTS=(!(helpers))
 cd -
@@ -59,7 +73,7 @@ update_component() {
 
     deployment_files=(components/"$component"/values/*.yaml*)
     for deployment_file in "${deployment_files[@]}"; do
-        current_tag=$(grep -Po '(?<=chartVersion: ).*' "$deployment_file" | sed -e 's/ //g')
+        current_tag=$($GREP -Po '(?<=chartVersion: ).*' "$deployment_file" | sed -e 's/ //g')
 
         deployment="${deployment_file%%.*}"
         deployment="${deployment##*/}"
