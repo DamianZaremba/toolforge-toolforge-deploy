@@ -120,6 +120,13 @@ build related requests.
 
 [Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/builds-api)
 
+### Builds Builder
+
+Part of the build service, this is the component that actually builds and pushes
+the images, currently based on tekton pipelines.
+
+[Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/builds-builder)
+
 ### Calico
 
 [Kubernetes CNI](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
