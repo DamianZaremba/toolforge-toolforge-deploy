@@ -27,7 +27,7 @@ releases:
   - name: kube-state-metrics
     namespace: metrics
     chart: prometheus-community/kube-state-metrics
-    version: v4.1.0
+    version: "{{ .Values.kubeStateMetricsChartVersion }}"
     values:
       - values/common/kube-state-metrics.yaml
       # this next entry allows overwriting the common one
@@ -36,7 +36,7 @@ releases:
   - name: metrics-server-api-certs
     namespace: metrics
     chart: wmf-stable/raw
-    version: v0.3.0
+    version: "{{ .Values.metricsServerApiCertsChartVersion }}"
     values:
       - values/common/metrics-server-api-certs.yaml
       # this next entry allows overwriting the common one
@@ -45,7 +45,7 @@ releases:
   - name: metrics-server
     namespace: metrics
     chart: metrics-server/metrics-server
-    version: v3.8.3
+    version: "{{ .Values.metricsServerChartVersion }}"
     values:
       - values/common/metrics-server.yaml
       # this next entry allows overwriting the common one
@@ -54,7 +54,7 @@ releases:
   - name: metrics-server-psp
     namespace: metrics
     chart: wmf-stable/raw
-    version: v0.3.0
+    version: "{{ .Values.metricsServerPspChartVersion }}"
     values:
       - values/common/metrics-server-psp.yaml
       # this next entry allows overwriting the common one

@@ -1,1 +1,5 @@
 chartVersion: 4.3.0
+# When changing the chart version, make sure to update kubeVersion
+# See:
+#    https://github.com/kubernetes/ingress-nginx/tree/main#supported-versions-table
+kubeVersion: ">=1.22 <=1.25"

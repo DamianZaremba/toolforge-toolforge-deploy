@@ -1,2 +1,20 @@
 chartVersion: 0.0.17-20231030135912-7db7cff4
 chartRepository: toolsbeta
+# Also update kubeVersion when updating the kube-state-metrics chart
+# for compatibility info see:
+#  https://github.com/kubernetes/kube-state-metrics
+#
+# Current is <1.23
+kubeStateMetricsChartVersion: v4.1.0
+metricsServerApiCertsChartVersion: v0.3.0
+metricsServerPspChartVersion: v0.3.0
+metricsServerChartVersion: v3.8.3
+# When changing the chart version, make sure to update kubeVersion
+# See
+#   https://artifacthub.io/packages/helm/metrics-server/metrics-server -> for the appVersion
+#   https://github.com/kubernetes-sigs/metrics-server#compatibility-matrix
+#
+# Current is >=1.19
+#
+# The following is a combination of kube-state-metrics version requirement and metrics-server
+kubeVersion: ">=1.19 <1.23"

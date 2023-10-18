@@ -123,6 +123,17 @@ not-very-clear error from helmfile:
 in ./helmfile.yaml: error during helmfile.yaml.part.0 parsing: template: stringTemplate:11:22: executing "stringTemplate" at <.Values.chartRepository>: map has no entry for key "chartRepository"
 ```
 
+## K8s version compatibility
+
+Currently we update these values manually, you can check all the compatibility
+restrictions for your environment with:
+
+```
+> git grep kubeVersion: '*local.yaml'
+```
+
+replacing `local` with your environment (ex. `tools`).
+
 ## Documentation for the services
 
 See:
