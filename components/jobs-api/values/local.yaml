@@ -1,4 +1,4 @@
-chartVersion: 0.0.243-20231010080803-8f5e1f60
+chartVersion: 0.0.247-20231109135203-ba43661e
 chartRepository: tools
 replicas: 1
 harbor:
