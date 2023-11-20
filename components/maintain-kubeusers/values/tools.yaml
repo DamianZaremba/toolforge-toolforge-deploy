@@ -4,3 +4,44 @@ harbor:
   host: tools-harbor.wmcloud.org
 image:
   args: ["/app/maintain_kubeusers_cli.py"]
+
+quotas:
+  overrides:
+    add-text: # T337718
+      cpu: 16
+      memory: 24
+    anchor-corrector: # T350484
+      memory: 32
+    bd808-test:
+      services: 5
+    bodh: # T337190
+      services: 2
+    borkedbot: # T323846
+      jobs: 30
+    citationhunt:
+      jobs: 30
+    deltabot: # T347951
+      cronjobs: 100
+    deno: # T259789
+      services: 5
+    iabot: # T327952
+      memory: 11
+    moedata: # T250922
+      services: 5
+    montage: # T348894
+      memory: 16
+    oabot: # T273601
+      memory: 20
+      pod_memory: 8
+    paws-public: # T246519
+      services: 2
+    teg: # T246553
+      services: 2
+    vpsalertmanager:
+      services: 5
+    xiplus: # T315719
+      cronjobs: 100
+    yifeibot: # T329350
+      cpu: 10
+      memory: 12
+      pods: 20
