@@ -1,4 +1,4 @@
-chartVersion: 0.0.110-20231120145604-1511ca1c
+chartVersion: 0.0.116-20231122102253-e94fb1fd
 chartRepository: toolsbeta
 replicas: 1
 
