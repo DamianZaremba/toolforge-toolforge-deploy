@@ -1,4 +1,4 @@
-chartVersion: 0.0.116-20231122102253-e94fb1fd
+chartVersion: 0.0.110-20231120145604-1511ca1c
 chartRepository: tools
 harbor:
   host: tools-harbor.wmcloud.org
@@ -8,40 +8,57 @@ image:
 quotas:
   overrides:
     add-text: # T337718
+      version: T337718
       cpu: 16
       memory: 24
     anchor-corrector: # T350484
+      version: T350484
       memory: 32
     bd808-test:
+      version: custom1
       services: 5
     bodh: # T337190
+      version: T337190
       services: 2
     borkedbot: # T323846
+      version: T323846
       jobs: 30
     citationhunt:
+      version: custom1
       jobs: 30
     deltabot: # T347951
+      version: T347951
       cronjobs: 100
     deno: # T259789
+      version: T259789
       services: 5
     iabot: # T327952
+      version: T327952
       memory: 11
     moedata: # T250922
+      version: T250922
       services: 5
     montage: # T348894
+      version: T348894
       memory: 16
     oabot: # T273601
+      version: T273601
       memory: 20
       pod_memory: 8
     paws-public: # T246519
+      version: T246519
       services: 2
     teg: # T246553
+      version: T246553
       services: 2
     vpsalertmanager:
+      version: custom1
       services: 5
     xiplus: # T315719
+      version: T315719
       cronjobs: 100
     yifeibot: # T329350
+      version: T329350
       cpu: 10
       memory: 12
       pods: 20
