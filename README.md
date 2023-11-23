@@ -12,24 +12,60 @@ Every chart version is bound to it's own image tag.
 ![created using draw.io](docs/component_cd_flow.png)
 
 This is implemented in the cicd/gitlab-ci repository:
-https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/
+<https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/>
 
-# Deploying locally/by hand
+## Deploying locally/by hand
 
 Useful if you have your local minikube/kind for testing (see also
 [lima-kilo](Portal:Toolforge/Admin/lima-kilo)). To get started, run
 
-```
-./depoly.sh --help
+```bash
+./deploy.sh --help
 ```
 
-## Deploying on toolforge
+## Updating Component Versions
+
+When a new version of a component is available, you can use the `create_upgrade_branch.sh` script to automatically create a new branch with the updated component version. This script will also generate a commit message detailing the version change and any associated bug fixes.
+
+### Usage
+
+```bash
+utils/create_upgrade_branch.sh <COMPONENT>
+```
+
+Replace `<COMPONENT>` with the name of the component you want to upgrade.
+
+This script will:
+
+1. Check out a new branch named `bump_<COMPONENT>`.
+2. Reset the branch to the latest `main`.
+3. Run the `update_component.sh` script to update the component version.
+4. If there are changes (i.e., a new version is available), it will commit these changes with a detailed commit message.
+
+The commit message includes:
+
+- The component name and new version.
+- The previous version and new version.
+- A link to the release notes for the new version.
+- Any associated bug fixes between the two versions.
+
+After running the script, if a new version was found, the branch is ready to be pushed and a merge request can be created.
+
+For GitLab CLI users, you can create a merge request with:
+
+```bash
+glab mr create --fill --label 'Needs review' --remove-source-branch --yes
+```
+
+Otherwise, you can push the branch and manually create the merge request.
+
+## Deploying on Toolforge
 
 We use a cookbook to deploy the components on this repository, that will clone
 this repository and deploy the component on the right cluster. The cookbooks is
 [`wmcs.toolforge.k8s.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
 
-```
+```bash
 user@laptop:~$ cookbook wmcs.toolforge.k8s.component.deploy -h
 usage: cookbooks.wmcs.toolforge.k8s.component.deploy [-h] --cluster-name {tools,toolsbeta} [--task-id TASK_ID] [--no-dologmsg] (--component COMPONENT | --git-url GIT_URL) [--git-name GIT_NAME] [--git-branch GIT_BRANCH] [--deployment-command DEPLOYMENT_COMMAND]
 
@@ -64,30 +100,30 @@ The secrets are pulled from a yaml file, by default it's
 You can specify an alternative file with the env var
 SECRETS_FILE=/my/custom/secrets.yaml when running the deploy.sh script:
 
-```
+```bash
 SECRETS_FILE=$PWD/test_secrets.yaml ./deploy.sh builds-api
 ```
 
 In the values files templates (\*.yaml.gotmpl) you can get a secret with:
 
-```
+```bash
 myVariable: {{ exec "../../helpers/get_secret.sh" (list "mySecret") }}
 ```
 
 And you can try getting a secret manually by running the script directly:
 
-```
+```bash
 > components/helpers/get_secret.sh mySecret
 ```
 
 Note that if the secret does not exist, the template generation will fail with a
 not-very-clear error from helmfile:
 
-```
+```bash
 in ./helmfile.yaml: error during helmfile.yaml.part.0 parsing: template: stringTemplate:11:22: executing "stringTemplate" at <.Values.chartRepository>: map has no entry for key "chartRepository"
 ```
 
-## Documentation for the services:
+## Documentation for the services
 
 See:
 
@@ -229,4 +265,4 @@ This includes the following components:
   workloads inside Kubernetes.
 
 More information:
-https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes#Monitoring
+<https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes#Monitoring>
