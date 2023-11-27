@@ -12,8 +12,9 @@ quotas:
       cpu: 16
       memory: 24
     anchor-corrector: # T350484
-      version: T350484
+      version: T350484-2
       memory: 32
+      deployments: 10
     bd808-test:
       version: custom1
       services: 5
