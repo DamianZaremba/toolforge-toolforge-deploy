@@ -3,7 +3,7 @@ chartRepository: toolsbeta
 
 config:
   harborRepository: https://toolsbeta-harbor.wmcloud.org
-  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
+  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:22
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
 
