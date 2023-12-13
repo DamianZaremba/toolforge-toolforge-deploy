@@ -2,7 +2,7 @@ chartVersion: 0.0.117-20231213110249-3c9d6b72
 chartRepository: tools
 
 config:
-  builder: tools-harbor.wmcloud.org/toolforge/heroku-builder-classic:22
+  builder: tools-harbor.wmcloud.org/toolforge/heroku-builder:22
   okBuildsToKeep: 4
   failedBuildsToKeep: 2
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
