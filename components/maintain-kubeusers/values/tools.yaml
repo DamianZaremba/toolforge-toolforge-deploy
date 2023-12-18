@@ -24,6 +24,12 @@ quotas:
     borkedbot: # T323846
       version: T323846
       jobs: 30
+    cewbot: # T353104
+      version: T353104
+      memory: 32
+      pod_memory: 8
+      cronjobs: 128
+      deployments: 16
     citationhunt:
       version: custom1
       jobs: 30
@@ -49,9 +55,15 @@ quotas:
     paws-public: # T246519
       version: T246519
       services: 2
+    signature-checker: # T353104
+      memory: 32
+      deployments: 16
     teg: # T246553
       version: T246553
       services: 2
+    toc: # T353104
+      memory: 32
+      deployments: 16
     vpsalertmanager:
       version: custom1
       services: 5
