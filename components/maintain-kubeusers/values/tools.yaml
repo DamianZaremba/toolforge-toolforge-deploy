@@ -69,11 +69,15 @@ quotas:
     vpsalertmanager:
       version: custom1
       services: 5
+    wikibugs:
+      version: T306322
+      deployments: 6
     xiplus: # T315719
       version: T315719
       cronjobs: 100
     yifeibot: # T329350
-      version: T329350
+      version: T329350-2
       cpu: 10
       memory: 12
       pods: 20
+      deployments: 10
