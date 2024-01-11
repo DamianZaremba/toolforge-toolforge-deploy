@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2209
 GITLAB_BASE_URL="https://gitlab.wikimedia.org/repos/cloud/toolforge"
 
 set -o errexit
