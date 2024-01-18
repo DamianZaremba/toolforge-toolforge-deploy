@@ -1,5 +1,0 @@
-chartVersion: 0.0.257-20240119111328-dbdea5a4
-chartRepository: tools
-replicas: 1
-harbor:
-  host: toolsbeta-harbor.wmcloud.org

@@ -1,0 +1,6 @@
+chartVersion: 0.0.257-20240119111328-dbdea5a4
+chartRepository: toolsbeta
+replicas: 1
+harbor:
+  host: {{ exec "../../helpers/get_harbor_ip.sh" (list) }}
+  protocol: "http"
