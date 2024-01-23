@@ -1,4 +1,4 @@
-chartVersion: 0.0.17-20231030135912-7db7cff4
+chartVersion: 0.0.14-20230911104653-4cefc2ca
 chartRepository: tools
 kubeStateMetricsChartVersion: v4.1.0
 metricsServerApiCertsChartVersion: v0.3.0
