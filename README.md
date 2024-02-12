@@ -4,10 +4,9 @@ This repository hosts the per-component code to deploy an instance of toolforge.
 
 ## Expected development flow
 
-Note that the user does not need to write the image tag anywhere, only care
-about the chart version.
+Note that the user does not need to write the image tag anywhere, only care about the chart version.
 
-Every chart version is bound to it's own image tag.
+Every chart version is bound to its own image tag.
 
 ![created using draw.io](docs/component_cd_flow.png)
 
@@ -25,9 +24,14 @@ Useful if you have your local minikube/kind for testing (see also
 
 ## Updating Component Versions
 
-When a new version of a component is available, you can use the `create_upgrade_branch.sh` script to automatically create a new branch with the updated component version. This script will also generate a commit message detailing the version change and any associated bug fixes.
+### Via CI
 
-### Usage
+When a new version of a component is available, [a CI job](https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/-/blob/main/toolforge-cd/create_toolforge_deploy_mr.yaml?ref_type=heads) takes care of automatically creating a new branch with the updated component version.
+This script will also generate a commit message detailing the version change and any associated bug fixes, and open a version-bump MR.
+
+In case you ever need to deploy a new version of a component manually, read the next section for instructions. Otherwise, all that is left is testing the updated component on Toolsbeta and Toolforge before merging the version-bump MR.
+
+### Manual Update of Component Versions
 
 ```bash
 utils/create_upgrade_branch.sh <COMPONENT>
@@ -59,10 +63,10 @@ glab mr create --fill --label 'Needs review' --remove-source-branch --yes
 
 Otherwise, you can push the branch and manually create the merge request.
 
-## Deploying on Toolforge
+## Deploying on Toolsbeta and Toolforge
 
-We use a cookbook to deploy the components on this repository, that will clone
-this repository and deploy the component on the right cluster. The cookbooks is
+We use a cookbook to deploy the components on this repository, that will clone this repository and deploy the component on the right cluster.
+The cookbook is
 [`wmcs.toolforge.k8s.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
 
 ```bash
@@ -128,7 +132,7 @@ in ./helmfile.yaml: error during helmfile.yaml.part.0 parsing: template: stringT
 Currently we update these values manually, you can check all the compatibility
 restrictions for your environment with:
 
-```
+```bash
 > git grep kubeVersion: '*local.yaml'
 ```
 
