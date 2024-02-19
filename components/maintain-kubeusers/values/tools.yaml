@@ -70,8 +70,9 @@ quotas:
       version: custom1
       services: 5
     wd-shex-infer: # T357209
-      version: T357209
+      version: T357209-2
       memory: 10
+      pod_memory: 10
     wikibugs:
       version: T306322
       deployments: 6
