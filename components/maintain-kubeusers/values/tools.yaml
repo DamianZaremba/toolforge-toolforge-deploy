@@ -73,9 +73,10 @@ quotas:
       version: T357209-2
       memory: 10
       pod_memory: 10
-    wikibugs:
-      version: T306322
+    wikibugs: # T306322, T358538
+      version: T358538
       deployments: 6
+      services: 2
     xiplus: # T315719
       version: T315719
       cronjobs: 100
