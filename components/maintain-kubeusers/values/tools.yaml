@@ -80,6 +80,10 @@ quotas:
       version: T358538
       deployments: 6
       services: 2
+    wikibugs-testing: # T358968
+      version: T358968
+      deployments: 6
+      services: 3
     xiplus: # T315719
       version: T315719
       cronjobs: 100
