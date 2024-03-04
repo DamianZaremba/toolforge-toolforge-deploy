@@ -42,6 +42,9 @@ quotas:
     iabot: # T327952
       version: T327952
       memory: 11
+    mbh: # T359061
+      version: T359061
+      deployments: 5
     moedata: # T250922
       version: T250922
       services: 5
