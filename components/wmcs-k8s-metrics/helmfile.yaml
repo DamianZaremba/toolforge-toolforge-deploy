@@ -31,6 +31,7 @@ releases:
     values:
       - values/common/kube-state-metrics.yaml
       # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.kube-state-metrics.yaml
       - values/{{ .Environment.Name }}.yaml*
 
   - name: metrics-server-api-certs
@@ -40,6 +41,7 @@ releases:
     values:
       - values/common/metrics-server-api-certs.yaml
       # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.metrics-server-api-certs.yaml
       - values/{{ .Environment.Name }}.yaml*
 
   - name: metrics-server
@@ -49,6 +51,7 @@ releases:
     values:
       - values/common/metrics-server.yaml
       # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.metrics-server.yaml
       - values/{{ .Environment.Name }}.yaml*
 
   - name: metrics-server-psp
@@ -58,6 +61,7 @@ releases:
     values:
       - values/common/metrics-server-psp.yaml
       # this next entry allows overwriting the common one
+      - values/{{ .Environment.Name }}.metrics-server-psp.yaml
       - values/{{ .Environment.Name }}.yaml*
 
 environments:
