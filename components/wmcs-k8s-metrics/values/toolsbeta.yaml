@@ -1,6 +1,16 @@
 chartVersion: 0.0.18-20240123190739-bb982183
 chartRepository: toolsbeta
-kubeStateMetricsChartVersion: v4.1.0
+# Also update kubeVersion when updating the kube-state-metrics chart
+# for compatibility info see:
+#  https://github.com/kubernetes/kube-state-metrics
+#  and
+#  https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/Chart.yaml
+#
+# Current is <= 1.24, see
+# https://github.com/prometheus-community/helm-charts/commit/09118d526a5ca562fde11502621c16a8960a2ee0
+# this v4.18.0 chart should pull v2.6.0, which is usually cached in our registry
+# see also: components/wmcs-k8s-metrics/values/common/kube-state-metrics.yaml
+kubeStateMetricsChartVersion: v4.18.0
 metricsServerApiCertsChartVersion: v0.3.0
 metricsServerPspChartVersion: v0.3.0
 metricsServerChartVersion: v3.8.3
@@ -9,4 +19,7 @@ metricsServerChartVersion: v3.8.3
 #   https://artifacthub.io/packages/helm/metrics-server/metrics-server -> for the appVersion
 #   https://github.com/kubernetes-sigs/metrics-server#compatibility-matrix
 #
-kubeVersion: ">=1.19"
+# Current is >=1.19
+#
+# The following is a combination of kube-state-metrics version requirement and metrics-server
+kubeVersion: ">=1.19 <=1.24"

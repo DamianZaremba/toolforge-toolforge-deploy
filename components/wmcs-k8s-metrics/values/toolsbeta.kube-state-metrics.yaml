@@ -1,2 +1,4 @@
 ---
-# use this file to override variables, if required
+# temporal override, given the default in common/ is for k8s 1.23
+image:
+  version: v2.6.0
