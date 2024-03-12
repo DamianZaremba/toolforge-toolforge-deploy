@@ -39,6 +39,9 @@ quotas:
     deno: # T259789
       version: T259789
       services: 5
+    eranbot: # T359923
+      version: T359923
+      deployments: 10
     iabot: # T327952
       version: T327952
       memory: 11
