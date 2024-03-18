@@ -1,6 +1,6 @@
 image:
   repository: docker-registry.tools.wmflabs.org/kube-state-metrics
-  version: v2.2.4
+  version: v2.6.0
 
 podSecurityPolicy:
   enabled: true
