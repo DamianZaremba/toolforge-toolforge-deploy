@@ -4,7 +4,8 @@ This repository hosts the per-component code to deploy an instance of toolforge.
 
 ## Expected development flow
 
-Note that the user does not need to write the image tag anywhere, only care about the chart version.
+Note that the user does not need to write the image tag anywhere, only care
+about the chart version.
 
 Every chart version is bound to its own image tag.
 
@@ -26,10 +27,15 @@ Useful if you have your local minikube/kind for testing (see also
 
 ### Via CI
 
-When a new version of a component is available, [a CI job](https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/-/blob/main/toolforge-cd/create_toolforge_deploy_mr.yaml?ref_type=heads) takes care of automatically creating a new branch with the updated component version.
-This script will also generate a commit message detailing the version change and any associated bug fixes, and open a version-bump MR.
+When a new version of a component is available,
+[a CI job](https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/-/blob/main/toolforge-cd/create_toolforge_deploy_mr.yaml?ref_type=heads)
+takes care of automatically creating a new branch with the updated component
+version. This script will also generate a commit message detailing the version
+change and any associated bug fixes, and open a version-bump MR.
 
-In case you ever need to deploy a new version of a component manually, read the next section for instructions. Otherwise, all that is left is testing the updated component on Toolsbeta and Toolforge before merging the version-bump MR.
+In case you ever need to deploy a new version of a component manually, read the
+next section for instructions. Otherwise, all that is left is testing the
+updated component on Toolsbeta and Toolforge before merging the version-bump MR.
 
 ### Manual Update of Component Versions
 
@@ -44,7 +50,8 @@ This script will:
 1. Check out a new branch named `bump_<COMPONENT>`.
 2. Reset the branch to the latest `main`.
 3. Run the `update_component.sh` script to update the component version.
-4. If there are changes (i.e., a new version is available), it will commit these changes with a detailed commit message.
+4. If there are changes (i.e., a new version is available), it will commit these
+   changes with a detailed commit message.
 
 The commit message includes:
 
@@ -53,7 +60,8 @@ The commit message includes:
 - A link to the release notes for the new version.
 - Any associated bug fixes between the two versions.
 
-After running the script, if a new version was found, the branch is ready to be pushed and a merge request can be created.
+After running the script, if a new version was found, the branch is ready to be
+pushed and a merge request can be created.
 
 For GitLab CLI users, you can create a merge request with:
 
@@ -65,8 +73,8 @@ Otherwise, you can push the branch and manually create the merge request.
 
 ## Deploying on Toolsbeta and Toolforge
 
-We use a cookbook to deploy the components on this repository, that will clone this repository and deploy the component on the right cluster.
-The cookbook is
+We use a cookbook to deploy the components on this repository, that will clone
+this repository and deploy the component on the right cluster. The cookbook is
 [`wmcs.toolforge.k8s.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
 
 ```bash
@@ -156,13 +164,6 @@ See:
 This component is the entrypoint of any request to any toolforge API.
 
 [Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/api-gateway)
-
-### Builds Admission
-
-Part of the build service, it takes care of making sure the build requests
-(currently PipelineRun resources) match our parameters.
-
-[Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/builds-admission)
 
 ### Builds API
 
