@@ -4,3 +4,6 @@ replicas: 1
 harbor:
   host: {{ exec "../../helpers/get_harbor_ip.sh" (list) }}
   protocol: "http"
+
+webservice:
+  DEBUG: "true"
