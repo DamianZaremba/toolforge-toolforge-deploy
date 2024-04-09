@@ -1,0 +1,60 @@
+---
+# NOTE: this is the rolebinding that allows Kyverno to work in a PSP-enabled cluster
+# yes, the very thing we want to remove, so only temporal. This should be deleted
+# when we drop PSP.
+resources:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: kyverno-admission-controller-psp
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: privileged-psp
+    subjects:
+      - kind: ServiceAccount
+        namespace: kyverno
+        # TODO: fetch this from the chart instead?
+        name: kyverno-admission-controller
+
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: kyverno-background-controller-psp
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: privileged-psp
+    subjects:
+      - kind: ServiceAccount
+        namespace: kyverno
+        # TODO: fetch this from the chart instead?
+        name: kyverno-background-controller
+
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: kyverno-cleanup-controller-psp
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: privileged-psp
+    subjects:
+      - kind: ServiceAccount
+        namespace: kyverno
+        # TODO: fetch this from the chart instead?
+        name: kyverno-cleanup-controller
+
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: kyverno-reports-controller-psp
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: privileged-psp
+    subjects:
+      - kind: ServiceAccount
+        namespace: kyverno
+        # TODO: fetch this from the chart instead?
+        name: kyverno-reports-controller

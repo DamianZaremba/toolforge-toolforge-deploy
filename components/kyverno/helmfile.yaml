@@ -1,0 +1,32 @@
+---
+repositories:
+  - name: kyverno
+    url: https://kyverno.github.io/kyverno
+  - name: wmf-stable
+    url: https://helm-charts.wikimedia.org/stable
+
+releases:
+  # NOTE: in a PSP-enabled cluster, kyverno wont start without this
+  - name: kyverno-itself-psp
+    namespace: kyverno
+    createNamespace: true
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - values/common/kyverno-itself-psp.yaml
+
+  - name: kyverno
+    namespace: kyverno
+    createNamespace: true
+    chart: kyverno/kyverno
+    # see version matrix at https://kyverno.io/docs/installation/#compatibility-matrix
+    # and then run `helm search repo kyverno -l`
+    # the 3.0.9 chart deploys kyverno v1.10.7
+    version: 3.0.9
+    values:
+      - values/common/images.yaml
+
+environments:
+  tools: {}
+  toolsbeta: {}
+  local: {}

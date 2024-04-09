@@ -1,0 +1,39 @@
+---
+# see 'helm show values kyverno/kyverno'
+
+# we don't use upstream container images directly from their registry
+# instead, we copy/cache them in Toolforge's docker registry so we don't
+# depend on the availability of third party services to deploy our stuff
+
+# about replicas, see:
+#  https://kyverno.io/docs/high-availability/
+#  https://kyverno.io/docs/installation/methods/#high-availability
+
+admissionController:
+  replicas: 3
+  initContainer:
+    image:
+      registry: "docker-registry.tools.wmflabs.org"
+      repository: "toolforge-kyverno-kyvernopre"
+  container:
+    image:
+      registry: "docker-registry.tools.wmflabs.org"
+      repository: "toolforge-kyverno-kyverno"
+
+backgroundController:
+  replicas: 2
+  image:
+    registry: "docker-registry.tools.wmflabs.org"
+    repository: "toolforge-kyverno-background-controller"
+
+cleanupController:
+  replicas: 2
+  image:
+    registry: "docker-registry.tools.wmflabs.org"
+    repository: "toolforge-kyverno-cleanup-controller"
+
+reportsController:
+  replicas: 2
+  image:
+    registry: "docker-registry.tools.wmflabs.org"
+    repository: "toolforge-kyverno-reports-controller"

@@ -1,0 +1,3 @@
+---
+# NOTE: never delete this file, keep for deploy script
+kubeVersion: ">= 1.24 <= 1.26"
