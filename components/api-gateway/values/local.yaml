@@ -1,5 +1,5 @@
 chartVersion: 0.0.19-20240411190537-c937fb4a
-chartRepository: tools
+chartRepository: toolsbeta
 
 certificates:
   internalClusterDomain: cluster.local

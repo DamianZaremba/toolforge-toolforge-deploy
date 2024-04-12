@@ -1,6 +1,6 @@
 # this is for local development
 chartVersion: 0.0.40-20240411190744-5d11fafa
-chartRepository: tools
+chartRepository: toolsbeta
 
 replicas: 1
 debug: true
