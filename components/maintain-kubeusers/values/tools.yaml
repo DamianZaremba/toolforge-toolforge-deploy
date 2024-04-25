@@ -72,6 +72,9 @@ quotas:
       version: T353104
       memory: 32
       deployments: 16
+    uploadmap: # T362975
+      version: T362975
+      services: 3
     vpsalertmanager:
       version: custom1
       services: 5
