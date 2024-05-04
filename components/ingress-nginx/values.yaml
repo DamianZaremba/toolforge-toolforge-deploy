@@ -29,6 +29,9 @@ controller:
     proxy-read-timeout: "3600"
     # T346322: render http connection error pages via the default backend
     custom-http-errors: "502,503,504"
+    # T363877: pass any X-Accel-Buffering header on to upstream proxy
+    http-snippet: |
+      proxy_pass_header X-Accel-Buffering;
 
   electionID: ingress-controller-gen2-leader
 
