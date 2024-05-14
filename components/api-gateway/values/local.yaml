@@ -1,4 +1,4 @@
-chartVersion: 0.0.19-20240411190537-c937fb4a
+chartVersion: 0.0.22-20240514132013-9d1a4346
 chartRepository: toolsbeta
 
 certificates:
@@ -6,3 +6,6 @@ certificates:
   extraNames:
     # this is useful in the lima-kilo kind context, harmless if not
     - toolforge-control-plane
+
+app:
+  log_level: debug

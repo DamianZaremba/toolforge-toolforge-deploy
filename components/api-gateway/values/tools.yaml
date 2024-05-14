@@ -1,4 +1,4 @@
-chartVersion: 0.0.19-20240411190537-c937fb4a
+chartVersion: 0.0.22-20240514132013-9d1a4346
 chartRepository: tools
 backends:
   - name: jobs-api
@@ -19,6 +19,12 @@ backends:
       namespace: envvars-api
       service: envvars-api
       port: 8443
+
+app:
+  log_level: info
+  builds_openapi_url: "https://builds-api.builds-api.svc.tools.local:8443/openapi.json"
+  jobs_openapi_url: "https://jobs-api.jobs-api.svc.tools.local:8443/openapi.json"
+  envvars_openapi_url: "https://envvars-api.envvars-api.svc.tools.local:8443/openapi.json"
 
 nginx:
   replicas: 2
