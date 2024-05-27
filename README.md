@@ -280,5 +280,28 @@ This includes the following components:
 - `prometheus-rbac` generates access control rules so Prometheus can scrape
   workloads inside Kubernetes.
 
+## Functional tests
+
+There's a suite of functional tests that use
+[bats-core](https://bats-core.readthedocs.io/) (you can easily install it in a
+venv using the pip package `bats-core-pkg`), they are meant to be run inside
+lima-kilo, or as a tool in any toolforge installation.
+
+To run from a tool just use the script:
+
+```
+mytool$ git clone https://gitlab.wikimedia.org/repos/cloud/toolforge/toolforge-deploy
+mytool$ toolforge-deploy/helpers/run_functional_tests.sh
+```
+
+To run them inside lima-kilo
+[see the lima-kilo docs](https://gitlab.wikimedia.org/repos/cloud/toolforge/lima-kilo).
+
+### Developing new tests
+
+Remember to add the line `# bats file_tags=<component>` to the new tests when
+adding tests for new components, that helps filtering out later with
+`--filter-tag <component>`.
+
 More information:
 <https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes#Monitoring>
