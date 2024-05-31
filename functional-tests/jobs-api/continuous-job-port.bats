@@ -61,7 +61,7 @@ setup() {
 
     toolforge jobs run \
         --command "curl -v 'http://$rand_string.tool-$tool_name.svc.$CLUSTER_DOMAIN:1234/status'" \
-        --wait 10 \
+        --wait 120 \
         --image python3.11 \
         check-$rand_string
 

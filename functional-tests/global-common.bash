@@ -31,8 +31,10 @@ _global_teardown() {
 
 retry() {
     local command="${1?}"
-    # default to 40 as it seems to be enough for toolsbeta speed
-    local num_tries="${2:-40}"
+    # default to 120 because:
+    # it seems to be enough for toolsbeta speed
+    # it may be enough in case the system needs to download a new container image
+    local num_tries="${2:-120}"
     echo "Retrying $num_tries times: $command"
     shift
     for _ in $(seq "$num_tries"); do

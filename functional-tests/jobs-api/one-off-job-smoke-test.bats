@@ -15,7 +15,7 @@ setup() {
     toolforge \
         jobs \
         run \
-        --wait 10 \
+        --wait 120 \
         --command "echo '$rand_string'" \
         --image=python3.11 \
         "$rand_string"
