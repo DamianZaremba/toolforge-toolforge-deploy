@@ -201,6 +201,8 @@ main() {
         )
     fi
 
+    # we need to be in the home of the tool, where the jobs will create the logs
+    cd ~
     bats_core_pkg \
         --verbose-run \
         --pretty \
