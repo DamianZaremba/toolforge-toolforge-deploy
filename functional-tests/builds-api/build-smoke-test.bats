@@ -11,6 +11,13 @@ setup() {
 }
 
 
+setup_file() {
+    # cleanup just in case
+    toolforge build delete --all --yes-i-know
+    toolforge build clean --yes-i-know
+}
+
+
 @test "start build" {
     toolforge build start --detach "$SAMPLE_REPO_URL"
 }
