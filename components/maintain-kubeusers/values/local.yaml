@@ -3,4 +3,4 @@ chartRepository: toolsbeta
 replicas: 1
 
 image:
-  args: ["/app/maintain_kubeusers_cli.py", "--project=toolsbeta", "--debug"]
+  args: ["/app/maintain_kubeusers_cli.py", "--project=toolsbeta", "--debug", "--interval=60"]
