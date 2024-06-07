@@ -31,15 +31,15 @@ setup_file() {
 
 # bats test_tags=slow
 @test "tail logs and wait (slow)" {
-    # this also waits for it to finish
     toolforge build logs -f
 }
 
 
 # bats test_tags=slow
-@test "show finished build" {
-    run toolforge build show
-    assert_line --partial "Status: ok"
+@test "show finished build (slow)" {
+    # the build may download a bunch of stuff from the internet
+    # retry in case the build takes time to complete and update the Status field
+    retry "toolforge build show | grep 'Status: ok'"
 }
 
 
