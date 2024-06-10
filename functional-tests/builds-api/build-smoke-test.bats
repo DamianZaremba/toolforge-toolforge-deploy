@@ -13,8 +13,8 @@ setup() {
 
 setup_file() {
     # cleanup just in case
-    toolforge build delete --all --yes-i-know
-    toolforge build clean --yes-i-know
+    toolforge build delete --all --yes-i-know 2>/dev/null || :
+    toolforge build clean --yes-i-know 2>/dev/null || :
 }
 
 
