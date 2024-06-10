@@ -25,6 +25,8 @@ releases:
     version: 3.0.9
     values:
       - values/common/images.yaml
+      # this allows us to override the common one
+      - values/{{ .Environment.Name }}.yaml*
 
 environments:
   tools: {}
