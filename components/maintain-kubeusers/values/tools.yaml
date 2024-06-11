@@ -12,45 +12,25 @@ quotas:
       cpu: 16
       memory: 24
     anchor-corrector: # T350484
-      version: T350484-2
+      version: T350484-3
       memory: 32
-      deployments: 10
-    bd808-test:
-      version: custom1
-      services: 5
-    bodh: # T337190
-      version: T337190
-      services: 2
     borkedbot: # T323846
       version: T323846
       jobs: 30
     cewbot: # T353104
-      version: T353104
+      version: T353104-2
       memory: 32
       pod_memory: 8
       cronjobs: 128
-      deployments: 16
     citationhunt:
       version: custom1
       jobs: 30
     deltabot: # T347951
       version: T347951
       cronjobs: 100
-    deno: # T259789
-      version: T259789
-      services: 5
-    eranbot: # T359923
-      version: T359923
-      deployments: 10
     iabot: # T327952
       version: T327952
       memory: 11
-    mbh: # T359061
-      version: T359061
-      deployments: 5
-    moedata: # T250922
-      version: T250922
-      services: 5
     montage: # T348894
       version: T348894
       memory: 16
@@ -58,44 +38,21 @@ quotas:
       version: T273601
       memory: 20
       pod_memory: 8
-    paws-public: # T246519
-      version: T246519
-      services: 2
     signature-checker: # T353104
-      version: T353104
+      version: T353104-2
       memory: 32
-      deployments: 16
-    teg: # T246553
-      version: T246553
-      services: 2
     toc: # T353104
-      version: T353104
+      version: T353104-2
       memory: 32
-      deployments: 16
-    uploadmap: # T362975
-      version: T362975
-      services: 3
-    vpsalertmanager:
-      version: custom1
-      services: 5
     wd-shex-infer: # T357209
       version: T357209-3
       memory: 16
       pod_memory: 10
-    wikibugs: # T306322, T358538
-      version: T358538
-      deployments: 6
-      services: 2
-    wikibugs-testing: # T358968
-      version: T358968
-      deployments: 6
-      services: 3
     xiplus: # T315719
       version: T315719
       cronjobs: 100
     yifeibot: # T329350
-      version: T329350-2
+      version: T329350-3
       cpu: 10
       memory: 12
       pods: 20
-      deployments: 10
