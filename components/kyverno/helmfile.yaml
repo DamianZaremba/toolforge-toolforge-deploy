@@ -24,7 +24,7 @@ releases:
     # the 3.0.9 chart deploys kyverno v1.10.7
     version: 3.0.9
     values:
-      - values/common/images.yaml
+      - values/common/settings.yaml
       # this allows us to override the common one
       - values/{{ .Environment.Name }}.yaml*
 

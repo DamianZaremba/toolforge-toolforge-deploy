@@ -6,24 +6,12 @@ kubeVersion: ">= 1.24 <= 1.26"
 # trim down the replicas and remove resouce requests
 admissionController:
   replicas: 1
-  initContainer:
-    resources:
-      requests: null
-  container:
-    resources:
-      requests: null
 
 backgroundController:
   replicas: 1
-  resources:
-    requests: null
 
 cleanupController:
   replicas: 1
-  resources:
-    requests: null
 
 reportsController:
   replicas: 1
-  resources:
-    requests: null
