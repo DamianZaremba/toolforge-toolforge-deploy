@@ -1,4 +1,4 @@
-chartVersion: 0.0.40-20240603080405-5c500731
+chartVersion: 0.0.42-20240612171641-a8eaf992
 chartRepository: toolsbeta
 allowedRegistries:
   - "docker-registry.tools.wmflabs.org"
