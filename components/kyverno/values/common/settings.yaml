@@ -9,38 +9,57 @@
 #  https://kyverno.io/docs/high-availability/
 #  https://kyverno.io/docs/installation/methods/#high-availability
 # about scaling, see:
-# https://kyverno.io/docs/installation/scaling/
+#  https://kyverno.io/docs/installation/scaling/
+# about upstream recomendations, see:
+#  https://github.com/kyverno/kyverno/issues/10458
 
 admissionController:
-  replicas: 3
+  replicas: 7
   initContainer:
-    resources: null
     image:
       registry: "docker-registry.tools.wmflabs.org"
       repository: "toolforge-kyverno-kyvernopre"
   container:
-    resources: null
+    resources:
+      limits:
+        cpu: 1
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 2Gi
     image:
       registry: "docker-registry.tools.wmflabs.org"
       repository: "toolforge-kyverno-kyverno"
 
 backgroundController:
-  replicas: 2
-  resources: null
+  replicas: 4
+  resources:
+    limits:
+      cpu: 1
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
   image:
     registry: "docker-registry.tools.wmflabs.org"
     repository: "toolforge-kyverno-background-controller"
 
 cleanupController:
   replicas: 2
-  resources: null
+  resources:
+    limits:
+      cpu: 1
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
   image:
     registry: "docker-registry.tools.wmflabs.org"
     repository: "toolforge-kyverno-cleanup-controller"
 
 reportsController:
-  replicas: 2
-  resources: null
-  image:
-    registry: "docker-registry.tools.wmflabs.org"
-    repository: "toolforge-kyverno-reports-controller"
+  enabled: false
+
+features:
+  admissionReports:
+    enabled: false

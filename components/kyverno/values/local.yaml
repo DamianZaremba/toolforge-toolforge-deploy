@@ -1,17 +1,3 @@
 ---
 # NOTE: never delete this file, keep for deploy script
 kubeVersion: ">= 1.24 <= 1.26"
-
-# we have little CPU and memory in lima-kilo
-# trim down the replicas and remove resouce requests
-admissionController:
-  replicas: 1
-
-backgroundController:
-  replicas: 1
-
-cleanupController:
-  replicas: 1
-
-reportsController:
-  replicas: 1
