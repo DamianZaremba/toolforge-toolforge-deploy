@@ -91,6 +91,14 @@ setup_file() {
 }
 
 
+@test "shell starts and echoes" {
+    random_token="$RANDOM-token"
+    run bash -c "toolforge webservice php7.4 shell -- echo '$random_token'"
+    assert_success
+    assert_line --partial "$random_token"
+}
+
+
 teardown() {
     _global_teardown
 }
