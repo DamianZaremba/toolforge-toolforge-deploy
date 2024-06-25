@@ -185,6 +185,10 @@ main() {
     fi
 
     if [[ "$USER" != "$test_tool_uid" ]]; then
+        if command -v toolforge_get_versions.sh &>/dev/null; then
+            echo "Installed toolforge components versions:"
+            toolforge_get_versions.sh | sed -e 's/^/    /'
+        fi
         sudo -i -u "$test_tool_uid" "$(realpath "$0")" "${passed_args[@]}"
         exit $?
     fi
