@@ -14,9 +14,6 @@ controller:
     runAsUser: 101
     allowPrivilegeEscalation: true
 
-  # Use Toolforge privileged PSP
-  existingPsp: "privileged-psp"
-
   # T294330: snippet annotations are insecure
   allowSnippetAnnotations: false
 
@@ -118,9 +115,6 @@ defaultBackend:
 rbac:
   create: true
   scope: false
-
-podSecurityPolicy:
-  enabled: true
 
 serviceAccount:
   create: true
