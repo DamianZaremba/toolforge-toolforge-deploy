@@ -54,16 +54,6 @@ releases:
       - values/{{ .Environment.Name }}.metrics-server.yaml
       - values/{{ .Environment.Name }}.yaml*
 
-  - name: metrics-server-psp
-    namespace: metrics
-    chart: wmf-stable/raw
-    version: "{{ .Values.metricsServerPspChartVersion }}"
-    values:
-      - values/common/metrics-server-psp.yaml
-      # this next entry allows overwriting the common one
-      - values/{{ .Environment.Name }}.metrics-server-psp.yaml
-      - values/{{ .Environment.Name }}.yaml*
-
 environments:
   local:
     values:

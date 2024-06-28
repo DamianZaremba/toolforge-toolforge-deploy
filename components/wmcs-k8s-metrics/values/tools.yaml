@@ -12,7 +12,6 @@ chartRepository: tools
 # see also: components/wmcs-k8s-metrics/values/common/kube-state-metrics.yaml
 kubeStateMetricsChartVersion: v4.18.0
 metricsServerApiCertsChartVersion: v0.3.0
-metricsServerPspChartVersion: v0.3.0
 metricsServerChartVersion: v3.8.3
 # When changing the chart version, make sure to update kubeVersion
 # See
