@@ -74,7 +74,12 @@ update_component() {
 
     deployment_files=(components/"$component"/values/*.yaml*)
     for deployment_file in "${deployment_files[@]}"; do
-        current_tag=$($GREP -Po '(?<=chartVersion: ).*' "$deployment_file" | sed -e 's/ //g')
+        current_tag=$($GREP -Po '(?<=chartVersion: ).*' "$deployment_file" | sed -e 's/ //g' || echo "tagnotfound")
+        if [ "$current_tag" == "tagnotfound" ] ; then
+            # this can happen if we have multiple values files, for overrides, but not all of them
+            # have the chartVersion entry. See for example wmcs-k8s-metrics
+            continue
+        fi
 
         deployment="${deployment_file%%.*}"
         deployment="${deployment##*/}"
