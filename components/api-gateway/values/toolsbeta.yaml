@@ -1,4 +1,4 @@
-chartVersion: 0.0.24-20240603092014-c6e82aab
+chartVersion: 0.0.25-20240628091913-285fb180
 chartRepository: toolsbeta
 backends:
   - name: jobs-api
