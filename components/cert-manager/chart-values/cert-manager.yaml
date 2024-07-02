@@ -1,8 +1,4 @@
 installCRDs: true
-global:
-  podSecurityPolicy:
-    enabled: true
-    useAppArmor: false
 
 image:
   repository: docker-registry.tools.wmflabs.org/cert-manager/controller
