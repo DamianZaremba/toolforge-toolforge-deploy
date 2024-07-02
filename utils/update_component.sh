@@ -72,6 +72,7 @@ update_component() {
         return 0
     fi
 
+    some_tag_found="no"
     deployment_files=(components/"$component"/values/*.yaml*)
     for deployment_file in "${deployment_files[@]}"; do
         current_tag=$($GREP -Po '(?<=chartVersion: ).*' "$deployment_file" | sed -e 's/ //g' || echo "tagnotfound")
@@ -80,6 +81,8 @@ update_component() {
             # have the chartVersion entry. See for example wmcs-k8s-metrics
             continue
         fi
+
+        some_tag_found="yes"
 
         deployment="${deployment_file%%.*}"
         deployment="${deployment##*/}"
@@ -90,6 +93,11 @@ update_component() {
             echo "Already at latest $component/$deployment: $current_tag == $latest_tag"
         fi
     done
+
+    if [ "$some_tag_found" == "no" ] ; then
+        echo "Could not find any chartVersion tag in any deployment value files. Checked: ${deployment_files[*]}"
+        exit 1
+    fi
 }
 
 main() {
