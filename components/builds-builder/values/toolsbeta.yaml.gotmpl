@@ -5,3 +5,5 @@ repository:
   username: {{ exec "../../helpers/get_secret.sh" (list "harborImageBuilderUsername") }}
   password: {{ exec "../../helpers/get_secret.sh" (list "harborImageBuilderPassword") }}
   url: toolsbeta-harbor.wmcloud.org
+
+kubeVersion: ">=1.21"

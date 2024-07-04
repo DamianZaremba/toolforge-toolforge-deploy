@@ -9,3 +9,5 @@ repository:
   url: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}
 
 dockerconfig: '{"insecure-registries": ["http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}"]}'
+
+kubeVersion: ">=1.21"

@@ -141,7 +141,7 @@ Currently we update these values manually, you can check all the compatibility
 restrictions for your environment with:
 
 ```bash
-> git grep kubeVersion: '*local.yaml'
+> git grep kubeVersion: '*local.yaml*'
 ```
 
 replacing `local` with your environment (ex. `tools`).
@@ -289,7 +289,7 @@ lima-kilo, or as a tool in any toolforge installation.
 
 To run from a tool just use the script:
 
-```
+```bash
 mytool$ git clone https://gitlab.wikimedia.org/repos/cloud/toolforge/toolforge-deploy
 mytool$ toolforge-deploy/helpers/run_functional_tests.sh
 ```
