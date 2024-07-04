@@ -22,9 +22,9 @@ backends:
 
 app:
   log_level: info
-  builds_openapi_url: "https://builds-api.builds-api.svc.tools.local:8443/openapi.json"
-  jobs_openapi_url: "https://jobs-api.jobs-api.svc.tools.local:8443/openapi.json"
-  envvars_openapi_url: "https://envvars-api.envvars-api.svc.tools.local:8443/openapi.json"
+  builds_api_url: "https://builds-api.builds-api.svc.tools.local:8443"
+  jobs_api_url: "https://jobs-api.jobs-api.svc.tools.local:8443"
+  envvars_api_url: "https://envvars-api.envvars-api.svc.tools.local:8443"
 
 nginx:
   replicas: 2
