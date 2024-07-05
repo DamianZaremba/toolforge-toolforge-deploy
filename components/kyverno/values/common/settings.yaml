@@ -82,7 +82,7 @@ policyReportsCleanup:
     registry: "docker-registry.tools.wmflabs.org"
     repository: "bitnami-kubectl"
 
-cleanupsJobs:
+cleanupJobs:
   admissionReports:
     image:
       registry: "docker-registry.tools.wmflabs.org"
