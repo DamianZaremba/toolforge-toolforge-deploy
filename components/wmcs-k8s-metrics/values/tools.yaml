@@ -6,11 +6,11 @@ chartRepository: tools
 #  and
 #  https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/Chart.yaml
 #
-# Current is <= 1.24, see
-# https://github.com/prometheus-community/helm-charts/commit/09118d526a5ca562fde11502621c16a8960a2ee0
-# this v4.18.0 chart should pull v2.6.0, which is usually cached in our registry
+# Current is <= 1.25, see
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/Chart.yaml
+# this v4.29.0 chart should pull v2.7.0, which is usually cached in our registry
 # see also: components/wmcs-k8s-metrics/values/common/kube-state-metrics.yaml
-kubeStateMetricsChartVersion: v4.18.0
+kubeStateMetricsChartVersion: v4.29.0
 metricsServerApiCertsChartVersion: v0.3.0
 metricsServerChartVersion: v3.8.3
 # When changing the chart version, make sure to update kubeVersion
@@ -21,4 +21,4 @@ metricsServerChartVersion: v3.8.3
 # Current is >=1.19
 #
 # The following is a combination of kube-state-metrics version requirement and metrics-server
-kubeVersion: ">=1.19 <=1.24"
+kubeVersion: ">=1.19 <=1.25"
