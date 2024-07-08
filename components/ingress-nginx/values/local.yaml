@@ -1,6 +1,15 @@
 chartVersion: 4.3.0
 controller:
   replicaCount: 1
+  # null make helmfile remove the key
+  extraArgs: ~
+  config:
+    custom-http-errors: ""
+  # lima-kilo vm is not that big
+  resources:
+    requests:
+      cpu: 1
+      memory: 1G
 # When changing the chart version, make sure to update kubeVersion
 # See:
 #    https://github.com/kubernetes/ingress-nginx/tree/main#supported-versions-table
