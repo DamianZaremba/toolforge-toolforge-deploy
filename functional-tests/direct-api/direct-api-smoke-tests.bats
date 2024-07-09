@@ -33,28 +33,100 @@ get_toolforge_url() {
     assert_line --partial "200 OK"
 }
 
+
+@test "get envvars openapi definition without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/envvars/openapi.json' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
+@test "get envvars metrics without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/envvars/v1/metrics'"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
+@test "get envvars health without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/envvars/v1/healthz' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
 @test "get envvars list for current tool works" {
     toolforge_url=$(get_toolforge_url)
     run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME/envvar"
     assert_line --partial "200 OK"
 }
 
-@test "get envvars list for other tool fails with unauthorized" {
+@test "get envvars list for other tool fails with forbidden" {
     toolforge_url=$(get_toolforge_url)
     run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME.notthistool/envvar"
     assert_line --partial "403 Forbidden"
 }
 
-@test "get jobs list for current tool works" {
+@test "get jobs openapi definition without auth works" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/jobs/api/v1/tool/$TOOL_NAME/jobs/"
+    run bash -c "curl --verbose --insecure '$toolforge_url/jobs/openapi.json' | jq"
+    assert_success
     assert_line --partial "200 OK"
 }
 
-@test "get jobs list for other tool fails with unauthorized" {
+
+@test "get jobs metrics without auth works" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/jobs/api/v1/tool/$TOOL_NAME.notthistool/jobs/"
+    run bash -c "curl --verbose --insecure '$toolforge_url/jobs/v1/metrics'"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
+@test "get jobs health without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/jobs/v1/healthz' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+@test "get jobs list for current tool works" {
+    toolforge_url=$(get_toolforge_url)
+    run do_curl "$toolforge_url/jobs/v1/tool/$TOOL_NAME/jobs/"
+    assert_line --partial "200 OK"
+}
+
+@test "get jobs list for other tool fails with forbidden" {
+    toolforge_url=$(get_toolforge_url)
+    run do_curl "$toolforge_url/jobs/v1/tool/$TOOL_NAME.notthistool/jobs/"
     assert_line --partial "403 Forbidden"
+}
+
+
+@test "get builds openapi definition without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/builds/openapi.json' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
+@test "get builds metrics without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/builds/v1/metrics'"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
+@test "get builds health without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/builds/v1/healthz' | jq"
+    assert_success
+    assert_line --partial "200 OK"
 }
 
 @test "get builds list for current tool works" {
@@ -63,7 +135,7 @@ get_toolforge_url() {
     assert_line --partial "200 OK"
 }
 
-@test "get builds list for other tool fails with unauthorized" {
+@test "get builds list for other tool fails with forbidden" {
     toolforge_url=$(get_toolforge_url)
     run do_curl "$toolforge_url/builds/v1/tool/$TOOL_NAME.notthistool/build"
     assert_line --partial "403 Forbidden"
