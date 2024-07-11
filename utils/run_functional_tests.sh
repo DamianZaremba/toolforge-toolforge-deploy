@@ -177,6 +177,8 @@ main() {
             exit 1
         fi
         test_tool_uid="$current_project.${DEFAULT_TEST_TOOLS_PER_ENV[$current_project]}"
+    else
+        test_tool_uid="$current_project.$test_tool_name"
     fi
 
     if ! id -u "$test_tool_uid" &>/dev/null; then
