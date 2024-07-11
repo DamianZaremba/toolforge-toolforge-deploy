@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-# bats file_tags=pod-policy,smoke
+# bats file_tags=policy,smoke
 
 set -o nounset
 
