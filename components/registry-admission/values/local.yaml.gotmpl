@@ -6,6 +6,7 @@ allowedRegistries:
   - "docker-registry.tools.wmflabs.org"
   - "toolsbeta-harbor.wmcloud.org"
   - "tools-harbor.wmcloud.org"
+  - {{ exec "../../helpers/get_harbor_ip.sh" (list) }}
 
 excludedNamespaces:
   - "kube-system"
