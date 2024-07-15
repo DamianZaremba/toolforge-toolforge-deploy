@@ -1,5 +1,5 @@
 _global_setup() {
-    export BATS_SKIP_FILE="$BATS_TMPDIR/bats.skip"
+    export BATS_SKIP_FILE="$BATS_TMPDIR/$USER.bats.skip"
     # this allows not running any tests after the first failure
     [[ ! -f "$BATS_SKIP_FILE" ]] || skip "skip remaining tests ($BATS_SKIP_FILE exists)"
 
