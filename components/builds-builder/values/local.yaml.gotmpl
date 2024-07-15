@@ -8,6 +8,9 @@ repository:
   # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
   url: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}
 
+imagesSource:
+  runImage: "toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb"
+
 dockerconfig: '{"insecure-registries": ["http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}"]}'
 
 kubeVersion: ">=1.21"

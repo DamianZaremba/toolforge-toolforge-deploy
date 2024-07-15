@@ -6,4 +6,7 @@ repository:
   password: {{ exec "../../helpers/get_secret.sh" (list "harborImageBuilderPassword") }}
   url: toolsbeta-harbor.wmcloud.org
 
+imagesSource:
+  runImage: "toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb"
+
 kubeVersion: ">=1.21"
