@@ -68,11 +68,11 @@ controller:
   # https://engineering.indeedblog.com/blog/2019/12/cpu-throttling-regression-fix/
   resources:
     limits:
-      cpu: 2
-      memory: 3G
+      cpu: 3
+      memory: 6G
     requests:
-      cpu: 1
-      memory: 2G
+      cpu: 2
+      memory: 5G
 
   service:
     enabled: true
