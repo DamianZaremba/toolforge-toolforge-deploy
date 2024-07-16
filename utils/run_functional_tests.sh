@@ -75,7 +75,20 @@ setup_venv() {
     if ! [[ -e "$HOME/venv/bin/activate" ]]; then
         if inside_toolforge_deployment; then
             # shellcheck disable=SC2016
-            webservice python3.11 shell -- bash -c 'python3 -m venv "$TOOL_DATA_DIR/venv"'
+            # double -- as the `toolforge` cli swallows it (T370184)
+            toolforge webservice python3.11 shell -- -- bash -c 'python3 -m venv "$TOOL_DATA_DIR/venv"'
+            local retries=10
+            while ! [[ -e "$HOME/venv/bin/activate" ]]; do
+                echo "Waiting for nfs to sync up..."
+                # Force NFS to re-check the home dir
+                ls "$HOME" &>/dev/null || :
+                sleep 1
+                retries=$((retries - 1))
+                if [[ "$retries" -le 0 ]]; then
+                    echo "ERROR: Unable to find the venv created with webservice" >&2
+                    return 1
+                fi
+            done
         else
             # TODO: use webservice for lima-kilo once it's supported there
             python3 -m venv "$HOME/venv"
@@ -191,7 +204,11 @@ main() {
             echo "Installed toolforge components versions:"
             toolforge_get_versions.sh | sed -e 's/^/    /'
         fi
-        sudo -i -u "$test_tool_uid" "$(realpath "$0")" "${passed_args[@]}"
+        local script_name="${0##*/}"
+        local user_home
+        user_home="$(sudo -i -u "$test_tool_uid"  echo '$HOME')"
+        sudo cp "$(realpath "$0")" "$user_home/$script_name"
+        sudo -i -u "$test_tool_uid" "$user_home/$script_name" "${passed_args[@]}"
         exit $?
     fi
 
