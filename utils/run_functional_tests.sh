@@ -134,6 +134,8 @@ setup_toolforge_deploy() {
         git reset --hard FETCH_HEAD
         cd -
     fi
+
+    echo "Running tests from branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
 }
 
 setup_environment() {
@@ -221,10 +223,8 @@ main() {
     fi
 
     if [[ "$USER" != "$test_tool_uid" ]]; then
-        if command -v toolforge_get_versions.sh &>/dev/null; then
-            echo "Installed toolforge components versions:"
-            toolforge_get_versions.sh | sed -e 's/^/    /'
-        fi
+        echo "Installed toolforge components versions:"
+        "${0%/*}"/toolforge_get_versions.sh | sed -e 's/^/    /'
         local script_name="${0##*/}"
         local user_home
         user_home="$(sudo -i -u "$test_tool_uid"  echo '$HOME')"
