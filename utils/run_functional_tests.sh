@@ -4,6 +4,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
+LOCKFILE="$HOME/functional_tests.lock"
 TOOLFORGE_DEPLOY_URL="https://gitlab.wikimedia.org/repos/cloud/toolforge/toolforge-deploy"
 declare -A DEFAULT_TEST_TOOLS_PER_ENV
 DEFAULT_TEST_TOOLS_PER_ENV["local"]="tf-test"
@@ -52,6 +53,26 @@ help() {
 EOH
 }
 
+remove_lock() {
+    rm -f "$LOCKFILE"
+}
+
+ensure_lock() {
+    local pid
+    if ! [[ -e "$LOCKFILE" ]]; then
+        echo "$$" > "$LOCKFILE"
+        return 0
+    fi
+
+    pid="$(cat "$LOCKFILE")"
+    if [[ "$(pgrep --pidfile "$LOCKFILE")" == "" ]]; then
+        echo "Found stale lockfile $LOCKFILE (pid $pid), removing and continuing..."
+        return 0
+    fi
+
+    echo "Found already running tests (lockfile $LOCKFILE, pid $pid), can't run in parallel, aborting"
+    return 1
+}
 
 inside_toolforge_deployment() {
     if [[ -e /etc/wmcs-project ]]; then
@@ -211,6 +232,9 @@ main() {
         sudo -i -u "$test_tool_uid" "$user_home/$script_name" "${passed_args[@]}"
         exit $?
     fi
+
+    ensure_lock
+    trap remove_lock EXIT
 
     setup_environment "$refetch"
 
