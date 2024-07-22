@@ -223,6 +223,7 @@ main() {
     fi
 
     if [[ "$USER" != "$test_tool_uid" ]]; then
+        setup_toolforge_deploy "$refetch"
         echo "Installed toolforge components versions:"
         "${0%/*}"/toolforge_get_versions.sh | sed -e 's/^/    /'
         local script_name="${0##*/}"
