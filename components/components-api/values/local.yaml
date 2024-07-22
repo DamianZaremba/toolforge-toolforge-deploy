@@ -1,0 +1,7 @@
+chartVersion: 0.0.1
+chartRepository: toolsbeta
+replicas: 1
+config:
+  debug: true
+certificates:
+  internalClusterDomain: cluster.local
