@@ -109,6 +109,8 @@ show_chart_version() {
     local chart="${1?}"
     local cur_version
     local td_version
+    # warm up the cache
+    get_all_charts >/dev/null
     cur_version=$(get_all_charts | grep "^$chart " | awk '{print $9}')
     td_version=$(get_toolforge_deploy_version "$chart")
     if [[ "$chart" == "wmcs-metrics" ]]; then
@@ -138,4 +140,4 @@ main() {
 }
 
 
-main "$@" | sort
+main "$@"
