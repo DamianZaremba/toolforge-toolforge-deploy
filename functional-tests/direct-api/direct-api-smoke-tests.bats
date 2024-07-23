@@ -60,13 +60,13 @@ get_toolforge_url() {
 
 @test "get envvars list for current tool works" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME/envvar"
+    run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME/envvars"
     assert_line --partial "200 OK"
 }
 
 @test "get envvars list for other tool fails with forbidden" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME.notthistool/envvar"
+    run do_curl "$toolforge_url/envvars/v1/tool/$TOOL_NAME.notthistool/envvars"
     assert_line --partial "403 Forbidden"
 }
 
@@ -131,13 +131,13 @@ get_toolforge_url() {
 
 @test "get builds list for current tool works" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/builds/v1/tool/$TOOL_NAME/build"
+    run do_curl "$toolforge_url/builds/v1/tool/$TOOL_NAME/builds"
     assert_line --partial "200 OK"
 }
 
 @test "get builds list for other tool fails with forbidden" {
     toolforge_url=$(get_toolforge_url)
-    run do_curl "$toolforge_url/builds/v1/tool/$TOOL_NAME.notthistool/build"
+    run do_curl "$toolforge_url/builds/v1/tool/$TOOL_NAME.notthistool/builds"
     assert_line --partial "403 Forbidden"
 }
 
