@@ -4,3 +4,5 @@ chartRepository: toolsbeta
 
 replicas: 1
 debug: true
+domains:
+  - local
