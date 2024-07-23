@@ -59,18 +59,17 @@ setup_file() {
 
 
 @test "can be reached by external url" {
+    tool="${USER#*.}"
+
     case $PROJECT in
+        local)
+            external_url="http://$tool.local:30002"
+            ;;
         toolsbeta)
-            tool="${USER#*.}"
             external_url="https://$tool.beta.toolforge.org"
             ;;
         tools)
-            tool="${USER#*.}"
             external_url="https://$tool.toolforge.org"
-            ;;
-        *)
-            echo "Skipping as we external urls are not yet supported in dev/lima-kilo"
-            skip
             ;;
     esac
 
