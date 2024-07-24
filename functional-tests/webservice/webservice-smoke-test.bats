@@ -62,7 +62,7 @@ setup_file() {
     tool="${USER#*.}"
 
     case $PROJECT in
-        local)
+        lima-kilo)
             external_url="http://$tool.local:30002"
             ;;
         toolsbeta)
