@@ -28,10 +28,10 @@ backends:
 
 app:
   log_level: info
-  builds_api_url: "https://builds-api.builds-api.svc.tools.local:8443"
-  jobs_api_url: "https://jobs-api.jobs-api.svc.tools.local:8443"
-  envvars_api_url: "https://envvars-api.envvars-api.svc.tools.local:8443"
-  components_api_url: "https://components-api.components-api.svc.tools.local:8443"
+  api_maps:
+    builds: "https://builds-api.builds-api.svc.tools.local:8443"
+    jobs: "https://jobs-api.jobs-api.svc.tools.local:8443"
+    envvars: "https://envvars-api.envvars-api.svc.tools.local:8443"
 
 nginx:
   replicas: 2
