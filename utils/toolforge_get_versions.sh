@@ -12,30 +12,30 @@ TOOLFORGE_DEPLOY_REPO=~/toolforge-deploy
 TOOLFORGE_PACKAGE_REGISTRY_DIR=~/.lima-kilo/installed_packages
 
 
-APT_PACKAGES=(
-    "python3-toolforge-weld"
-    "toolforge-builds-cli"
-    "toolforge-cli"
-    "toolforge-envvars-cli"
-    "toolforge-jobs-framework-cli"
-    "toolforge-webservice"
+declare -A NAME_TO_APT_PACKAGE=(
+    ["toolforge-weld"]="python3-toolforge-weld"
+    ["builds-cli"]="toolforge-builds-cli"
+    ["toolforge-cli"]="toolforge-cli"
+    ["envvars-cli"]="toolforge-envvars-cli"
+    ["jobs-cli"]="toolforge-jobs-framework-cli"
+    ["tools-webservice"]="toolforge-webservice"
 )
 
 
-HELM_CHARTS=(
-    "api-gateway"
-    "builds-api"
-    "builds-builder"
-    "cert-manager"
-    "envvars-admission"
-    "envvars-api"
-    "image-config"
-    "jobs-api"
-    "kyverno"
-    "maintain-kubeusers"
-    "registry-admission"
-    "volume-admission"
-    "wmcs-metrics"
+declare -A NAME_TO_HELM_CHART=(
+    ["api-gateway"]="api-gateway"
+    ["builds-api"]="builds-api"
+    ["builds-builder"]="builds-builder"
+    ["cert-manager"]="cert-manager"
+    ["envvars-admission"]="envvars-admission"
+    ["envvars-api"]="envvars-api"
+    ["image-config"]="image-config"
+    ["jobs-api"]="jobs-api"
+    ["kyverno"]="kyverno"
+    ["maintain-kubeusers"]="maintain-kubeusers"
+    ["registry-admission"]="registry-admission"
+    ["volume-admission"]="volume-admission"
+    ["wmcs-k8s-metrics"]="wmcs-metrics"
 )
 
 ALL_CHARTS_CACHE=""
@@ -81,7 +81,8 @@ get_toolforge_deploy_version() {
 
 
 show_package_version() {
-    local package="${1?}"
+    local component="${1?}"
+    local package="${NAME_TO_APT_PACKAGE[$component]}"
     local cur_version \
         last_apt_history_entry \
         installed_mr \
@@ -101,12 +102,13 @@ show_package_version() {
         )
         cur_version="$YELLOW$cur_version (mr:$installed_mr)$ENDCOLOR"
     fi
-    echo -e "$package (package): $cur_version"
+    echo -e "$component (package:$package): $cur_version"
 }
 
 
 show_chart_version() {
-    local chart="${1?}"
+    local component="${1?}"
+    local chart="${NAME_TO_HELM_CHART[$component]}"
     local cur_version
     local td_version
     # warm up the cache
@@ -123,21 +125,22 @@ show_chart_version() {
     elif [[ "$cur_version" != "$td_version" ]]; then
         cur_version="$RED$cur_version$ENDCOLOR $YELLOW(toolforge-deploy has $td_version)$ENDCOLOR"
     fi
-    echo -e "$name (chart $chart): $cur_version"
+    echo -e "$name (chart:$chart): $cur_version"
 }
 
 main() {
-    local package \
-        chart
+    local component
 
-    for package in "${APT_PACKAGES[@]}"; do
-        show_package_version "$package"
+    # shellcheck disable=SC1078
+    for component in "${!NAME_TO_APT_PACKAGE[@]}"; do
+        show_package_version "$component"
     done
 
-    for chart in "${HELM_CHARTS[@]}"; do
-        show_chart_version "$chart"
+    # shellcheck disable=SC1078
+    for component in "${!NAME_TO_HELM_CHART[@]}"; do
+        show_chart_version "$component"
     done
 }
 
 
-main "$@"
+main "$@" | sort
