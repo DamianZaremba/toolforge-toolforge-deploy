@@ -9,3 +9,7 @@ certificates:
 
 app:
   log_level: debug
+  api_maps:
+    builds: "https://builds-api.builds-api.svc.cluster.local:8443"
+    jobs: "https://jobs-api.jobs-api.svc.cluster.local:8443"
+    envvars: "https://envvars-api.envvars-api.svc.cluster.local:8443"
