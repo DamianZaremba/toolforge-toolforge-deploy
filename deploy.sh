@@ -5,7 +5,10 @@ set -o pipefail
 set -o nounset
 shopt -s extglob
 
-cd components
+BASE_DIR=$(dirname "$(realpath -s "$0")")
+
+
+cd "$BASE_DIR/components"
 COMPONENTS=(!(helpers))
 cd -
 
@@ -40,8 +43,7 @@ EOH
 }
 
 main() {
-    local base_dir \
-        deploy_environment \
+    local deploy_environment \
         component \
         project \
         interactive_param
@@ -51,19 +53,17 @@ main() {
         return 0
     fi
 
-    # explicitly find and specify path to helmfile to allow invoking
-    # this script without having to cd to the deployment directory
-    base_dir=$(dirname "$(realpath -s "$0")")
-
     component="${1:?No component passed, choose one of: ${COMPONENTS[@]}}"
     shift
-    if ! [[ -d components/$component ]]; then
+    if ! [[ -d $BASE_DIR/components/$component ]]; then
         echo "The component '$component' was not found, choose one of: ${COMPONENTS[*]}"
         help
         return 1
     fi
 
-    cd "$base_dir/components/$component"
+    # explicitly find and specify path to helmfile to allow invoking
+    # this script without having to cd to the deployment directory
+    cd "$BASE_DIR/components/$component"
 
     project=$(cat /etc/wmcs-project 2>/dev/null || echo "local")
     # If we got any flags, no env was passed, ex. --wait
