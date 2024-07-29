@@ -225,7 +225,7 @@ main() {
     if [[ "$USER" != "$test_tool_uid" ]]; then
         setup_toolforge_deploy "$refetch"
         echo "Installed toolforge components versions:"
-        "${0%/*}"/toolforge_get_versions.sh | sed -e 's/^/    /'
+        "${0%/*}"/toolforge_get_versions.sh
         local script_name="${0##*/}"
         local user_home
         user_home="$(sudo -i -u "$test_tool_uid"  echo '$HOME')"
