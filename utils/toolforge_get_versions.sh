@@ -89,6 +89,7 @@ show_package_version() {
         registry_file
 
     cur_version=$(apt policy "$package" 2>/dev/null| grep '\*\*\*' | awk '{print $2}')
+    comment=""
     last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
     if [[ "$package" == "toolforge-jobs-framework-cli" ]]; then
@@ -100,9 +101,10 @@ show_package_version() {
             jq '.mr_number' 2>/dev/null < "$registry_file" \
             || echo "$registry_file" \
         )
-        cur_version="$YELLOW$cur_version (mr:$installed_mr)$ENDCOLOR"
+        cur_version="$YELLOW$cur_version$ENDCOLOR"
+        comment="${YELLOW}mr:$installed_mr$ENDCOLOR"
     fi
-    echo -e "$component (package:$package): $cur_version"
+    echo -e "| $component | package | $package | $cur_version | $comment |"
 }
 
 
@@ -113,7 +115,8 @@ show_chart_version() {
     local td_version
     # warm up the cache
     get_all_charts >/dev/null
-    cur_version=$(get_all_charts | grep "^$chart " | awk '{print $9}')
+    cur_version="$(get_all_charts | grep "^$chart " | awk '{print $9}')"
+    comment=""
     td_version=$(get_toolforge_deploy_version "$chart")
     if [[ "$chart" == "wmcs-metrics" ]]; then
         name="wmcs-k8s-metrics"
@@ -121,11 +124,13 @@ show_chart_version() {
         name="$chart"
     fi
     if [[ "$cur_version" =~ ^.*-dev-mr-(.*)$ ]]; then
-        cur_version="$YELLOW$cur_version (mr:${BASH_REMATCH[1]})$ENDCOLOR"
+        cur_version="$YELLOW$cur_version$ENDCOLOR"
+        comment="${YELLOW}mr:${BASH_REMATCH[1]}$ENDCOLOR"
     elif [[ "$cur_version" != "$td_version" ]]; then
-        cur_version="$RED$cur_version$ENDCOLOR $YELLOW(toolforge-deploy has $td_version)$ENDCOLOR"
+        cur_version="$RED$cur_version$ENDCOLOR"
+        comment="${YELLOW}toolforge-deploy has $td_version$ENDCOLOR"
     fi
-    echo -e "$name (chart:$chart): $cur_version"
+    echo -e "| $name | chart | $chart | $cur_version | $comment |"
 }
 
 main() {
@@ -143,4 +148,6 @@ main() {
 }
 
 
+echo '| component | type | package name | version | comment |'
+echo '| :-------: | :--: | :----------: | :-----: | :-----: |'
 main "$@" | sort
