@@ -102,7 +102,7 @@ show_package_version() {
             || echo "$registry_file" \
         )
         cur_version="$YELLOW$cur_version$ENDCOLOR"
-        comment="${YELLOW}mr:$installed_mr$ENDCOLOR"
+        comment="${YELLOW}mr:$component!$installed_mr$ENDCOLOR"
     fi
     echo -e "| $component | package | $package | $cur_version | $comment |"
 }
@@ -125,7 +125,7 @@ show_chart_version() {
     fi
     if [[ "$cur_version" =~ ^.*-dev-mr-(.*)$ ]]; then
         cur_version="$YELLOW$cur_version$ENDCOLOR"
-        comment="${YELLOW}mr:${BASH_REMATCH[1]}$ENDCOLOR"
+        comment="${YELLOW}mr:$component!${BASH_REMATCH[1]}$ENDCOLOR"
     elif [[ "$cur_version" != "$td_version" ]]; then
         cur_version="$RED$cur_version$ENDCOLOR"
         comment="${YELLOW}toolforge-deploy has $td_version$ENDCOLOR"
