@@ -27,6 +27,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["builds-api"]="builds-api"
     ["builds-builder"]="builds-builder"
     ["cert-manager"]="cert-manager"
+    ["components-api"]="components-api"
     ["envvars-admission"]="envvars-admission"
     ["envvars-api"]="envvars-api"
     ["image-config"]="image-config"
