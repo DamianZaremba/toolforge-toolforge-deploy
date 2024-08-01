@@ -141,6 +141,19 @@ get_toolforge_url() {
     assert_line --partial "403 Forbidden"
 }
 
+@test "get components openapi definition without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/components/openapi.json' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+@test "get components health without auth works" {
+    toolforge_url=$(get_toolforge_url)
+    run bash -c "curl --verbose --insecure '$toolforge_url/components/v1/healthz' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
 
 teardown() {
     _global_teardown
