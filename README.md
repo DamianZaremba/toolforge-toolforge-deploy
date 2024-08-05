@@ -79,7 +79,7 @@ this repository and deploy the component on the right cluster. The cookbook is
 
 ```bash
 user@laptop:~$ cookbook wmcs.toolforge.k8s.component.deploy -h
-usage: cookbooks.wmcs.toolforge.k8s.component.deploy [-h] --cluster-name {tools,toolsbeta} [--task-id TASK_ID] [--no-dologmsg] (--component COMPONENT | --git-url GIT_URL) [--git-name GIT_NAME] [--git-branch GIT_BRANCH] [--deployment-command DEPLOYMENT_COMMAND]
+usage: cookbook [GLOBAL_ARGS] wmcs.toolforge.k8s.component.deploy [-h] --cluster-name {tools,toolsbeta} [--task-id TASK_ID] [--no-dologmsg] --component COMPONENT [--git-branch GIT_BRANCH]
 
 WMCS Toolforge Kubernetes - deploy a kubernetes custom component
 
@@ -88,7 +88,12 @@ Usage example:
         --cluster-name toolsbeta \
         --component jobs-api
 
-options:
+    cookbook wmcs.toolforge.k8s.component.deploy \
+        --cluster-name toolsbeta \
+        --component builds-cli \
+        --git-branch bump_to_0.0.18
+
+optional arguments:
   -h, --help            show this help message and exit
   --cluster-name {tools,toolsbeta}
                         cluster to work on (default: None)
@@ -96,12 +101,9 @@ options:
   --no-dologmsg         To disable dologmsg calls (no SAL messages on IRC). (default: False)
   --component COMPONENT
                         component to deploy from the toolforge-deploy repo (default: None)
-  --git-url GIT_URL     git URL for the source code (default: None)
-  --git-name GIT_NAME   git repository name. If not provided, it will be guessed based on the git URL (default: None)
   --git-branch GIT_BRANCH
                         git branch in the source repository (default: main)
-  --deployment-command DEPLOYMENT_COMMAND
-                        command to trigger the deployment. (default: ./deploy.sh)
+
 ```
 
 ## Secrets
