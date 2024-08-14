@@ -93,10 +93,6 @@ show_package_version() {
     comment=""
     last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
-    if [[ "$package" == "toolforge-jobs-framework-cli" ]]; then
-        # TODO: get jobs to use the same naming as all the other packages
-        registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/toolforge-jobs-cli"
-    fi
     if [[ "$last_apt_history_entry" == *_all.deb ]]; then
         installed_mr=$( \
             jq '.mr_number' 2>/dev/null < "$registry_file" \
