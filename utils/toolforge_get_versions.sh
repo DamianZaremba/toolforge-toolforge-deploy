@@ -37,6 +37,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["registry-admission"]="registry-admission"
     ["volume-admission"]="volume-admission"
     ["wmcs-k8s-metrics"]="wmcs-metrics"
+    ["calico"]="calico"
 )
 
 ALL_CHARTS_CACHE=""
