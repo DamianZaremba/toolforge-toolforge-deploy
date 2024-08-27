@@ -1,4 +1,4 @@
-chartVersion: 0.0.7-20240411190528-63954490
+chartVersion: 0.0.9-20240827072036-84ea5a22
 chartRepository: tools
 # When changing the chart version, make sure to update kubeVersion
 # See
