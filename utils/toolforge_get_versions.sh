@@ -26,18 +26,20 @@ declare -A NAME_TO_HELM_CHART=(
     ["api-gateway"]="api-gateway"
     ["builds-api"]="builds-api"
     ["builds-builder"]="builds-builder"
+	["calico"]="calico"
     ["cert-manager"]="cert-manager"
     ["components-api"]="components-api"
     ["envvars-admission"]="envvars-admission"
     ["envvars-api"]="envvars-api"
     ["image-config"]="image-config"
+    ["ingress-admission"]="ingress-admission"
+    ["ingress-nginx"]="ingress-nginx-gen2"
     ["jobs-api"]="jobs-api"
     ["kyverno"]="kyverno"
     ["maintain-kubeusers"]="maintain-kubeusers"
     ["registry-admission"]="registry-admission"
     ["volume-admission"]="volume-admission"
     ["wmcs-k8s-metrics"]="wmcs-metrics"
-    ["calico"]="calico"
 )
 
 ALL_CHARTS_CACHE=""
@@ -71,9 +73,11 @@ get_toolforge_deploy_version() {
         # it stores the version in the helmfile
         echo "$component-$(grep version "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/helmfile.yaml | awk '{print $2}' | tail -n 1)"
         return 0
-    elif [[ "$component" == "wmcs-metrics" ]]; then
+    elif [[ "$component" =~ (wmcs-metrics|ingress-nginx-gen2) ]]; then
         # naming does not match the component name
-        echo "wmcs-k8s-metrics-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/wmcs-k8s-metrics/values/local.yaml | awk '{print $2}' | tail -n 1)"
+        local dir_name
+        dir_name=$([ "$component" == "wmcs-metrics" ] && echo "wmcs-k8s-metrics" || echo "ingress-nginx")
+        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/local.yaml | awk '{print $2}' | tail -n 1)"
         return 0
     fi
 
