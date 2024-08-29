@@ -4,3 +4,11 @@ chartRepository: toolsbeta
 replicas: 1
 config:
   debug: true
+
+resources:
+  limits:
+    memory: ~
+    cpu: ~
+  requests:
+    memory: ~
+    cpu: ~

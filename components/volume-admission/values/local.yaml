@@ -3,3 +3,5 @@ chartVersion: 0.0.53-20240821005523-419b3162
 chartRepository: toolsbeta
 replicas: 1
 debug: true
+
+resources: ~

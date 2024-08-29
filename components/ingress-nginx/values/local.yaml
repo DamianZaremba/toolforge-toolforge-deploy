@@ -6,10 +6,7 @@ controller:
   config:
     custom-http-errors: ""
   # lima-kilo vm is not that big
-  resources:
-    requests:
-      cpu: 1
-      memory: 1G
+  resources: ~
 # When changing the chart version, make sure to update kubeVersion
 # See:
 #    https://github.com/kubernetes/ingress-nginx/tree/main#supported-versions-table

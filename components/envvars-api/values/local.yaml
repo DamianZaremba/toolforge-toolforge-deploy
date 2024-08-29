@@ -6,3 +6,11 @@ config:
   debug: true
 certificates:
   internalClusterDomain: cluster.local
+
+resources:
+  limits:
+    memory: ~
+    cpu: ~
+  requests:
+    memory: ~
+    cpu: ~

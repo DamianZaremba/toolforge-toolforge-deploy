@@ -3,42 +3,20 @@
 kubeVersion: ">= 1.24 <= 1.26"
 
 admissionController:
-  replicas: 5
+  replicas: 1
   container:
-    resources:
-      limits:
-        cpu: 1
-        memory: 2Gi
-      requests:
-        cpu: 500m
-        memory: 1Gi
+    resources: ~
+  initContainer:
+    resources: ~
 
 backgroundController:
   replicas: 1
-  resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 500m
-      memory: 1Gi
+  resources: ~
 
 cleanupController:
   replicas: 1
-  resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 500m
-      memory: 1Gi
+  resources: ~
 
 reportsController:
   replicas: 1
-  resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
-    requests:
-      cpu: 500m
-      memory: 1Gi
+  resources: ~

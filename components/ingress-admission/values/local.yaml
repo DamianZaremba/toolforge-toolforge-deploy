@@ -6,3 +6,11 @@ replicas: 1
 debug: true
 domains:
   - local
+
+resources:
+  limits:
+    memory: ~
+    cpu: ~
+  requests:
+    memory: ~
+    cpu: ~
