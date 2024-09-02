@@ -3,11 +3,3 @@ chartRepository: tools
 allowedRegistries:
   - "docker-registry.tools.wmflabs.org"
   - "tools-harbor.wmcloud.org"
-
-resources:
-  limits:
-    memory: ~
-    cpu: ~
-  requests:
-    memory: ~
-    cpu: ~
