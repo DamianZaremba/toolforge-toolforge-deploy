@@ -9,9 +9,9 @@ releases:
     createNamespace: true
     chart: kyverno/kyverno
     # see version matrix at https://kyverno.io/docs/installation/#compatibility-matrix
-    # and then run `helm search repo kyverno -l`
-    # the 3.0.9 chart deploys kyverno v1.10.7
-    version: 3.0.9
+    # you can see the chart that matches a version by changing to the corresponding tag:
+    #    https://github.com/kyverno/kyverno/blob/release-1.12/charts/kyverno/Chart.yaml
+    version: 3.2.6
     values:
       - values/common/settings.yaml
       # this allows us to override the common one

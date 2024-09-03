@@ -71,11 +71,9 @@ reportsController:
     repository: "toolforge-kyverno-reports-controller"
 
 webhooksCleanup:
-  # see https://github.com/kyverno/kyverno/blob/v1.10.7/charts/kyverno/templates/hooks/pre-delete.yaml#L25
-  # this has changed to the format in the other entries in kyverno 1.12.4 which is in the chart 3.2.0
-  # see upstream change:
-  # https://github.com/kyverno/kyverno/commit/2f4b8230304ff3de2001735791eb44ee1e69bedd#diff-23551c97ee8f78827383cc3372373f52b849d268ce2d29b02a9a97858cb915db
-  image: "docker-registry.tools.wmflabs.org/bitnami-kubectl"
+  image:
+    registry: "docker-registry.tools.wmflabs.org"
+    repository: "bitnami-kubectl"
 
 policyReportsCleanup:
   image:
@@ -103,3 +101,9 @@ cleanupJobs:
     image:
       registry: "docker-registry.tools.wmflabs.org"
       repository: "bitnami-kubectl"
+
+crds:
+  migration:
+    image:
+      registry: "docker-registry.tools.wmflabs.org"
+      repository: "toolforge-kyverno-kyverno-cli"
