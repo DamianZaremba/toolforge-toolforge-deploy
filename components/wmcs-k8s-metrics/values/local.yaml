@@ -11,7 +11,9 @@ chartRepository: toolsbeta
 # this v5.11.1 chart should pull v2.9.2, which is usually cached in our registry
 # see also: components/wmcs-k8s-metrics/values/common/kube-state-metrics.yaml
 kubeStateMetricsChartVersion: v5.11.1
+# see with `helm search repo --versions wmf-stable/raw``, with wmf-stable repo installed (ex. lima-kilo)
 metricsServerApiCertsChartVersion: v0.3.0
+# chart version fromhttps://artifacthub.io/packages/helm/metrics-server/metrics-server
 metricsServerChartVersion: v3.8.3
 # When changing the chart version, make sure to update kubeVersion
 # See

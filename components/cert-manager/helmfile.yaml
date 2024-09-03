@@ -17,6 +17,7 @@ releases:
     namespace: cert-manager
     createNamespace: true
     chart: jetstack/cert-manager
+    # see https://artifacthub.io/packages/helm/cert-manager/cert-manager for chart versions
     version: v1.11.0
     values:
       - chart-values/cert-manager.yaml
