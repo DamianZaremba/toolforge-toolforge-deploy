@@ -6,3 +6,5 @@ chartRepository: toolsbeta
 #   https://docs.tigera.io/archive/v3.24/getting-started/kubernetes/requirements
 #   and https://gitlab.wikimedia.org/repos/cloud/toolforge/calico/-/blob/main/deployment/chart/values.yaml#L6
 kubeVersion: ">=1.22 <=1.25"
+
+typha_replicas: 1
