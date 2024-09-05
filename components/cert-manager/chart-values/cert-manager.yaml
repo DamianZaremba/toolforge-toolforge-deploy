@@ -10,4 +10,4 @@ cainjector:
     repository: docker-registry.tools.wmflabs.org/cert-manager/cainjector
 startupapicheck:
   image:
-    repository: docker-registry.tools.wmflabs.org/cert-manager/ctr
+    repository: docker-registry.tools.wmflabs.org/cert-manager/startupapicheck
