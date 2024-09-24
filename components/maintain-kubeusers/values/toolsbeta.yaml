@@ -1,4 +1,4 @@
-chartVersion: 0.0.168-20240910133124-0c3e395c
+chartVersion: 0.0.169-20240924215037-64da2c2e
 chartRepository: toolsbeta
 image:
   args: ["/app/maintain_kubeusers_cli.py", "--project=toolsbeta", "--debug", "--interval=60"]
