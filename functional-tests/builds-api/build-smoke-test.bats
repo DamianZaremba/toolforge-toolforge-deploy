@@ -45,7 +45,7 @@ setup_file() {
 
 @test "delete build" {
     local build_id
-    build_id="$(toolforge build list --json | jq -r '.build_id')"
+    build_id="$(toolforge build list --json | jq -r '.builds[0].build_id')"
     toolforge build delete --yes-i-know "$build_id"
 
     run toolforge build list
