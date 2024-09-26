@@ -1,5 +1,5 @@
 # this is for local development
-chartVersion: 0.0.50-20240904123720-27c26acf
+chartVersion: 0.0.51-20240926154329-19cfe59e
 chartRepository: toolsbeta
 
 replicas: 1
