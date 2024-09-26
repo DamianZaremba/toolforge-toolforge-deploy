@@ -75,20 +75,22 @@ Otherwise, you can push the branch and manually create the merge request.
 
 We use a cookbook to deploy the components on this repository, that will clone
 this repository and deploy the component on the right cluster. The cookbook is
-[`wmcs.toolforge.k8s.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
+[`wmcs.toolforge.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
 
 ```bash
-user@laptop:~$ cookbook wmcs.toolforge.k8s.component.deploy -h
-usage: cookbook [GLOBAL_ARGS] wmcs.toolforge.k8s.component.deploy [-h] --cluster-name {tools,toolsbeta} [--task-id TASK_ID] [--no-dologmsg] --component COMPONENT [--git-branch GIT_BRANCH]
+user@laptop:~$ cookbook wmcs.toolforge.component.deploy -h
 
-WMCS Toolforge Kubernetes - deploy a kubernetes custom component
+root@cloudcumin1001:~# cookbook wmcs.toolforge.component.deploy --help
+usage: cookbook [GLOBAL_ARGS] wmcs.toolforge.component.deploy [-h] --cluster-name {tools,toolsbeta} [--task-id TASK_ID] [--no-dologmsg] --component COMPONENT [--git-branch GIT_BRANCH] [--skip-tests] [--no-wait] [--filter-tags FILTER_TAGS]
+
+WMCS Toolforge - deploy a custom component
 
 Usage example:
-    cookbook wmcs.toolforge.k8s.component.deploy \
+    cookbook wmcs.toolforge.component.deploy \
         --cluster-name toolsbeta \
         --component jobs-api
 
-    cookbook wmcs.toolforge.k8s.component.deploy \
+    cookbook wmcs.toolforge.component.deploy \
         --cluster-name toolsbeta \
         --component builds-cli \
         --git-branch bump_to_0.0.18
@@ -102,7 +104,11 @@ optional arguments:
   --component COMPONENT
                         component to deploy from the toolforge-deploy repo (default: None)
   --git-branch GIT_BRANCH
-                        git branch in the source repository (default: main)
+                        git branch in the source repository, will use 'bump_{component}' by default (force it to be 'main' if you want to deploy main) (default: None)
+  --skip-tests          If passed, will skip running the tests. (default: False)
+  --no-wait             (k8s components only) If passed, it will not wait for the helm deployment to finish up. (default: False)
+  --filter-tags FILTER_TAGS
+                        filter tests with the given tags (default: [])
 
 ```
 
