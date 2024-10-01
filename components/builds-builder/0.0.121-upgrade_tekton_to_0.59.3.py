@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+Script to upgrade builds-builder and builds-api to the newer tekton 0.59.3.
+
+
+This has to be run from a k8s control node, *instead* of running the toolforge.component.deploy cookbook.
+
+It will:
+* patch existing tekton CRDs
+* download the newer ones and patch them too
+* upgrade builds-builder (this pulls the newer tekton)
+* upgrade builds-api (with support for the newer tekton)
+* unpatch the new CRDs to have the same conversion hooks they had from upstream
+
+"""
 from typing import Any
 import requests
 import subprocess
@@ -120,7 +134,7 @@ STAGES = {
 }
 
 
-@click.command()
+@click.command(help=__doc__)
 @click.option(
     "--stage",
     "stages",
