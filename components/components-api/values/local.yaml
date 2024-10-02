@@ -5,6 +5,8 @@ config:
   debug: true
 certificates:
   internalClusterDomain: cluster.local
+image:
+  pullPolicy: Always
 resources:
   limits:
     memory: ~
