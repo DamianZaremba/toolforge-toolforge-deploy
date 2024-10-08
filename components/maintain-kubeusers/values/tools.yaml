@@ -47,6 +47,11 @@ quotas:
     toc: # T353104
       version: T353104-2
       memory: 32
+    video-answer-tool: # T376505
+      version: T376505-1
+      cpu: 6
+      memory: 8
+      pod_memory: 8
     wd-shex-infer: # T357209
       version: T357209-3
       memory: 16
