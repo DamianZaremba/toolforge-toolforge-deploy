@@ -41,9 +41,10 @@ quotas:
     signature-checker: # T353104
       version: T353104-2
       memory: 32
-    sqid: # T375070
-      version: T375070-1
+    sqid: # T376338
+      version: T376338-1
       memory: 9
+      pod_memory: 7
     toc: # T353104
       version: T353104-2
       memory: 32
