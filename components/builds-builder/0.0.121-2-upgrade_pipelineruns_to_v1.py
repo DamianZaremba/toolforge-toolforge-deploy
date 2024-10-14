@@ -82,6 +82,31 @@ def get_pipeline(name: str, version: Literal["v1", "v1beta1"]) -> dict[str, Any]
     return yaml.safe_load(output)
 
 
+def k8s_patch(new_value: dict[str, Any], pipelinerun_name: str):
+    """
+    We don't have kubernetes python libs in the bastion/control nodes, so defaulting to cli.
+    """
+    tmp_file = pathlib.Path(tempfile.mktemp())
+    with tmp_file.open("w") as tmp_file_df:
+        yaml.safe_dump(new_value, tmp_file_df)
+
+    cmd: list[str] = [
+        "kubectl",
+        "patch",
+        "pipelineruns",
+        "--namespace=image-build",
+        "--type=merge",
+        f"--patch-file={tmp_file}",
+        pipelinerun_name,
+    ]
+    try:
+        subprocess.check_call(cmd)
+    except subprocess.CalledProcessError as error:
+        raise Exception(f"Error running {cmd}") from error
+
+    tmp_file.unlink()
+
+
 def k8s_patch_status_subresource(new_value: dict[str, Any], pipelinerun_name: str):
     """
     We don't have kubernetes python libs in the bastion/control nodes, so defaulting to cli.
@@ -154,9 +179,19 @@ def main() -> None:
                 }
             )
 
+        spec_status_patch: dict[str, Any] = {}
+        # Needed to patch cancelled runs
+        if v1_version["spec"].get("status", None) == "PipelineRunCancelled":
+            spec_status_patch["spec"]["status"] = "Cancelled"
+
         click.echo("    Uploading modified v1 pipelinerun...")
         if not yes_all:
             click.echo(f"-- {pipelinerun_name} ------------------------")
+            if spec_status_patch:
+                click.echo("Pipelinerun.spec.status:")
+                print(yaml.safe_dump(spec_status_patch))
+
+            click.echo("Pipelinerun.status:")
             print(yaml.safe_dump(patch))
             click.echo("--------------------------")
             answer = click.prompt(
@@ -170,6 +205,9 @@ def main() -> None:
                 return
             if answer == "all":
                 yes_all = True
+
+        if spec_status_patch:
+            k8s_patch(new_value=patch, pipelinerun_name=pipelinerun_name)
 
         k8s_patch_status_subresource(new_value=patch, pipelinerun_name=pipelinerun_name)
 
