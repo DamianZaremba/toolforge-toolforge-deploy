@@ -30,6 +30,14 @@ BASEDIR = CURDIR.parent.parent
 
 
 def get_pipelinerun_names() -> list[str]:
+    return get_all_names(resource="pipelineruns")
+
+
+def get_taskrun_names() -> list[str]:
+    return get_all_names(resource="taskruns")
+
+
+def get_all_names(resource: str) -> list[str]:
     """This will be the only request that takes >10s."""
     cmd: list[str] = [
         "kubectl",
@@ -38,7 +46,7 @@ def get_pipelinerun_names() -> list[str]:
         "name",
         "-n",
         "image-build",
-        "pipelineruns",
+        resource,
     ]
     try:
         raw_list = subprocess.check_output(cmd)
@@ -74,19 +82,24 @@ def get_pipeline(name: str, version: Literal["v1", "v1beta1"]) -> dict[str, Any]
     return yaml.safe_load(output)
 
 
-def k8s_apply(k8s_objects: list[dict[str, Any]]):
+def k8s_patch_status_subresource(new_value: dict[str, Any], pipelinerun_name: str):
     """
     We don't have kubernetes python libs in the bastion/control nodes, so defaulting to cli.
     """
-    if isinstance(k8s_objects, dict):
-        # in case we get passed a single object directly, we want a list of them
-        k8s_objects = [k8s_objects]
-
     tmp_file = pathlib.Path(tempfile.mktemp())
     with tmp_file.open("w") as tmp_file_df:
-        yaml.safe_dump_all(k8s_objects, tmp_file_df)
+        yaml.safe_dump(new_value, tmp_file_df)
 
-    cmd: list[str] = ["kubectl", "apply", "-f", str(tmp_file)]
+    cmd: list[str] = [
+        "kubectl",
+        "patch",
+        "pipelineruns",
+        "--namespace=image-build",
+        "--subresource=status",
+        "--type=merge",
+        f"--patch-file={tmp_file}",
+        pipelinerun_name,
+    ]
     try:
         subprocess.check_call(cmd)
     except subprocess.CalledProcessError as error:
@@ -101,8 +114,9 @@ def main() -> None:
     click.echo(
         "Running the pipelinerun upgrade script (only do so after upgrade!) for builds-builder to 0.121.0"
     )
-    pipelinerun_names = get_pipelinerun_names()
+    pipelinerun_names = get_all_names(resource="pipelineruns")
     click.echo(f"I'm going to migrate {len(pipelinerun_names)} pipelineruns")
+    all_taskrun_names = get_all_names(resource="taskruns")
     for pipelinerun_name in pipelinerun_names:
         click.echo(f"    Pipelinerun {pipelinerun_name}")
         v1_version = get_pipeline(name=pipelinerun_name, version="v1")
@@ -115,13 +129,23 @@ def main() -> None:
         v1_version["status"]["childReferences"] = []
         v1beta1_version = get_pipeline(name=pipelinerun_name, version="v1beta1")
         if "taskRuns" not in v1beta1_version["status"]:
-            click.echo(
-                "      Skipping, the v1beta1 version has no task runs, maybe it failed completely to launch?"
-            )
-            continue
+            # fall back to filtering from the known runs
+            taskrun_names = [
+                taskrun_name
+                for taskrun_name in all_taskrun_names
+                if taskrun_name.startswith(pipelinerun_name)
+            ]
+            if not taskrun_names:
+                click.echo(
+                    "      Skipping, the v1beta1 version has no task runs, maybe it failed completely to launch?"
+                )
+                continue
+        else:
+            taskrun_names = list(v1beta1_version["status"]["taskRuns"].keys())
 
-        for taskrun_name in v1beta1_version["status"]["taskRuns"].keys():
-            v1_version["status"]["childReferences"].append(
+        patch: dict[str, Any] = {"status": {"childReferences": []}}
+        for taskrun_name in taskrun_names:
+            patch["status"]["childReferences"].append(
                 {
                     "apiVersion": "tekton.dev/v1",
                     "kind": "TaskRun",
@@ -132,8 +156,8 @@ def main() -> None:
 
         click.echo("    Uploading modified v1 pipelinerun...")
         if not yes_all:
-            click.echo("--------------------------")
-            print(yaml.safe_dump(v1_version))
+            click.echo(f"-- {pipelinerun_name} ------------------------")
+            print(yaml.safe_dump(patch))
             click.echo("--------------------------")
             answer = click.prompt(
                 "Are you sure you want to continue?",
@@ -147,7 +171,7 @@ def main() -> None:
             if answer == "all":
                 yes_all = True
 
-            k8s_apply(k8s_objects=[v1_version])
+        k8s_patch_status_subresource(new_value=patch, pipelinerun_name=pipelinerun_name)
 
     click.echo(
         r"Done \o/, please run the functional tests from the bastion to make sure everything works as expected."
