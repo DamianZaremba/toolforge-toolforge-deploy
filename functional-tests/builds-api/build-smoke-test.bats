@@ -46,13 +46,15 @@ setup_file() {
 @test "run job with built image" {
     rand_string="test-$RANDOM"
     # need the mount=all for the results
+    user="${USER#*.}"
+    image="tool-$user/tool-$user:latest"
     toolforge \
         jobs \
         run \
         --wait 120 \
         --command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out" \
         --mount=all \
-        --image="tool-tf-test/tool-tf-test:latest" \
+        --image="$image" \
         "$rand_string"
 
     retry "grep '$rand_string' '$HOME/$rand_string.out'"
