@@ -43,6 +43,22 @@ setup_file() {
 }
 
 
+@test "run job with built image" {
+    rand_string="test-$RANDOM"
+    # need the mount=all for the results
+    toolforge \
+        jobs \
+        run \
+        --wait 120 \
+        --command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out" \
+        --mount=all \
+        --image="tool-tf-test/tool-tf-test:latest" \
+        "$rand_string"
+
+    retry "grep '$rand_string' '$HOME/$rand_string.out'"
+}
+
+
 @test "delete build" {
     local build_id
     build_id="$(toolforge build list --json | jq -r '.builds[0].build_id')"
