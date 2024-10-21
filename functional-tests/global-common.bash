@@ -7,6 +7,7 @@ _global_setup() {
         echo "This tests are meant to run inside a toolforge environment (/etc/wmcs-project not found)"
         exit 1
     fi
+
     PROJECT="$(cat /etc/wmcs-project)"
     CLUSTER_DOMAIN="$PROJECT.local"
     if [[ "$PROJECT" == "local" ]]; then

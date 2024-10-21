@@ -1,0 +1,10 @@
+chartVersion: 0.0.0
+chartRepository: toolsbeta
+environment: local
+
+maintainHarbor:
+  config:
+    harborURL: "http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}/api/v2.0"
+    harborUsername: maintain-harbor
+    harborPassword: Dummyuserpass0
+    toolforgeRepoArtifactLimit: 5

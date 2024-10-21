@@ -48,7 +48,7 @@ main() {
         project \
         interactive_param
 
-    if [[ "$1" =~ --?h(elp)? ]]; then
+    if [[  "$1" =~ ^-h$|^--help$ ]]; then
         help
         return 0
     fi

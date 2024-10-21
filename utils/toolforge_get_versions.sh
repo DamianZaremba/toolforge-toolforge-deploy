@@ -42,6 +42,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["registry-admission"]="registry-admission"
     ["volume-admission"]="volume-admission"
     ["wmcs-k8s-metrics"]="wmcs-metrics"
+    ["maintain-harbor"]="maintain-harbor"
 )
 
 ALL_CHARTS_CACHE=""

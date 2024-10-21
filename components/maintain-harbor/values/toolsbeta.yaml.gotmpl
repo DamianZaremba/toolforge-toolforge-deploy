@@ -1,0 +1,28 @@
+chartVersion: 0.0.0
+chartRepository: toolsbeta
+environment: toolsbeta
+
+maintainHarbor:
+  cronjobs:
+    - name: mh--delete-empty-tool-projects-cron
+      schedule: "23 8 * * *"
+      args:
+        - --debug
+        - delete-empty-tool-projects
+
+    - name: mh--delete-stale-toolforge-artifacts-cron
+      schedule: "0 8 * * 3"
+      args:
+        - --debug
+        - delete-stale-toolforge-artifacts
+
+    - name: mh--manage-image-retention-cron
+      schedule: "23 10 * * *"
+      args:
+        - --debug
+        - manage-image-retention
+
+  config:
+    harborURL: "https://toolsbeta-harbor.wmcloud.org/api/v2.0"
+    harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
+    harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
