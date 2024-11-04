@@ -1,4 +1,4 @@
-chartVersion: 0.0.20-20240628101504-9ed20c1f
+chartVersion: 0.0.21-20241104102245-a6f60a0d
 chartRepository: toolsbeta
 # Also update kubeVersion when updating the kube-state-metrics chart
 # for compatibility info see:
