@@ -1,5 +1,5 @@
 pre-commit:
-  image: "docker-registry.tools.wmflabs.org/cloud-cicd-py39bullseye-tox:latest"
+  image: "docker-registry.tools.wmflabs.org/cloud-cicd-py311bookworm-tox:latest"
   stage: test
   script:
     - pre-commit run -a
