@@ -28,10 +28,15 @@ backends:
 
 app:
   log_level: debug
+  superusers:
+    - service:components-api
   api_maps:
     builds: "https://builds-api.builds-api.svc.toolsbeta.local:8443"
     jobs: "https://jobs-api.jobs-api.svc.toolsbeta.local:8443"
     envvars: "https://envvars-api.envvars-api.svc.toolsbeta.local:8443"
+    components: "https://components-api.components-api.svc.toolsbeta.local:8443"
+  openapi_docs:
+    components: true
 
 nginx:
   replicas: 2

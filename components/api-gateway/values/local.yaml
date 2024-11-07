@@ -16,6 +16,8 @@ app:
     jobs: "https://jobs-api.jobs-api.svc.cluster.local:8443"
     envvars: "https://envvars-api.envvars-api.svc.cluster.local:8443"
     components: "https://components-api.components-api.svc.cluster.local:8443"
+  openapi_docs:
+    components: true
 
 resources:
   limits:
