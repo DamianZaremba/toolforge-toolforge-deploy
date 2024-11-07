@@ -1,4 +1,7 @@
-chartVersion: 0.0.42-20241015121530-8b9350de
+chartVersion: 0.0.21-20241107105745-795f4143
 chartRepository: toolsbeta
+config:
+  debug: true
+  toolforge_api_url: "https://api.svc.beta.tools.eqiad1.wikimedia.cloud"
 certificates:
   internalClusterDomain: toolsbeta.local
