@@ -6,13 +6,13 @@ chartRepository: tools
 #  and
 #  https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/Chart.yaml
 #
-# Current is <= 1.27, see
+# Current is <= 1.28, see
 #   https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/Chart.yaml
-# this v5.16.4 chart should pull v2.10.1, which is usually cached in our registry
+# this v5.18.0 chart should pull v2.11.0, which is usually cached in our registry
 # see also:
-#  https://explore.ggcr.dev/?image=registry.k8s.io%2Fkube-state-metrics%2Fkube-state-metrics:v2.10.1
+#  https://explore.ggcr.dev/?image=registry.k8s.io%2Fkube-state-metrics%2Fkube-state-metrics:v2.11.0
 #  components/wmcs-k8s-metrics/values/common/kube-state-metrics.yaml
-kubeStateMetricsChartVersion: v5.16.4
+kubeStateMetricsChartVersion: v5.18.0
 metricsServerApiCertsChartVersion: v0.3.0
 metricsServerChartVersion: v3.12.1
 # When changing the chart version, make sure to update kubeVersion
@@ -23,4 +23,4 @@ metricsServerChartVersion: v3.12.1
 # Current is >=1.19
 #
 # The following is a combination of kube-state-metrics version requirement and metrics-server
-kubeVersion: ">=1.19 <=1.27"
+kubeVersion: ">=1.19 <=1.28"
