@@ -2,6 +2,8 @@ chartVersion: 0.0.64-20241107151530-f4a19dfa
 chartRepository: toolsbeta
 config:
   debug: true
-  toolforge_api_url: "https://api.svc.beta.tools.eqiad1.wikimedia.cloud"
+  # we go through the internal endpoint to be able to authenticate with certificates
+  toolforge_api_url: "https://api.svc.toolsbeta.eqiad1.wikimedia.cloud:30003"
+  verify_toolforge_api_cert: false
 certificates:
   internalClusterDomain: toolsbeta.local
