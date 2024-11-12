@@ -1,4 +1,4 @@
-chartVersion: 0.0.54-20241111133126-cf520466
+chartVersion: 0.0.55-20241112125309-8ca61926
 chartRepository: toolsbeta
 backends:
   - name: jobs-api
@@ -37,6 +37,7 @@ app:
     components: "https://components-api.components-api.svc.toolsbeta.local:8443"
   openapi_docs:
     components: true
+    external_api_url: "https://api.svc.beta.toolforge.org"
 
 nginx:
   replicas: 2
