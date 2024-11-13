@@ -95,6 +95,12 @@ show_package_version() {
         installed_mr \
         registry_file
 
+    # Check if package exists first
+    if ! apt-cache policy "$package" >/dev/null 2>&1; then
+        echo -e "| $component | package | $package | ${RED}missing${ENDCOLOR} | |"
+        return 0
+    fi
+
     cur_version=$(apt policy "$package" 2>/dev/null| grep '\*\*\*' | awk '{print $2}')
     comment=""
     last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
