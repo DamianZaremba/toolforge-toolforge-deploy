@@ -13,12 +13,13 @@ TOOLFORGE_PACKAGE_REGISTRY_DIR=~/.lima-kilo/installed_packages
 
 
 declare -A NAME_TO_APT_PACKAGE=(
-    ["toolforge-weld"]="python3-toolforge-weld"
     ["builds-cli"]="toolforge-builds-cli"
-    ["toolforge-cli"]="toolforge-cli"
+    ["components-cli"]="toolforge-components-cli"
     ["envvars-cli"]="toolforge-envvars-cli"
     ["jobs-cli"]="toolforge-jobs-framework-cli"
+    ["toolforge-cli"]="toolforge-cli"
     ["tools-webservice"]="toolforge-webservice"
+    ["toolforge-weld"]="python3-toolforge-weld"
 )
 
 
