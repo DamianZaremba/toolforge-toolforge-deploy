@@ -36,6 +36,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["ingress-admission"]="ingress-admission"
     ["ingress-nginx"]="ingress-nginx-gen2"
     ["jobs-api"]="jobs-api"
+    ["jobs-emailer"]="jobs-emailer"
     ["kyverno"]="kyverno"
     ["maintain-kubeusers"]="maintain-kubeusers"
     ["registry-admission"]="registry-admission"
