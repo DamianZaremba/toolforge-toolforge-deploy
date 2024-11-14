@@ -27,7 +27,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["api-gateway"]="api-gateway"
     ["builds-api"]="builds-api"
     ["builds-builder"]="builds-builder"
-	["calico"]="calico"
+    ["calico"]="calico"
     ["cert-manager"]="cert-manager"
     ["components-api"]="components-api"
     ["envvars-admission"]="envvars-admission"
@@ -94,7 +94,8 @@ show_package_version() {
     local cur_version \
         last_apt_history_entry \
         installed_mr \
-        registry_file
+        registry_file \
+        comment=""
 
     # Check if package exists first
     # The output of apt policy will have the installed version starting
@@ -105,7 +106,6 @@ show_package_version() {
     fi
 
     cur_version=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' | awk '{print $2}')
-    comment=""
     last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
     if [[ "$last_apt_history_entry" == *_all.deb ]]; then
@@ -125,16 +125,24 @@ show_chart_version() {
     local chart="${NAME_TO_HELM_CHART[$component]}"
     local cur_version
     local td_version
+    local name
+    local comment=""
     # warm up the cache
     get_all_charts >/dev/null
-    cur_version="$(get_all_charts | grep "^$chart " | awk '{print $9}')"
-    comment=""
-    td_version=$(get_toolforge_deploy_version "$chart")
+
     if [[ "$chart" == "wmcs-metrics" ]]; then
         name="wmcs-k8s-metrics"
     else
         name="$chart"
     fi
+
+    if ! get_all_charts | grep -q "^$chart "; then
+        echo -e "| $name | chart | $chart | ${RED}missing${ENDCOLOR} | $comment |"
+        return
+    fi
+
+    cur_version="$(get_all_charts | grep "^$chart " | awk '{print $9}')"
+    td_version=$(get_toolforge_deploy_version "$chart")
     if [[ "$cur_version" =~ ^.*-dev-mr-(.*)$ ]]; then
         cur_version="$YELLOW$cur_version$ENDCOLOR"
         comment="${YELLOW}mr:$component!${BASH_REMATCH[1]}$ENDCOLOR"
