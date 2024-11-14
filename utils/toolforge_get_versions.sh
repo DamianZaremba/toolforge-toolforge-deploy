@@ -96,12 +96,14 @@ show_package_version() {
         registry_file
 
     # Check if package exists first
-    if ! apt-cache policy "$package" >/dev/null 2>&1; then
+    # The output of apt policy will have the installed version starting
+    # with three ***, or *** will not be there if it's not installed
+    if ! apt policy "$package" 2>/dev/null | grep -q '\*\*\*'; then
         echo -e "| $component | package | $package | ${RED}missing${ENDCOLOR} | |"
         return 0
     fi
 
-    cur_version=$(apt policy "$package" 2>/dev/null| grep '\*\*\*' | awk '{print $2}')
+    cur_version=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' | awk '{print $2}')
     comment=""
     last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
