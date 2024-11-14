@@ -2,6 +2,9 @@
 chartVersion: 0.0.44-20241118103718-c9ddd271
 chartRepository: tools
 
+image:
+  pullPolicy: Always
+
 configmap_data:
   send_emails_for_real: "no"
   debug: "yes"
