@@ -22,8 +22,9 @@ setup_file() {
     cat >service.template <<EOT
 cpu: 500m
 mem: 512Mi
-replicas: 1
+# test that the type is not the last, see T379903
 type: php8.2
+replicas: 1
 EOT
     run toolforge webservice start --template=service.template
     assert_success
