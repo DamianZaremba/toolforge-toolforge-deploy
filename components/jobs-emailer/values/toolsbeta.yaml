@@ -1,5 +1,5 @@
 ---
-chartVersion: 0.0.43-20240902122251-1677ec5f
+chartVersion: 0.0.44-20241118103718-c9ddd271
 chartRepository: toolsbeta
 
 configmap_data:
