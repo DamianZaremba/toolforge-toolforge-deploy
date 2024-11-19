@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-# bats file_tags=jobs-api
+# bats file_tags=tools,jobs-api
 
 set -o nounset
 

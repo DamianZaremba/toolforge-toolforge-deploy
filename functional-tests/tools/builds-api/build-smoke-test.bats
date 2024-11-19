@@ -1,12 +1,12 @@
 #!/usr/bin/env bats
-# bats file_tags=builds-api,smoke
+# bats file_tags=tools,builds-api,smoke
 SAMPLE_REPO_URL=https://gitlab.wikimedia.org/toolforge-repos/sample-static-buildpack-app
 
 
 set -o nounset
 
 setup() {
-    load "../global-common"
+    load "../../global-common"
     _global_setup
 }
 

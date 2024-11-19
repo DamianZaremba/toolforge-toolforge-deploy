@@ -1,10 +1,10 @@
 #!/usr/bin/env bats
-# bats file_tags=policy,smoke
+# bats file_tags=tools,policy,smoke
 
 set -o nounset
 
 setup() {
-    load "../global-common"
+    load "../../global-common"
     _global_setup
 }
 

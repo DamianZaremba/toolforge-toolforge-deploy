@@ -161,10 +161,12 @@ main() {
         show_package_version "$component"
     done
 
-    # shellcheck disable=SC1078
-    for component in "${!NAME_TO_HELM_CHART[@]}"; do
-        show_chart_version "$component"
-    done
+    if [[ "$USER" != "root" ]] && sudo -n true 2>/dev/null;then # trying to show deployed charts as tool user errors out
+        # shellcheck disable=SC1078
+        for component in "${!NAME_TO_HELM_CHART[@]}"; do
+            show_chart_version "$component"
+        done
+    fi
 }
 
 

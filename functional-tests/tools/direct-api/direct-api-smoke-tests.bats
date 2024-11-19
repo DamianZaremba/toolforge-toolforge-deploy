@@ -1,11 +1,11 @@
 #!/usr/bin/env bats
-# bats file_tags=direct-api,smoke
+# bats file_tags=tools,direct-api,smoke
 
 
 set -o nounset
 
 setup() {
-    load "../global-common"
+    load "../../global-common"
     export TOOL_NAME="${USER#*.}"
     _global_setup
 }

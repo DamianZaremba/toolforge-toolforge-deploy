@@ -1,11 +1,11 @@
 #!/usr/bin/env bats
-# bats file_tags=webservice,smoke
+# bats file_tags=tools,webservice,smoke
 
 
 set -o nounset
 
 setup() {
-    load "../global-common"
+    load "../../global-common"
     _global_setup
 }
 

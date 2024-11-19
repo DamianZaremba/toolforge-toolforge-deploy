@@ -5,7 +5,7 @@
 set -o nounset
 
 setup() {
-    load "../global-common"
+    load "../../global-common"
     _global_setup
 }
 

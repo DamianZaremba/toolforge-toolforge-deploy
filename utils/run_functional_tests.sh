@@ -4,12 +4,12 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-LOCKFILE="$HOME/functional_tests.lock"
 TOOLFORGE_DEPLOY_URL="https://gitlab.wikimedia.org/repos/cloud/toolforge/toolforge-deploy"
 declare -A DEFAULT_TEST_TOOLS_PER_ENV
 DEFAULT_TEST_TOOLS_PER_ENV["local"]="tf-test"
 DEFAULT_TEST_TOOLS_PER_ENV["toolsbeta"]="test"
 DEFAULT_TEST_TOOLS_PER_ENV["tools"]="automated-toolforge-tests"
+SOURCE_FILE_NAME="functional-tests-source-file-$RANDOM"
 
 
 help() {
@@ -37,12 +37,10 @@ help() {
                 If passed, it will be passed as-is to bats as extra arguments.
                 Usefule for example to filter tests to run, for example:
                     To filter by test name:
-                    * --filter '.*continuous-job.*'
+                    * --filter '.*continuous job.*'
 
                     To filter by tag (toloforge component):
                     * --filter-tags jobs-api
-
-                Note the -- separating this from the options.
 
 
         Example:
@@ -53,24 +51,47 @@ help() {
 EOH
 }
 
-remove_lock() {
-    rm -f "$LOCKFILE"
+run_as_user() {
+    local user="$1"
+    shift
+    sudo -i -u "$user" bash -c "$@" || {
+        local err=$?
+        if [[ $err -eq 1 ]]; then
+            # if permission error user is likey already a tool, retry directly without sudo
+            bash -c "$@"
+        else
+            return $err
+        fi
+    }
+}
+
+remove_file() {
+    local userhome
+    local user="${1?}"
+    local filename="${2?}"
+    userhome="$(eval echo ~"$user")"
+    local file="$userhome/$filename"
+    run_as_user "$user" "rm -f \"$file\""
 }
 
 ensure_lock() {
-    local pid
-    if ! [[ -e "$LOCKFILE" ]]; then
-        echo "$$" > "$LOCKFILE"
+    local userhome
+    local user="${1?}"
+    userhome="$(eval echo ~"$user")"
+    local lockfile="$userhome/functional_tests.lock"
+    local pid="$$"
+    if ! [[ -e "$lockfile" ]]; then
+        run_as_user "$user" "echo \"$pid\" > \"$lockfile\""
         return 0
     fi
 
-    pid="$(cat "$LOCKFILE")"
-    if [[ "$(pgrep --pidfile "$LOCKFILE")" == "" ]]; then
-        echo "Found stale lockfile $LOCKFILE (pid $pid), removing and continuing..."
+    pid="$(cat "$lockfile")"
+    if [[ "$(pgrep --pidfile "$lockfile")" == "" ]]; then
+        echo "Found stale lockfile $lockfile (pid $pid), removing and continuing..."
         return 0
     fi
 
-    echo "Found already running tests (lockfile $LOCKFILE, pid $pid), can't run in parallel, aborting"
+    echo "Found already running tests (lockfile $lockfile, pid $pid), can't run in parallel, aborting"
     return 1
 }
 
@@ -82,7 +103,6 @@ inside_toolforge_deployment() {
     return 1
 }
 
-
 inside_lima_kilo() {
     if [[ -e /etc/wmcs-project ]]; then
         grep -q 'local' /etc/wmcs-project
@@ -91,6 +111,22 @@ inside_lima_kilo() {
     return 1
 }
 
+is_login_user() {
+    if [[ "$USER" != "root" ]] && sudo -n true 2>/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+is_tool_user() {
+    local test_tool_uid="${1?}"
+    if [[ "$USER" == "$test_tool_uid" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
 
 setup_venv() {
     if ! [[ -e "$HOME/venv/bin/activate" ]]; then
@@ -138,10 +174,23 @@ setup_toolforge_deploy() {
     echo "Running tests from branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
 }
 
-setup_environment() {
-    local refetch="${1?}"
-    setup_venv
-    setup_toolforge_deploy "$refetch"
+run_tests() {
+    local test_tool_home="${1?}"
+    local dir="${2?}"
+    shift
+    shift
+
+    # we need to be in the home of the tool, where the jobs will create the logs
+    cd "$test_tool_home"
+    # shellcheck disable=SC1091
+    source "$test_tool_home/venv/bin/activate" && bats_core_pkg \
+        --verbose-run \
+        --pretty \
+        --timing \
+        --recursive \
+        --setup-suite-file "$test_tool_home"/toolforge-deploy/functional-tests/setup_suite.bash \
+        "$@" \
+        "$test_tool_home"/toolforge-deploy/functional-tests/"$dir"
 }
 
 
@@ -149,14 +198,12 @@ main() {
     local refetch="no"
     local verbose="no"
     local opts \
+        test_tool_uid \
         current_project \
-        passed_args \
-        test_tool_name="" \
-        test_tool_uid
+        test_tool_name=""
 
 
-    passed_args=("$@")
-    opts=$(getopt -o 'hrvt:' --long 'help,verbose,refetch-tests,test-tool' -n "$0" -- "$@")
+    opts=$(getopt -o 'hrvt:' --long 'help,verbose,refetch-tests,test-tool:' -n "$0" -- "$@")
     # shellcheck disable=SC2181
     if [[ $? -ne 0 ]]; then
         echo 'Wrong options' >&2
@@ -201,6 +248,16 @@ main() {
         esac
     done
 
+    local verbose_options=(
+        "--print-output-on-failure"
+    )
+    if [[ "$verbose" == "yes" ]]; then
+        verbose_options=(
+            "--show-output-of-passing-tests"
+            "--trace"
+        )
+    fi
+
     if [[ ! -e "/etc/wmcs-project" ]]; then
         echo "This script is meant to run inside a toolforge environment (/etc/wmcs-project not found)"
         exit 1
@@ -222,45 +279,58 @@ main() {
         exit 1
     fi
 
-    if [[ "$USER" != "$test_tool_uid" ]]; then
-        setup_toolforge_deploy "$refetch"
-        echo "Installed toolforge components versions:"
+    if ! is_login_user && ! is_tool_user "$test_tool_uid" ; then
+        echo "You can only run tests either as $test_tool_uid or as a login user"
+        echo "If you want to run tests as a different tool, become the tool then run the script again with --test-tool <tool-name>"
+        exit 1
+    fi
+
+    # since tests are no longer always run as tool user, we can't depend on $USER
+    export TEST_TOOL_UID="$test_tool_uid"
+
+    ensure_lock "$TEST_TOOL_UID"
+    trap 'remove_file "$TEST_TOOL_UID" "functional_tests.lock"; remove_file "$TEST_TOOL_UID" "$SOURCE_FILE_NAME"' EXIT
+
+    if is_login_user; then
+        echo "Installed toolforge components and CLIs versions:"
         "${0%/*}"/toolforge_get_versions.sh
-        local script_name="${0##*/}"
-        local user_home
-        user_home="$(sudo -i -u "$test_tool_uid"  echo '$HOME')"
-        sudo cp "$(realpath "$0")" "$user_home/$script_name"
-        sudo -i -u "$test_tool_uid" "$user_home/$script_name" "${passed_args[@]}"
-        exit $?
+        echo -e "\n"
+
+        local test_tool_home
+        test_tool_home="$(sudo -i -u "$TEST_TOOL_UID" bash -c "echo \"\$HOME\"")"
+        sudo cp "$(realpath "$0")" "$test_tool_home/$SOURCE_FILE_NAME"
+
+        sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_venv"
+        setup_toolforge_deploy "$refetch"
+
+        echo "@@@@@@@@ Running admin tests as $USER ..."
+        echo "-----------------------------------------"
+        run_tests "$test_tool_home" "admin" "${verbose_options[@]}" "$@"
+
+        echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
+        echo "--------------------------------------------------"
+        sudo -i -u "$TEST_TOOL_UID" \
+        bash -c \
+        "source $test_tool_home/$SOURCE_FILE_NAME && \
+        run_tests \"\$@\"" -- "$test_tool_home" "tools" "${verbose_options[@]}" "$@"
     fi
 
-    ensure_lock
-    trap remove_lock EXIT
+    if is_tool_user "$TEST_TOOL_UID"; then
+        echo "Installed toolforge CLIs versions:"
+        "${0%/*}"/toolforge_get_versions.sh
+        echo -e "\n"
 
-    setup_environment "$refetch"
+        setup_venv
+        setup_toolforge_deploy "$refetch"
 
-    local verbose_options=(
-        "--print-output-on-failure"
-    )
-    if [[ "$verbose" == "yes" ]]; then
-        verbose_options=(
-            "--show-output-of-passing-tests"
-            "--trace"
-        )
+        echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
+        echo "--------------------------------------------------"
+        run_tests "$HOME" "tools" "${verbose_options[@]}" "$@"
     fi
-
-    # we need to be in the home of the tool, where the jobs will create the logs
-    cd ~
-    bats_core_pkg \
-        --verbose-run \
-        --pretty \
-        --timing \
-        --recursive \
-        --setup-suite-file "$HOME"/toolforge-deploy/functional-tests/setup_suite.bash \
-        "${verbose_options[@]}" \
-        "$@" \
-        "$HOME"/toolforge-deploy/functional-tests
 }
 
 
-main "$@"
+# don't run main if the script is being sourced
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
