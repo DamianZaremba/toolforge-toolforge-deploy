@@ -24,15 +24,18 @@ cpu: 500m
 mem: 512Mi
 # test that the type is not the last, see T379903
 type: php8.2
+# test that we don't consider extra_args unknown T380141
+extra_args: ""
 replicas: 1
 EOT
     run toolforge webservice start --template=service.template
     assert_success
     assert_line --partial "Starting webservice"
 
-    run toolforge webservice status
+    run toolforge webservice status --template=service.template
     assert_success
     assert_line --partial "webservice of type php8.2 is running"
+    refute_line --partial "Your template file (service.template) contains unknown keys"
 }
 
 
