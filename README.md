@@ -14,6 +14,9 @@ Every chart version is bound to its own image tag.
 This is implemented in the cicd/gitlab-ci repository:
 <https://gitlab.wikimedia.org/repos/cloud/cicd/gitlab-ci/>
 
+See the
+[original proposal](https://wikitech.wikimedia.org/wiki/Wikimedia_Cloud_Services_team/EnhancementProposals/Toolforge_Kubernetes_component_workflow_improvements).
+
 ## Deploying locally/by hand
 
 Useful if you have your local minikube/kind for testing (see also

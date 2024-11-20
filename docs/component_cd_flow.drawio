@@ -1,18 +1,24 @@
 <mxfile host="65bd71144e">
     <diagram id="LKbLOsZnP0aAuwJLBHS4" name="Page-1">
-        <mxGraphModel dx="1199" dy="967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000000" math="0" shadow="0">
+        <mxGraphModel dx="2346" dy="920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#000000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="680" width="770" height="390" as="geometry"/>
-                </mxCell>
                 <mxCell id="83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="1" vertex="1">
                     <mxGeometry x="60" y="120" width="770" height="560" as="geometry"/>
                 </mxCell>
+                <mxCell id="84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="680" width="770" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="80" value="" style="endArrow=none;html=1;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="495" y="1040" as="sourcePoint"/>
+                        <mxPoint x="495.08" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
                 <mxCell id="29" value="" style="endArrow=none;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="370" y="670" as="sourcePoint"/>
+                        <mxPoint x="370" y="740" as="sourcePoint"/>
                         <mxPoint x="370.29" y="120" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
@@ -37,13 +43,13 @@
                         <mxPoint x="790" y="120" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="10" value="Gitlab repo" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="350" y="40" width="140.29" height="40" as="geometry"/>
+                <mxCell id="10" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;CI on component&lt;br&gt;repo (builds-api, ...)&lt;/font&gt;" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="300.14" y="70" width="140.29" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="Toolsbeta" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
+                <mxCell id="11" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Toolsbeta&lt;/font&gt;" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="630" y="80" width="110" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="Tools" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
+                <mxCell id="12" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Tools&lt;/font&gt;" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="750" y="80" width="70" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="" style="endArrow=classic;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" target="20" edge="1">
@@ -139,9 +145,9 @@
                         <mxPoint x="90" y="430" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" value="Pull chart version=0.0.X-dev-mr#" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3C5063;fontColor=#FFFFFF;" parent="40" vertex="1" connectable="0">
+                <mxCell id="41" value="Pull chart version=0.0.X-dev-mr#&lt;br&gt;See lima-kilo toolforge_deploy_mr.py" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3C5063;fontColor=#FFFFFF;" parent="40" vertex="1" connectable="0">
                     <mxGeometry x="0.1608" relative="1" as="geometry">
-                        <mxPoint x="2" y="-10" as="offset"/>
+                        <mxPoint x="-2" y="-20" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="47" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
@@ -190,13 +196,13 @@
                 </mxCell>
                 <mxCell id="59" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="200.29" y="740" as="sourcePoint"/>
+                        <mxPoint x="370" y="740" as="sourcePoint"/>
                         <mxPoint x="490" y="740" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="60" value="Create merge request for tools&lt;br&gt;on deploy repo&lt;br&gt;Update chart version to&lt;br&gt;&amp;lt;chartversion&amp;gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="59" vertex="1" connectable="0">
+                <mxCell id="60" value="Create merge request for tools&lt;br&gt;on deploy repo&lt;br&gt;Updating chart version&lt;br&gt;(done by CI)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="59" vertex="1" connectable="0">
                     <mxGeometry x="-0.22" y="2" relative="1" as="geometry">
-                        <mxPoint x="14" y="-28" as="offset"/>
+                        <mxPoint x="33" y="-28" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="63" value="" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" edge="1">
@@ -209,9 +215,9 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="64" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Manually deploy&lt;br&gt;on toolsbeta&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="63" vertex="1" connectable="0">
+                <mxCell id="64" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Manually run deploy cookbook&lt;br&gt;for toolsbeta&lt;br&gt;(local or on cloudcumin)&lt;br&gt;&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="63" vertex="1" connectable="0">
                     <mxGeometry x="-0.2851" relative="1" as="geometry">
-                        <mxPoint x="50" y="21" as="offset"/>
+                        <mxPoint x="80" y="21" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="65" value="" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" edge="1">
@@ -272,25 +278,16 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="76" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Manually deploy&lt;br&gt;on tools&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="75" vertex="1" connectable="0">
+                <mxCell id="76" value="&lt;span style=&quot;font-size: 12px;&quot;&gt;Manually run deploy cookbook&lt;br&gt;for tools&lt;br&gt;(local or on cloudcumin)&lt;br&gt;&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" parent="75" vertex="1" connectable="0">
                     <mxGeometry x="-0.2851" relative="1" as="geometry">
-                        <mxPoint x="50" y="21" as="offset"/>
+                        <mxPoint x="80" y="16" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="77" value="Harbor" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="690" y="40" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="78" value="Component" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=0;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="290" y="80" width="150" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="79" value="Deploy" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=0;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="440" y="80" width="100.29" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="80" value="" style="endArrow=none;html=1;" parent="1" edge="1">
-                    <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="495" y="1040" as="sourcePoint"/>
-                        <mxPoint x="495.08" y="120" as="targetPoint"/>
-                    </mxGeometry>
+                <mxCell id="79" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;toolforge-deploy&lt;br&gt;repo&lt;/font&gt;" style="text;strokeColor=none;fillColor=#000000;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=0;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="70" width="100.29" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="85" value="" style="endArrow=classic;html=1;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -363,11 +360,33 @@
                         <mxPoint x="-28" y="-10" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="95" value="Component" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=270;fontColor=#FFFFFF;" parent="1" vertex="1">
+                <mxCell id="95" value="Component development flow" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=270;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="740" y="380" width="150" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" value="Deploy" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=270;fontColor=#FFFFFF;" parent="1" vertex="1">
+                <mxCell id="96" value="toolforge-deploy flow" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;direction=south;rotation=270;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="740" y="855" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="800" as="sourcePoint"/>
+                        <mxPoint x="490" y="800" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="98" value="Reports functional test&lt;br&gt;results on MR" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" vertex="1" connectable="0" parent="97">
+                    <mxGeometry x="-0.22" y="2" relative="1" as="geometry">
+                        <mxPoint x="31" y="-18" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="99" value="" style="endArrow=classic;html=1;" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="910" as="sourcePoint"/>
+                        <mxPoint x="490" y="910" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="100" value="Reports functional test&lt;br&gt;results on MR" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#3E7E55;fontColor=#FFFFFF;" vertex="1" connectable="0" parent="99">
+                    <mxGeometry x="-0.22" y="2" relative="1" as="geometry">
+                        <mxPoint x="31" y="-18" as="offset"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
