@@ -2,6 +2,7 @@
 chartVersion: 0.0.44-20241118103718-c9ddd271
 chartRepository: toolsbeta
 
+# all numbers must be strings (yaml/helm issues)
 configmap_data:
   task_compose_emails_loop_sleep: "400"
   task_send_emails_loop_sleep: "1"

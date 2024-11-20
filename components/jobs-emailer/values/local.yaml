@@ -5,10 +5,11 @@ chartRepository: tools
 image:
   pullPolicy: Always
 
+# all numbers must be strings (yaml/helm issues)
 configmap_data:
   # make these short so we can easily test without having to wait much
   # but they are not too short so they don't spam the logs
-  task_compose_emails_loop_sleep: 2
-  task_send_emails_loop_sleep: 2
+  task_compose_emails_loop_sleep: "2"
+  task_send_emails_loop_sleep: "2"
   send_emails_for_real: "no"
   debug: "yes"
