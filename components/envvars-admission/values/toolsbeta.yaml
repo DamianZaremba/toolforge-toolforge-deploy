@@ -2,7 +2,7 @@ chartVersion: 0.0.22-20241120104704-1c22695e
 chartRepository: toolsbeta
 
 config:
-  extra_envvars:
+  extraEnvvars:
     - name: TOOL_TOOLFORGE_API_URL
       value: "https://api.svc.toolsbeta.eqiad1.wikimedia.cloud:30003"
     - name: TOOL_REDIS_URI
