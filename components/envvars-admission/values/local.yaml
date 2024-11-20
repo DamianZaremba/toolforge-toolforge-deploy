@@ -4,11 +4,6 @@ chartRepository: toolsbeta
 replicas: 1
 config:
   debug: true
-
-resources:
-  limits:
-    memory: ~
-    cpu: ~
-  requests:
-    memory: ~
-    cpu: ~
+  extraEnvvars:
+    - name: TOOL_TOOLFORGE_API_URL
+      value: "https://api-gateway.api-gateway.svc"
