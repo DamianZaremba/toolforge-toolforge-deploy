@@ -5,3 +5,7 @@ config:
   extra_envvars:
     - name: TOOL_TOOLFORGE_API_URL
       value: "https://api.svc.tools.eqiad1.wikimedia.cloud:30003"
+    - name: TOOL_REDIS_URI
+      value: "redis://redis.svc.tools.eqiad1.wikimedia.cloud:6379"
+    - name: TOOL_ELASTICSEARCH_URL
+      value: "http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud:80"

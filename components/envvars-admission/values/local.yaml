@@ -7,3 +7,7 @@ config:
   extraEnvvars:
     - name: TOOL_TOOLFORGE_API_URL
       value: "https://api-gateway.api-gateway.svc"
+    - name: TOOL_REDIS_URI
+      value: "notsetup"
+    - name: TOOL_ELASTICSEARCH_URL
+      value: "notsetup"
