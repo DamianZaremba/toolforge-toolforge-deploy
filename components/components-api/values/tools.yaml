@@ -1,4 +1,4 @@
-chartVersion: 0.0.68-20241120144205-2811ef71
+chartVersion: 0.0.69-20241125085913-80897cab
 #chartRepository: tools
 chartRepository: donotdeployyet
 certificates:
