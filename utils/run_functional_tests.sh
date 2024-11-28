@@ -26,6 +26,9 @@ help() {
                 by fetching the latest commit from the toolforge deploy repo:
                 ($TOOLFORGE_DEPLOY_URL)
 
+            -b|--branch
+                toolforge-deploy branch to use for the test. defaults to main
+
             -t|--test-tool
                 Name of the tool to use for the testing without prefix (ex. tf-test or wm-lol)
 
@@ -160,9 +163,19 @@ setup_venv() {
 
 setup_toolforge_deploy() {
     local refetch="${1?}"
+    local branch="${2?}"
     if ! [[ -e "$HOME"/toolforge-deploy ]]; then
         git clone "$TOOLFORGE_DEPLOY_URL" "$HOME"/toolforge-deploy
     fi
+
+    if ! git -C "$HOME"/toolforge-deploy branch -a | grep -qw "remotes/origin/$branch"; then
+        echo "Branch $branch not found in $TOOLFORGE_DEPLOY_URL"
+        exit 1
+    fi
+
+    cd "$HOME"/toolforge-deploy
+    git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
+    cd -
 
     if [[ "$refetch" == "yes" ]]; then
         cd "$HOME"/toolforge-deploy
@@ -177,8 +190,7 @@ setup_toolforge_deploy() {
 run_tests() {
     local test_tool_home="${1?}"
     local dir="${2?}"
-    shift
-    shift
+    shift 2
 
     # we need to be in the home of the tool, where the jobs will create the logs
     cd "$test_tool_home"
@@ -197,13 +209,14 @@ run_tests() {
 main() {
     local refetch="no"
     local verbose="no"
+    local git_branch="main"
     local opts \
         test_tool_uid \
         current_project \
         test_tool_name=""
 
 
-    opts=$(getopt -o 'hrvt:' --long 'help,verbose,refetch-tests,test-tool:' -n "$0" -- "$@")
+    opts=$(getopt -o 'hrvt:b:' --long 'help,verbose,refetch-tests,test-tool:,branch:' -n "$0" -- "$@")
     # shellcheck disable=SC2181
     if [[ $? -ne 0 ]]; then
         echo 'Wrong options' >&2
@@ -233,6 +246,11 @@ main() {
             ;;
             '-t'|'--test-tool')
                 test_tool_name="$2"
+                shift 2
+                continue
+            ;;
+            '-b'|'--branch')
+                git_branch="$2"
                 shift 2
                 continue
             ;;
@@ -301,7 +319,7 @@ main() {
         sudo cp "$(realpath "$0")" "$test_tool_home/$SOURCE_FILE_NAME"
 
         sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_venv"
-        setup_toolforge_deploy "$refetch"
+        sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_toolforge_deploy \"\$@\"" -- "$refetch" "$git_branch"
 
         echo "@@@@@@@@ Running admin tests as $USER ..."
         echo "-----------------------------------------"
@@ -321,7 +339,7 @@ main() {
         echo -e "\n"
 
         setup_venv
-        setup_toolforge_deploy "$refetch"
+        setup_toolforge_deploy "$refetch" "$git_branch"
 
         echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
         echo "--------------------------------------------------"
