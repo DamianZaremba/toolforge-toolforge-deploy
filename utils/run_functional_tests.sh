@@ -168,12 +168,13 @@ setup_toolforge_deploy() {
         git clone "$TOOLFORGE_DEPLOY_URL" "$HOME"/toolforge-deploy
     fi
 
-    if ! git -C "$HOME"/toolforge-deploy branch -a | grep -qw "remotes/origin/$branch"; then
-        echo "Branch $branch not found in $TOOLFORGE_DEPLOY_URL"
+    if ! git -C "$HOME"/toolforge-deploy branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
+        echo "Branch $branch not found in $HOME/toolforge-deploy or $TOOLFORGE_DEPLOY_URL"
         exit 1
     fi
 
     cd "$HOME"/toolforge-deploy
+    git fetch --all 2>/dev/null
     git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
     cd -
 
@@ -319,6 +320,7 @@ main() {
         sudo cp "$(realpath "$0")" "$test_tool_home/$SOURCE_FILE_NAME"
 
         sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_venv"
+        setup_toolforge_deploy "$refetch" "$git_branch"
         sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_toolforge_deploy \"\$@\"" -- "$refetch" "$git_branch"
 
         echo "@@@@@@@@ Running admin tests as $USER ..."
