@@ -3,9 +3,9 @@ get_harbor_url(){
     project_name=$(cat "/etc/wmcs-project")
 
     if [[ "$project_name" == "local" ]]; then
-        hostname -I | awk '{print $1}'
+        echo "http://$(hostname -I | awk '{print $1}')"
     else
-        echo "${project_name}-harbor.wmcloud.org"
+        echo "https://${project_name}-harbor.wmcloud.org"
     fi
 }
 
