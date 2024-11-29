@@ -59,7 +59,7 @@ get_bugs_for_upgrade() {
 main() {
     local component
 
-    if [[ "${1:-}" =~ --?h(elp)? ]]; then
+    if [[ "${1:-}" =~ ^-h$|^--help$ ]]; then
         help
         return 0
     fi

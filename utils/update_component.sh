@@ -105,7 +105,7 @@ main() {
         component_repo \
         latest_tag
 
-    if [[ "${1:-}" =~ --?h(elp)? ]]; then
+    if [[ "${1:-}" =~ ^-h$|^--help$ ]]; then
         help
         return 0
     fi
