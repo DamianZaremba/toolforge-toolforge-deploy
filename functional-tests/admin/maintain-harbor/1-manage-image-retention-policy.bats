@@ -17,7 +17,7 @@ setup(){
         run bash -c "$CURL_VERBOSE -X DELETE \"$HARBOR_URL/retentions/$retention_id\""
 
         assert_success
-        assert_line --regexp "200 OK|no such Retention policy with id"
+        assert_line --regexp "200|no such Retention policy with id"
     fi
 
     # Delete project repository
