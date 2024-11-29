@@ -28,12 +28,23 @@ _maintain_harbor_setup() {
     HARBOR_PASSWORD=$(
         $SUKUBECTL get secret maintain-harbor-secret -o yaml \
         | grep "MAINTAIN_HARBOR_AUTH_PASSWORD:" | awk '{print $2}' | base64 --decode)
-    CURL="curl -u $HARBOR_USERNAME:$HARBOR_PASSWORD -H Content-Type:application/json -k"
-    CURL_VERBOSE="curl --verbose -u $HARBOR_USERNAME:$HARBOR_PASSWORD -H Content-Type:application/json -ki"
+    CURL="curl --netrc -H Content-Type:application/json -k"
+    CURL_VERBOSE="curl --netrc --verbose -H Content-Type:application/json -ki"
 
-    export SAMPLE_REPO_URL HARBOR_URL HARBOR_PROJECT_NAME HARBOR_USERNAME HARBOR_PASSWORD SUKUBECTL CURL CURL_VERBOSE
+    export SAMPLE_REPO_URL HARBOR_URL HARBOR_PROJECT_NAME SUKUBECTL CURL CURL_VERBOSE
+
+    # Create .netrc file for curl authentication
+    cat <<EOF > ~/.netrc
+machine $(get_harbor_url | awk -F '//' '{print $2}')
+login $HARBOR_USERNAME
+password $HARBOR_PASSWORD
+EOF
+
+    # Set correct permissions for .netrc to avoid security warnings
+    chmod 600 ~/.netrc
 }
 
 _maintain_harbor_teardown() {
+    rm -rf ~/.netrc
     _global_teardown
 }
