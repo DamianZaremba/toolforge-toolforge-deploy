@@ -34,14 +34,14 @@ _maintain_harbor_setup() {
     export SAMPLE_REPO_URL HARBOR_URL HARBOR_PROJECT_NAME SUKUBECTL CURL CURL_VERBOSE
 
     # Create .netrc file for curl authentication
+    touch ~/.netrc
+    # Set correct permissions for .netrc to avoid security warnings
+    chmod 600 ~/.netrc
     cat <<EOF > ~/.netrc
 machine $(get_harbor_url | awk -F '//' '{print $2}')
 login $HARBOR_USERNAME
 password $HARBOR_PASSWORD
 EOF
-
-    # Set correct permissions for .netrc to avoid security warnings
-    chmod 600 ~/.netrc
 }
 
 _maintain_harbor_teardown() {

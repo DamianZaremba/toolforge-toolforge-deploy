@@ -164,28 +164,28 @@ setup_venv() {
 setup_toolforge_deploy() {
     local refetch="${1?}"
     local branch="${2?}"
+    echo "@@@@@@@@ Configuring toolforge-deploy for $USER"
     if ! [[ -e "$HOME"/toolforge-deploy ]]; then
         git clone "$TOOLFORGE_DEPLOY_URL" "$HOME"/toolforge-deploy
     fi
 
+    git -C "$HOME"/toolforge-deploy fetch --all 2>/dev/null
     if ! git -C "$HOME"/toolforge-deploy branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
         echo "Branch $branch not found in $HOME/toolforge-deploy or $TOOLFORGE_DEPLOY_URL"
         exit 1
+    else
+        cd "$HOME"/toolforge-deploy
+        git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
+        cd -
     fi
-
-    cd "$HOME"/toolforge-deploy
-    git fetch --all 2>/dev/null
-    git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
-    cd -
 
     if [[ "$refetch" == "yes" ]]; then
         cd "$HOME"/toolforge-deploy
-        git fetch --all 2>/dev/null
         git reset --hard FETCH_HEAD
         cd -
     fi
 
-    echo "Running tests from branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
+    echo "@@@@@@@@ Configured toolforge-deploy for $USER. Branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
 }
 
 run_tests() {
@@ -312,7 +312,11 @@ main() {
 
     if is_login_user; then
         echo "Installed toolforge components and CLIs versions:"
+        # 47 chars. Note that this is being used here https://gerrit.wikimedia.org/r/plugins/gitiles/cloud/wmcs-cookbooks/+/refs/heads/main/cookbooks/wmcs/toolforge/component/deploy.py#222
+        echo "-----------------------------------------------"
         "${0%/*}"/toolforge_get_versions.sh
+         # 47 chars. Note that this is being used here https://gerrit.wikimedia.org/r/plugins/gitiles/cloud/wmcs-cookbooks/+/refs/heads/main/cookbooks/wmcs/toolforge/component/deploy.py#222
+        echo "-----------------------------------------------"
         echo -e "\n"
 
         local test_tool_home
