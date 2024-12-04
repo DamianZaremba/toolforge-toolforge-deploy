@@ -1,5 +1,5 @@
 ---
-chartVersion: 0.0.44-20241118103718-c9ddd271
+chartVersion: 0.0.45-20241204192251-ef3470d9
 chartRepository: tools
 
 # all numbers must be strings (yaml/helm issues)
