@@ -169,23 +169,21 @@ setup_toolforge_deploy() {
         git clone "$TOOLFORGE_DEPLOY_URL" "$HOME"/toolforge-deploy
     fi
 
-    git -C "$HOME"/toolforge-deploy fetch --all 2>/dev/null
-    if ! git -C "$HOME"/toolforge-deploy branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
-        echo "Branch $branch not found in $HOME/toolforge-deploy or $TOOLFORGE_DEPLOY_URL"
-        exit 1
+    cd "$HOME"/toolforge-deploy
+    git fetch --all 2>/dev/null
+    if ! git branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
+        echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\". Defaulting to \"main\""
+        git switch main
     else
-        cd "$HOME"/toolforge-deploy
         git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
-        cd -
     fi
 
     if [[ "$refetch" == "yes" ]]; then
-        cd "$HOME"/toolforge-deploy
-        git reset --hard FETCH_HEAD
-        cd -
+        git reset --hard origin/"$branch"
     fi
 
     echo "@@@@@@@@ Configured toolforge-deploy for $USER. Branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
+    cd -
 }
 
 run_tests() {
