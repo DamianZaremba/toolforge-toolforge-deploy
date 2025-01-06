@@ -21,19 +21,22 @@ setup(){
     fi
 }
 
-@test "delete project repository" {
-    # Delete project repository
-    run bash -c "$CURL_VERBOSE -X DELETE \"$HARBOR_URL/projects/$HARBOR_PROJECT_NAME/repositories/$HARBOR_PROJECT_NAME\""
+@test "delete project repositories" {
+    # Get all project repositories
+    repos=$($CURL -X GET "$HARBOR_URL/projects/$HARBOR_PROJECT_NAME/repositories" | jq -r '.')
 
-    assert_success
+    # loop through repos and delete all
+    for path in $(echo "$repos" | jq -r '.[].name'); do
+        path="${path//\//\/repositories\/}"
+        run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
+    done
 
+    # Check if all repos are deleted
     repo_count=$($CURL -X GET "$HARBOR_URL/projects/$HARBOR_PROJECT_NAME" | jq -r '.repo_count')
-
-    assert_success
     assert_equal "$repo_count" "0"
 }
 
-@test "delete project" {
+@test "delete empty harbor tool project" {
     job_name="test-$RANDOM"
     run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--delete-empty-tool-projects-cron"
 
