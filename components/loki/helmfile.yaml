@@ -1,0 +1,26 @@
+repositories:
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+
+releases:
+  - name: loki
+    namespace: loki
+    createNamespace: true
+    chart: grafana/loki-stack
+    version: "{{ .Values.chartVersion }}"
+    values:
+      - values/{{ .Environment.Name }}.yaml
+
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
