@@ -16,11 +16,3 @@ environments:
     values:
       # needed to use the chartVersion
       - values/{{ .Environment.Name }}.yaml*
-  toolsbeta:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  tools:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
