@@ -1,5 +1,5 @@
 ---
-chartVersion: 0.0.50-20250205000358-77ef0d92
+chartVersion: 0.0.52-20250219170643-a14ae54d
 chartRepository: tools
 
 image:
