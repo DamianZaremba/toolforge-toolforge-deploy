@@ -5,6 +5,6 @@ environment: local
 maintainHarbor:
   config:
     harborURL: "http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}/api/v2.0"
-    harborUsername: maintain-harbor
-    harborPassword: Dummyuserpass0
+    harborUsername: "robot$maintain-harbor"
+    harborPassword: "Dummyr0botpass"
     toolforgeRepoArtifactLimit: 5
