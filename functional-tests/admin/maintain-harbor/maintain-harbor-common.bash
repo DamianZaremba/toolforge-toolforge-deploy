@@ -28,11 +28,12 @@ _maintain_harbor_setup() {
     HARBOR_PASSWORD=$(
         $SUKUBECTL get secret maintain-harbor-secret -o yaml \
         | grep "MAINTAIN_HARBOR_AUTH_PASSWORD:" | awk '{print $2}' | base64 --decode)
+    HARBOR_CONFIGMAP=$($SUKUBECTL get configmap maintain-harbor-config -o json)
     CURL="curl --netrc -H Content-Type:application/json -k"
     CURL_VERBOSE="curl --netrc --verbose -H Content-Type:application/json -ki"
     CURL_VERBOSE_FAIL_WITH_BODY="curl --netrc --verbose --fail-with-body -H Content-Type:application/json -ki"
 
-    export SAMPLE_REPO_URL HARBOR_URL HARBOR_PROJECT_NAME SUKUBECTL CURL CURL_VERBOSE CURL_VERBOSE_FAIL_WITH_BODY
+    export SAMPLE_REPO_URL HARBOR_URL HARBOR_PROJECT_NAME SUKUBECTL CURL CURL_VERBOSE CURL_VERBOSE_FAIL_WITH_BODY HARBOR_CONFIGMAP
 
     # Create .netrc file for curl authentication
     touch ~/.netrc
