@@ -22,7 +22,25 @@ maintainHarbor:
       args:
         - manage-image-retention
 
+    - name: mh--manage-harbor-projects-quotas-cron
+      schedule: "0 * * * *"
+      args:
+        - manage-harbor-projects-quotas
+
   harborAuth:
     harborURL: "https://tools-harbor.wmcloud.org/api/v2.0"
     harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
     harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+
+  projectQuota:
+    default: "1Gi"
+    overrides:
+      tool-video-answer-tool-staging: "2Gi"
+      tool-video-answer-tool: "2Gi"
+      tool-dcaro-test10: "2Gi"
+      tool-mbh: "2Gi"
+      tool-wd-shex-infer: "2Gi"
+      tool-lucaswerkmeister-test: "2Gi"
+      tool-pywikibot: "2Gi"
+      toolforge: -1
+      library: -1

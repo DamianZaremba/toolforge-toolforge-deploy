@@ -22,7 +22,20 @@ maintainHarbor:
         - --debug
         - manage-image-retention
 
+    - name: mh--manage-harbor-projects-quotas-cron
+      schedule: "0 * * * *"
+      args:
+        - manage-harbor-projects-quotas
+
   harborAuth:
     harborURL: "https://toolsbeta-harbor.wmcloud.org/api/v2.0"
     harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
     harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+
+  projectQuota:
+    default: "1Gi"
+    overrides:
+      tool-gitlab-webhooks-beta: "2Gi"
+      toolforge: "100Gi"
+      dcaro: "4Gi"
+      test4: "2Gi"
