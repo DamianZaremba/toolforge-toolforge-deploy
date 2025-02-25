@@ -5,3 +5,5 @@ replicas: 1
 debug: true
 
 resources: ~
+image:
+  pullPolicy: Always
