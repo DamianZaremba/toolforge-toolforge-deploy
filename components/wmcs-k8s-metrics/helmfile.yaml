@@ -13,9 +13,6 @@ repositories:
     oci: true
 
 releases:
-  # this first chart serves two purposes:
-  #  * first, it installs various components into the cluster
-  #  * second, it creates the 'metrics' namespace for other charts to use
   - name: wmcs-metrics
     chart: "{{ .Values.chartRepository }}/wmcs-k8s-metrics"
     version: "{{ .Values.chartVersion }}"

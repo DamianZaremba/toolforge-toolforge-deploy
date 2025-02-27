@@ -1,6 +1,5 @@
 image:
   repository: docker-registry.tools.wmflabs.org/metrics-server
-  tag: v0.7.1
 
 extraVolumes:
   - name: metrics-server-api-tls

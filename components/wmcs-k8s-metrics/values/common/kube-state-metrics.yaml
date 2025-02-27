@@ -1,4 +1,3 @@
 image:
   registry: docker-registry.tools.wmflabs.org
   repository: kube-state-metrics
-  tag: v2.11.0
