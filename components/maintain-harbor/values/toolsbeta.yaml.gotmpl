@@ -22,7 +22,7 @@ maintainHarbor:
         - --debug
         - manage-image-retention
 
-  config:
+  harborAuth:
     harborURL: "https://toolsbeta-harbor.wmcloud.org/api/v2.0"
     harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
     harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}

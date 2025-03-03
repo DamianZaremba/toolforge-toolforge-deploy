@@ -3,8 +3,9 @@ chartRepository: toolsbeta
 environment: local
 
 maintainHarbor:
-  config:
+  harborAuth:
     harborURL: "http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}/api/v2.0"
     harborUsername: "robot$maintain-harbor"
     harborPassword: "Dummyr0botpass"
-    toolforgeRepoArtifactLimit: 5
+
+  toolforgeRepoArtifactLimit: 5
