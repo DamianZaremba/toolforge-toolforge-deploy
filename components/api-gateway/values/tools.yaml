@@ -34,7 +34,7 @@ app:
     envvars: "https://envvars-api.envvars-api.svc.tools.local:8443"
 
 nginx:
-  replicas: 2
+  replicas: 3
 
 certificates:
   internalClusterDomain: tools.local
