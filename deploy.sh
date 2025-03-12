@@ -89,6 +89,7 @@ main() {
             exit 1
         fi
     fi
+
     # use -i (interactive) to ask for confirmation for changing
     # live cluster state if stdin is a tty
     if [[ -t 0 ]]; then
@@ -97,12 +98,18 @@ main() {
             interactive_param=""
     fi
 
-    # helmfile apply will show a diff before doing changes
+    # We use "helmfile diff" + "helmfile sync", instead of "helmfile apply",
+    # because apply will not update the installed version if the diff is empty.
+    helmfile \
+        -e "$deploy_environment" \
+        --file "helmfile.yaml" \
+        diff \
+        "$@"
     helmfile \
         -e "$deploy_environment" \
         --file "helmfile.yaml" \
         $interactive_param \
-        apply \
+        sync \
         "$@"
 }
 
