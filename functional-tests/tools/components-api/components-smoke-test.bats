@@ -114,7 +114,8 @@ components:
 @test "deployment list works" {
     run toolforge components deployment list
     assert_success
-    assert_line --partial "Deployment ID:"
+    assert_line --partial "ID"
+    assert_line --partial "component1"
 }
 
 @test "deployment show works" {
