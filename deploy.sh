@@ -104,7 +104,7 @@ main() {
         -e "$deploy_environment" \
         --file "helmfile.yaml" \
         diff \
-        "$@"
+        "${@/--wait/}" # ugly hack because --wait is not valid for "helmfile diff"
     helmfile \
         -e "$deploy_environment" \
         --file "helmfile.yaml" \
