@@ -87,7 +87,7 @@ get_toolforge_deploy_version() {
         # FIXME: we are only showing the version of wmcs-metrics, we should show
         # the versions of the other charts as well (tracked in T388382)
         local dir_name=wmcs-k8s-metrics
-        echo "$dir_name-$(grep wmcsMetricsChartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/local.yaml | awk '{print $2}' | tail -n 1)"
+        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/local.yaml | awk '{print $2}' | tail -n 1)"
         return 0
     fi
 
