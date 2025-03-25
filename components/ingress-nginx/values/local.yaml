@@ -1,4 +1,4 @@
-chartVersion: 4.11.2
+chartVersion: 4.11.5
 controller:
   replicaCount: 1
   extraArgs:

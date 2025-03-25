@@ -6,8 +6,8 @@ controller:
   name: controller
   replicaCount: 3
   image:
-    tag: "v1.11.2"
-    digest: sha256:b10dae6f289b838b37a9989c912cbf780acb07c3f726f5648c2871d5e0919b33
+    tag: "v1.11.5"
+    digest: sha256:9c1b15cf9a5aa97527ec254fdc403fb407a45d5ca60968819e24c296ddf33c56
     repository: docker-registry.tools.wmflabs.org/nginx-ingress-controller
     pullPolicy: IfNotPresent
     # www-data -> uid 101
