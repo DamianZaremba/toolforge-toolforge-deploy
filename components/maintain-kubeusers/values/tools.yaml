@@ -7,17 +7,17 @@ image:
 
 quotas:
   overrides:
-    add-text: # T337718
+    add-text:
       version: T337718
       cpu: 16
       memory: 24
-    anchor-corrector: # T350484
+    anchor-corrector:
       version: T350484-3
       memory: 32
-    borkedbot: # T323846
+    borkedbot:
       version: T323846
       jobs: 30
-    cewbot: # T353104
+    cewbot:
       version: T353104-2
       memory: 32
       pod_memory: 8
@@ -25,43 +25,47 @@ quotas:
     citationhunt:
       version: custom1
       jobs: 30
-    deltabot: # T347951
+    deltabot:
       version: T347951
       cronjobs: 100
-    iabot: # T327952
+    iabot:
       version: T327952
       memory: 11
-    montage: # T348894
+    mbh:
+      version: T389733
+      pod_memory: 12
+      memory: 16
+    montage:
       version: T348894
       memory: 16
-    oabot: # T273601
+    oabot:
       version: T273601
       memory: 20
       pod_memory: 8
-    signature-checker: # T353104
+    signature-checker:
       version: T353104-2
       memory: 32
-    sqid: # T376338
+    sqid:
       version: T376338-1
       memory: 9
       pod_memory: 7
-    toc: # T353104
+    toc:
       version: T353104-2
       memory: 32
-    video-answer-tool: # T376505
+    video-answer-tool:
       version: T376505-2
       cpu: 6
       pod_cpu: 6
       memory: 8
       pod_memory: 8
-    wd-shex-infer: # T357209
+    wd-shex-infer:
       version: T357209-3
       memory: 16
       pod_memory: 10
-    xiplus: # T315719
+    xiplus:
       version: T315719
       cronjobs: 100
-    yifeibot: # T329350
+    yifeibot:
       version: T329350-3
       cpu: 10
       memory: 12
