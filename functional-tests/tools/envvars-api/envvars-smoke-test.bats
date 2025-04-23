@@ -22,9 +22,15 @@ setup_file() {
 
 
 @test "list envvars" {
-    run toolforge envvars list
+    run toolforge envvars list --show-values
     assert_line --partial "TEST_ENVVAR_1"
     assert_line --partial "test-envvar-1-contents"
+}
+
+@test "list envvars hides envvars values by default" {
+    run toolforge envvars list
+    assert_line --partial "TEST_ENVVAR_1"
+    refute_line --partial "test-envvar-1-contents"
 }
 
 
