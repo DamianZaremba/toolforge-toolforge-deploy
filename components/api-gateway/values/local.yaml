@@ -1,6 +1,5 @@
 chartVersion: 0.0.69-20250508122418-92f906ce
 chartRepository: toolsbeta
-
 certificates:
   internalClusterDomain: cluster.local
   extraNames:

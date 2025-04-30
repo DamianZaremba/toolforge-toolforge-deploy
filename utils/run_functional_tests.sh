@@ -32,6 +32,9 @@ help() {
             -t|--test-tool
                 Name of the tool to use for the testing without prefix (ex. tf-test or wm-lol)
 
+            -c|--component
+                This is used to determine the test tags to use (ex. -c builds-api -c jobs-api)
+
             -v|--verbose
                 If passed, it will use extra verbose options to show extra logs.
 
@@ -39,10 +42,10 @@ help() {
             extra-args
                 If passed, it will be passed as-is to bats as extra arguments.
                 Usefule for example to filter tests to run, for example:
-                    To filter by test name:
+                    For more control over the tests that run, use --filter to filter by test name:
                     * --filter '.*continuous job.*'
 
-                    To filter by tag (toloforge component):
+                    For more control over the tests that run, use --filter-tags to filter by tag:
                     * --filter-tags jobs-api
 
 
@@ -185,10 +188,58 @@ setup_toolforge_deploy() {
     echo "@@@@@@@@ Configured toolforge-deploy for $USER. Branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
 }
 
+get_component_test_tags() {
+    local component="$1"
+    local test_tool_home="$2"
+    local -a test_tags
+
+    component_dir="${test_tool_home}/toolforge-deploy/components/${component}"
+    test_file="${component_dir}/tests.txt"
+
+    if [[ ! -f "${test_file}" ]]; then
+        return 0
+    fi
+
+    while IFS= read -r test_tag; do
+        test_tags+=(--filter-tags "$test_tag")
+    done < <(cat "$test_file")
+
+    if [[ ${#test_tags[@]} -gt 0 ]]; then
+        printf '%s\n' "${test_tags[@]}"
+    fi
+}
+
 run_tests() {
-    local test_tool_home="${1?}"
-    local dir="${2?}"
-    shift 2
+    local components_str="${1?}"  # Comma-separated components str or "all"
+    local test_tool_home="${2?}"
+    local dir="${3?}"
+    shift 3
+
+    local -a extra_args=("$@")
+
+    # check if caller already provided --filter-tags
+    local has_filter_tags="no"
+    for arg in "${extra_args[@]}"; do
+        if [[ "$arg" == "--filter-tags" ]]; then
+            has_filter_tags="yes"
+            break
+        fi
+    done
+
+    # Split component_str into array
+    local -a components
+    if [[ "$components_str" != "all" ]]; then
+        IFS=, read -ra components <<< "$components_str"
+    fi
+
+    if [[ "$components_str" != "all" && "$has_filter_tags" == "no" ]]; then
+        for component in "${components[@]}"; do
+            mapfile -t test_tags < <(get_component_test_tags "$component" "$test_tool_home")
+            if [[ ${#test_tags[@]} -gt 0 ]]; then
+                extra_args+=("${test_tags[@]}")
+            fi
+        done
+    fi
 
     # we need to be in the home of the tool, where the jobs will create the logs
     cd "$test_tool_home"
@@ -198,9 +249,9 @@ run_tests() {
         --pretty \
         --timing \
         --recursive \
-        --setup-suite-file "$test_tool_home"/toolforge-deploy/functional-tests/setup_suite.bash \
-        "$@" \
-        "$test_tool_home"/toolforge-deploy/functional-tests/"$dir"
+        --setup-suite-file "${test_tool_home}/toolforge-deploy/functional-tests/setup_suite.bash" \
+        "${test_tool_home}/toolforge-deploy/functional-tests/${dir}" \
+        "${extra_args[@]}"
 }
 
 
@@ -208,13 +259,14 @@ main() {
     local refetch="no"
     local verbose="no"
     local git_branch="main"
+    local -a components=()
     local opts \
         test_tool_uid \
         current_project \
         test_tool_name=""
 
 
-    opts=$(getopt -o 'hrvt:b:' --long 'help,verbose,refetch-tests,test-tool:,branch:' -n "$0" -- "$@")
+    opts=$(getopt -o 'hrvt:b:c:' --long 'help,verbose,refetch-tests,test-tool:,branch:,component:' -n "$0" -- "$@")
     # shellcheck disable=SC2181
     if [[ $? -ne 0 ]]; then
         echo 'Wrong options' >&2
@@ -249,6 +301,11 @@ main() {
             ;;
             '-b'|'--branch')
                 git_branch="$2"
+                shift 2
+                continue
+            ;;
+            '-c'|'--component')
+                components+=("$2")
                 shift 2
                 continue
             ;;
@@ -324,16 +381,29 @@ main() {
         setup_toolforge_deploy "$refetch" "$git_branch"
         sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_toolforge_deploy \"\$@\"" -- "$refetch" "$git_branch"
 
+        local components_str="all"
+        if [[ ${#components[@]} -gt 0 ]]; then
+            for component in "${components[@]}"; do
+                local component_dir="${test_tool_home}/toolforge-deploy/components/$component"
+                if [[ ! -d "$component_dir" ]]; then
+                    echo "The component ${component} doesn't exist. Exiting..."
+                    exit 1
+                fi
+            done
+            # create comma separated components string
+            components_str=$(IFS=,; echo "${components[*]}")
+        fi
+
         echo "@@@@@@@@ Running admin tests as $USER ..."
         echo "-----------------------------------------"
-        run_tests "$test_tool_home" "admin" "${verbose_options[@]}" "$@"
+        run_tests "$components_str" "$test_tool_home" "admin" "${verbose_options[@]}" "$@"
 
         echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
         echo "--------------------------------------------------"
         sudo -i -u "$TEST_TOOL_UID" \
         bash -c \
         "source $test_tool_home/$SOURCE_FILE_NAME && \
-        run_tests \"\$@\"" -- "$test_tool_home" "tools" "${verbose_options[@]}" "$@"
+        run_tests \"\$@\"" -- "$components_str" "$test_tool_home" "tools" "${verbose_options[@]}" "$@"
     fi
 
     if is_tool_user "$TEST_TOOL_UID"; then
@@ -344,9 +414,22 @@ main() {
         setup_venv
         setup_toolforge_deploy "$refetch" "$git_branch"
 
+        local components_str="all"
+        if [[ ${#components[@]} -gt 0 ]]; then
+            for component in "${components[@]}"; do
+                local component_dir="${HOME}/toolforge-deploy/components/$component"
+                if [[ ! -d "$component_dir" ]]; then
+                    echo "The component ${component} doesn't exist. Exiting..."
+                    exit 1
+                fi
+            done
+            # create comma separated components string
+            components_str=$(IFS=,; echo "${components[*]}")
+        fi
+
         echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
         echo "--------------------------------------------------"
-        run_tests "$HOME" "tools" "${verbose_options[@]}" "$@"
+        run_tests "$components_str" "$HOME" "tools" "${verbose_options[@]}" "$@"
     fi
 }
 
