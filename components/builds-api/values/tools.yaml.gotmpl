@@ -2,11 +2,14 @@ chartVersion: 0.0.190-20250512093109-f2cdc829
 chartRepository: tools
 
 config:
-  builder: tools-harbor.wmcloud.org/toolforge/heroku-builder:22
   okBuildsToKeep: 4
   failedBuildsToKeep: 2
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+  builder: tools-harbor.wmcloud.org/toolforge/heroku-builder:22_20240105
+  runner: tools-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb
+  latestBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_0.20.7
+  latestRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24
 
 certificates:
   internalClusterDomain: tools.local

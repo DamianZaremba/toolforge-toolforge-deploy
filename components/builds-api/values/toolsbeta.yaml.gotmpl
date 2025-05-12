@@ -3,9 +3,12 @@ chartRepository: toolsbeta
 
 config:
   harborRepository: https://toolsbeta-harbor.wmcloud.org
-  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:22
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
+  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:22_20240105
+  runner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb
+  latestBuilder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.20.7
+  latestRunner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24
 
 certificates:
   internalClusterDomain: toolsbeta.local

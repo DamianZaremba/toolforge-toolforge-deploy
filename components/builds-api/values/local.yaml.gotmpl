@@ -9,11 +9,14 @@ config:
   debug: true
   # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
   harborRepository: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}
-  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:22
   okBuildsToKeep: 1
   failedBuildsToKeep: 2
   harborUsername: "robot$maintain-harbor"
   harborPassword: "Dummyr0botpass"
+  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:22_20240105
+  runner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb
+  latestBuilder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.20.7
+  latestRunner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24
 
 certificates:
   internalClusterDomain: cluster.local
