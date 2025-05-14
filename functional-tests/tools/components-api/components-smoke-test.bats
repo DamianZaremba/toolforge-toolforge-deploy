@@ -88,12 +88,26 @@ components:
 }
 
 @test "can create deployment using the cli" {
+    # Cleanup if needed
+    if [[ "$(toolforge components deployment list --json '.data.deployments[]')" != "" ]]; then
+        # TODO: use proper cancelling, this leaves the builds hanging
+        deployment=$(echo "$output"| grep "Deployment ID:" | cut -d' ' -f3)
+        toolforge components deployment delete "$deployment"
+    fi
+
     run toolforge components deployment create
     assert_success
     assert_line --partial "created successfully"
 }
 
 @test "can create deployment using the token" {
+    # Cleanup if needed
+    if [[ "$(toolforge components deployment list --json '.data.deployments[]')" != "" ]]; then
+        # TODO: use proper cancelling, this leaves the builds hanging
+        deployment=$(echo "$output"| grep "Deployment ID:" | cut -d' ' -f3)
+        toolforge components deployment delete "$deployment"
+    fi
+
     toolforge_url=$(get_toolforge_url)
     token=$(toolforge components deploy-token show | grep "Token:" | cut -d' ' -f2)
 
