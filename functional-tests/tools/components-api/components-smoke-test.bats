@@ -16,7 +16,7 @@ setup() {
     export TOOL_NAME="${USER#*.}"
 
     if [[ "$PROJECT" == "tools" ]]; then
-        skip "Skipping components tests"
+        skip "Skipping components tests until we have the cli deployed too"
     fi
 
     cat > "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml <<EOC

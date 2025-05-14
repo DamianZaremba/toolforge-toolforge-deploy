@@ -1,5 +1,4 @@
 chartVersion: 0.0.120-20250619182909-09ea62ae
-#chartRepository: tools
-chartRepository: donotdeployyet
+chartRepository: tools
 certificates:
   internalClusterDomain: tools.local

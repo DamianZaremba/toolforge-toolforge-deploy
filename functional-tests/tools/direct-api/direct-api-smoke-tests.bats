@@ -122,18 +122,12 @@ do_curl() {
 }
 
 @test "get components openapi definition without auth works" {
-    if [[ "$PROJECT" == "tools" ]]; then
-        skip "Skipping components tests"
-    fi
     run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/components/openapi.json' | jq"
     assert_success
     assert_line --partial "200 OK"
 }
 
 @test "get components health without auth works" {
-    if [[ "$PROJECT" == "tools" ]]; then
-        skip "Skipping components tests"
-    fi
     run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/components/v1/healthz' | jq"
     assert_success
     assert_line --partial "200 OK"
