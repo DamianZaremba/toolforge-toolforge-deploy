@@ -2,3 +2,6 @@ chartVersion: 0.0.68-20250512082944-cf63e685
 chartRepository: toolsbeta
 certificates:
   internalClusterDomain: toolsbeta.local
+
+image:
+  pullPolicy: Always
