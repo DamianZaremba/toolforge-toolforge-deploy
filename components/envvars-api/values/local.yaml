@@ -1,5 +1,5 @@
 # Update to your mr version tag
-chartVersion: 0.0.68-20250512082944-cf63e685
+chartVersion: 0.0.69-20250520050021-383f7616
 chartRepository: toolsbeta
 replicas: 1
 config:
