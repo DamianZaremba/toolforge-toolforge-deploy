@@ -8,7 +8,7 @@ controller:
   image:
     tag: "v1.11.5"
     digest: sha256:9c1b15cf9a5aa97527ec254fdc403fb407a45d5ca60968819e24c296ddf33c56
-    repository: docker-registry.tools.wmflabs.org/nginx-ingress-controller
+    repository: docker-registry.svc.toolforge.org/nginx-ingress-controller
     pullPolicy: IfNotPresent
     # www-data -> uid 101
     runAsUser: 101

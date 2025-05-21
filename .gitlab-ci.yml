@@ -1,5 +1,5 @@
 pre-commit:
-  image: "docker-registry.tools.wmflabs.org/cloud-cicd-py311bookworm-tox:latest"
+  image: "docker-registry.svc.toolforge.org/cloud-cicd-py311bookworm-tox:latest"
   stage: test
   script:
     - pre-commit run -a

@@ -1,5 +1,6 @@
 chartVersion: 0.0.61-20250512083144-8a2ebe74
 chartRepository: tools
 allowedRegistries:
+  - "docker-registry.svc.toolforge.org"
   - "docker-registry.tools.wmflabs.org"
   - "tools-harbor.wmcloud.org"

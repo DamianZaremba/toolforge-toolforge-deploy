@@ -1,13 +1,13 @@
 installCRDs: true
 
 image:
-  repository: docker-registry.tools.wmflabs.org/cert-manager/controller
+  repository: docker-registry.svc.toolforge.org/cert-manager/controller
 webhook:
   image:
-    repository: docker-registry.tools.wmflabs.org/cert-manager/webhook
+    repository: docker-registry.svc.toolforge.org/cert-manager/webhook
 cainjector:
   image:
-    repository: docker-registry.tools.wmflabs.org/cert-manager/cainjector
+    repository: docker-registry.svc.toolforge.org/cert-manager/cainjector
 startupapicheck:
   image:
-    repository: docker-registry.tools.wmflabs.org/cert-manager/startupapicheck
+    repository: docker-registry.svc.toolforge.org/cert-manager/startupapicheck

@@ -17,7 +17,7 @@ admissionController:
   replicas: 7
   initContainer:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "toolforge-kyverno-kyvernopre"
   container:
     resources:
@@ -28,7 +28,7 @@ admissionController:
         cpu: 1000m
         memory: 2Gi
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "toolforge-kyverno-kyverno"
 
 backgroundController:
@@ -41,7 +41,7 @@ backgroundController:
       cpu: 500m
       memory: 1Gi
   image:
-    registry: "docker-registry.tools.wmflabs.org"
+    registry: "docker-registry.svc.toolforge.org"
     repository: "toolforge-kyverno-background-controller"
 
 cleanupController:
@@ -54,7 +54,7 @@ cleanupController:
       cpu: 500m
       memory: 1Gi
   image:
-    registry: "docker-registry.tools.wmflabs.org"
+    registry: "docker-registry.svc.toolforge.org"
     repository: "toolforge-kyverno-cleanup-controller"
 
 reportsController:
@@ -67,43 +67,43 @@ reportsController:
       cpu: 1000m
       memory: 1Gi
   image:
-    registry: "docker-registry.tools.wmflabs.org"
+    registry: "docker-registry.svc.toolforge.org"
     repository: "toolforge-kyverno-reports-controller"
 
 webhooksCleanup:
   image:
-    registry: "docker-registry.tools.wmflabs.org"
+    registry: "docker-registry.svc.toolforge.org"
     repository: "bitnami-kubectl"
 
 policyReportsCleanup:
   image:
-    registry: "docker-registry.tools.wmflabs.org"
+    registry: "docker-registry.svc.toolforge.org"
     repository: "bitnami-kubectl"
 
 cleanupJobs:
   admissionReports:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "bitnami-kubectl"
   clusterAdmissionReports:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "bitnami-kubectl"
   updateRequests:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "bitnami-kubectl"
   ephemeralReports:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "bitnami-kubectl"
   clusterEphemeralReports:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "bitnami-kubectl"
 
 crds:
   migration:
     image:
-      registry: "docker-registry.tools.wmflabs.org"
+      registry: "docker-registry.svc.toolforge.org"
       repository: "toolforge-kyverno-kyverno-cli"
