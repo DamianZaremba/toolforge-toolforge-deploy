@@ -12,5 +12,9 @@ excludedNamespaces:
   - "kube-system"
   - "foxtrot-ldap"
   - "local-path-storage"
+  # This includes a Minio image for a local object storage service.
+  # TODO: Is there a cleaner way of doing this? Deploy Minio to a separate
+  # namespace?
+  - "loki"
 
 resources: ~

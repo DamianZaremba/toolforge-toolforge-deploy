@@ -1,0 +1,55 @@
+loki:
+  image:
+    registry: docker-registry.svc.toolforge.org
+  schemaConfig:
+    configs:
+      - from: 2024-04-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+  tracing:
+    enabled: true
+
+networkPolicy:
+  enabled: true
+  ingress:
+    podSelector:
+      matchLabels:
+        app.kubernetes.io/name: alloy
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: alloy
+
+gateway:
+  enabled: false
+lokiCanary:
+  enabled: false
+test:
+  enabled: false
+sidecar:
+  rules:
+    enabled: false
+
+# TODO: Evaluate whether we need these. For now, these use a separate memcached
+# image we've not copied to the Toolforge registry.
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+
+# tools and toolsbeta operate in the simple scalable mode. This is the default,
+# but listed out here regardless.
+deploymentMode: SimpleScalable
+
+backend:
+  # This too is the default.
+  replicas: 3
+
+  # Work around lack of persistent storage in our clusters.
+  persistence:
+    volumeClaimsEnabled: false

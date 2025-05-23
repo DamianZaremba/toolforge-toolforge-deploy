@@ -1,0 +1,50 @@
+global:
+  clusterDomain: cluster.local
+
+# Enable minio for local storage. In tools/toolsbeta, Ceph S3 is used instead.
+minio:
+  enabled: true
+  networkPolicy:
+    enabled: true
+
+deploymentMode: SingleBinary
+singleBinary:
+  replicas: 3
+  persistence:
+    enabled: false
+  affinity:
+    podAntiAffinity: null
+  # Work around lack of persistence.
+  extraVolumes:
+    - name: var-loki
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: var-loki
+      mountPath: /var/loki
+
+# Zero out replica counts of other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
