@@ -108,6 +108,16 @@ alloy:
         //   action   = "drop"
         // }
 
+        stage.limit {
+          rate  = 5
+          burst = 100
+          drop  = true
+
+          // This is per-node, so no need to cache entries for that many tools.
+          // 500 is still totally overkill.
+          max_distinct_labels = 500
+        }
+
         stage.tenant {
           label = "namespace"
         }

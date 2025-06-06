@@ -18,9 +18,13 @@ singleBinary:
   extraVolumes:
     - name: var-loki
       emptyDir: {}
+    - name: data-retention
+      emptyDir: {}
   extraVolumeMounts:
     - name: var-loki
       mountPath: /var/loki
+    - name: data-retention
+      mountPath: /data/retention
 
 # Zero out replica counts of other deployment modes
 backend:
