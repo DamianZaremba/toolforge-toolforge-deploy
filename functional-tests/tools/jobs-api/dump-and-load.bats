@@ -10,7 +10,7 @@ setup() {
 }
 
 
-@test "do a simple dump and load" {
+@test "do a simple dump and load of scheduled job" {
     rand_string="test-$RANDOM"
     toolforge \
         jobs \
@@ -31,6 +31,31 @@ setup() {
     run toolforge jobs list -o name
     assert_output "$rand_string"
 }
+
+
+@test "do a simple dump and load of continuous job" {
+    rand_string="test-$RANDOM"
+    toolforge \
+        jobs \
+        run \
+        --continuous \
+        --command "echo '$rand_string'" \
+        --image=python3.11 \
+        --health-check-script "true" \
+        "$rand_string"
+
+    toolforge jobs dump > "$rand_string.yaml"
+    toolforge jobs flush
+
+    run toolforge jobs list -o name
+    assert_output ""
+
+    toolforge jobs load "$rand_string.yaml"
+
+    run toolforge jobs list -o name
+    assert_output "$rand_string"
+}
+
 
 
 @test "doing a load does not flush all other jobs (T364204)" {
