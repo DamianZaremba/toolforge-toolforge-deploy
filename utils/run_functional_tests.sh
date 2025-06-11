@@ -202,7 +202,7 @@ get_component_test_tags() {
 
     while IFS= read -r test_tag; do
         test_tags+=(--filter-tags "$test_tag")
-    done < <(cat "$test_file")
+    done < <(grep '^[^#]' "$test_file")
 
     if [[ ${#test_tags[@]} -gt 0 ]]; then
         printf '%s\n' "${test_tags[@]}"

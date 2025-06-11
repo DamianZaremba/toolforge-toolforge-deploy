@@ -1,3 +1,6 @@
+# All clis + python components
 components-api
 jobs-api
-tools-webservice
+envvars-api
+builds-api
+webservice
