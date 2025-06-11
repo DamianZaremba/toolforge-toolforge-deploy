@@ -243,6 +243,17 @@ run_tests() {
 
     # we need to be in the home of the tool, where the jobs will create the logs
     cd "$test_tool_home"
+    cat <<EOM
+## Command run for easy copy-paste
+source "$test_tool_home/venv/bin/activate" && bats_core_pkg \\
+    --verbose-run \\
+    --pretty \\
+    --timing \\
+    --recursive \\
+    --setup-suite-file "${test_tool_home}/toolforge-deploy/functional-tests/setup_suite.bash" \\
+    "${test_tool_home}/toolforge-deploy/functional-tests/${dir}" \\
+    "${extra_args[@]}"
+EOM
     # shellcheck disable=SC1091
     source "$test_tool_home/venv/bin/activate" && bats_core_pkg \
         --verbose-run \
@@ -394,11 +405,11 @@ main() {
             components_str=$(IFS=,; echo "${components[*]}")
         fi
 
-        echo "@@@@@@@@ Running admin tests as $USER ..."
+        echo "@@@@@@@@ Running admin tests as $USER (for components $components_str) ..."
         echo "-----------------------------------------"
         run_tests "$components_str" "$test_tool_home" "admin" "${verbose_options[@]}" "$@"
 
-        echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
+        echo "@@@@@@@@ Running tools tests as $test_tool_uid (for components $components_str) ..."
         echo "--------------------------------------------------"
         sudo -i -u "$TEST_TOOL_UID" \
         bash -c \
@@ -427,7 +438,7 @@ main() {
             components_str=$(IFS=,; echo "${components[*]}")
         fi
 
-        echo "@@@@@@@@ Running tools tests as $test_tool_uid ..."
+        echo "@@@@@@@@ Running tools tests as $test_tool_uid (for components $components_str) ..."
         echo "--------------------------------------------------"
         run_tests "$components_str" "$HOME" "tools" "${verbose_options[@]}" "$@"
     fi
