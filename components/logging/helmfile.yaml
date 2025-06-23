@@ -4,6 +4,11 @@ environments:
       # needed to use the chartVersion
       - values/common.yaml
       - values/{{ .Environment.Name }}.yaml
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/common.yaml
+      - values/{{ .Environment.Name }}.yaml
 ---
 repositories:
   - name: grafana
@@ -18,8 +23,9 @@ releases:
     version: "{{ .Values.loki.chartVersion }}"
     values:
       - values/loki/common.yaml
-      - values/loki/{{ .Environment.Name }}.yaml
+      - values/loki/{{ .Environment.Name }}.yaml*
       - values/loki-tools/common.yaml
+      - values/loki-tools/{{ .Environment.Name }}.yaml
   - name: alloy
     # This needs a separate namespace for network policy reasons.
     namespace: alloy

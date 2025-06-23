@@ -1,0 +1,6 @@
+loki:
+  chartVersion: 6.30.1
+alloy:
+  chartVersion: 1.1.1
+  lokiUrl:
+    tools: http://loki-tools-gateway.loki.svc.toolsbeta.local:3100/loki/api/v1/push
