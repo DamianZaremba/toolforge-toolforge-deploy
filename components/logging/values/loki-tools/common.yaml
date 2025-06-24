@@ -1,3 +1,5 @@
+nameOverride: loki-tools
+
 # This only needs to be present on one Loki deployment
 # to have it provisioned in the right namespace.
 # We use loki-tools for that.
