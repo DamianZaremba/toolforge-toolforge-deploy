@@ -28,6 +28,8 @@ backends:
 
 app:
   log_level: info
+  superusers:
+    - service:components-api
   api_maps:
     builds: "https://builds-api.builds-api.svc.tools.local:8443"
     jobs: "https://jobs-api.jobs-api.svc.tools.local:8443"
