@@ -3,4 +3,4 @@ loki:
 alloy:
   chartVersion: 1.1.1
   lokiUrl:
-    tools: http://loki-tools-gateway.loki.svc.toolsbeta.local:3100/loki/api/v1/push
+    tools: http://loki-tools-write.loki.svc.toolsbeta.local:3100/loki/api/v1/push
