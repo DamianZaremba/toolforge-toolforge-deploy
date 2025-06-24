@@ -62,3 +62,14 @@ backend:
   # Work around lack of persistent storage in our clusters.
   persistence:
     volumeClaimsEnabled: false
+  extraVolumes:
+    - name: data-retention
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: data-retention
+      mountPath: /data/retention
+
+write:
+  # Work around lack of persistent storage in our clusters.
+  persistence:
+    volumeClaimsEnabled: false
