@@ -33,6 +33,12 @@ networkPolicy:
     namespaceSelector:
       matchLabels:
         kubernetes.io/metadata.name: alloy
+  externalStorage:
+    cidrs:
+      # object.eqiad1.wikimediacloud.org
+      - 185.15.56.161/32
+      - 2a02:ec80:a000:4000::1/128
+    ports: [443]
 
 gateway:
   enabled: false
