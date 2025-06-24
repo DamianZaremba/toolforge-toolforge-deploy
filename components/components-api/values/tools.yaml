@@ -2,3 +2,7 @@ chartVersion: 0.0.120-20250619182909-09ea62ae
 chartRepository: tools
 certificates:
   internalClusterDomain: tools.local
+config:
+  # we go through the internal endpoint to be able to authenticate with certificates
+  toolforge_api_url: "https://api.svc.tools.eqiad1.wikimedia.cloud:30003"
+  verify_toolforge_api_cert: false
