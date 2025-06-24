@@ -16,10 +16,6 @@ setup() {
     _components_setup
     export TOOL_NAME="${USER#*.}"
 
-    if [[ "$PROJECT" == "tools" ]]; then
-        skip "Skipping components tests"
-    fi
-
     cat > "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml <<EOC
 config_version: "v1beta1"
 components:
