@@ -26,6 +26,16 @@ releases:
       - values/loki/{{ .Environment.Name }}.yaml*
       - values/loki-tools/common.yaml
       - values/loki-tools/{{ .Environment.Name }}.yaml
+  # Instance for storing infrastructure logs.
+  - name: loki-infrastructure
+    namespace: loki
+    chart: grafana/loki
+    version: "{{ .Values.loki.chartVersion }}"
+    values:
+      - values/loki/common.yaml
+      - values/loki/{{ .Environment.Name }}.yaml*
+      - values/loki-infrastructure/common.yaml
+      - values/loki-infrastructure/{{ .Environment.Name }}.yaml
   - name: alloy
     # This needs a separate namespace for network policy reasons.
     namespace: alloy
