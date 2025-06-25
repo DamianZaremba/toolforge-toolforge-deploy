@@ -150,3 +150,16 @@ alloy:
 configReloader:
   # TODO
   enabled: false
+
+controller:
+  # Node tolerations for server scheduling to nodes with taints
+  # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  tolerations:
+    # Allow running on ingress nodes, for api-gateway pods.
+    - key: "ingressgen2"
+      operator: "Exists"
+      effect: "NoSchedule"
+    # Allow running on control place nodes, for kube-system logs.
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
