@@ -34,3 +34,4 @@ releases:
     version: "{{ .Values.alloy.chartVersion }}"
     values:
       - values/alloy/common.yaml*
+      - values/alloy/{{ .Environment.Name }}.yaml

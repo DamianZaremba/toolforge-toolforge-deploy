@@ -1,0 +1,13 @@
+global:
+  clusterDomain: tools.local
+
+loki:
+  storage:
+    type: s3
+    s3:
+      endpoint: object.eqiad1.wikimediacloud.org
+      region: default
+      s3ForcePathStyle: true
+      insecure: false
+      accessKeyId: {{ exec "../../../helpers/get_secret.sh" (list "lokiObjectStorageAccessKey") }}
+      secretAccessKey: {{ exec "../../../helpers/get_secret.sh" (list "lokiObjectStorageSecretKey") }}
