@@ -8,3 +8,5 @@ controller:
                 operator: In
                 values:
                   - tools-k8s-worker-108
+                  - tools-k8s-worker-110
+                  - tools-k8s-worker-nfs-54
