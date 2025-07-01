@@ -32,11 +32,11 @@ alloy:
           regex         = sys.env("HOSTNAME")
         }
 
-        // Tools only.
+        // These are too high-volume to be stored.
         rule {
           source_labels = ["__meta_kubernetes_namespace"]
-          action        = "keep"
-          regex         = "^tool-[a-z0-9\\-]+"
+          action        = "drop"
+          regex         = "^ingress-nginx-gen2$"
         }
 
         rule {
@@ -83,6 +83,7 @@ alloy:
 
       loki.process "pod_logs" {
         forward_to = [
+          loki.process.pod_logs_infrastructure.receiver,
           loki.process.pod_logs_tools.receiver,
         ]
 
@@ -101,12 +102,10 @@ alloy:
       loki.process "pod_logs_tools" {
         forward_to = [loki.write.loki_tools.receiver]
 
-        // Already filtering in discovery.kubernetes.pod. Restore this if
-        // we start feeding infrastructure logs to an another Loki instance.
-        // stage.match {
-        //   selector = "{namespace!~\"tool-\"}"
-        //   action   = "drop"
-        // }
+        stage.match {
+          selector = "{namespace!~\"tool-\"}"
+          action   = "drop"
+        }
 
         stage.limit {
           rate  = 5
@@ -123,9 +122,26 @@ alloy:
         }
       }
 
+      loki.process "pod_logs_infrastructure" {
+        forward_to = [loki.write.loki_infrastructure.receiver]
+
+        stage.match {
+          selector = "{namespace=~\"tool-\"}"
+          action   = "drop"
+        }
+      }
+
       loki.write "loki_tools" {
         endpoint {
           url = "{{ .Values.alloy.lokiUrl.tools }}"
+        }
+
+        external_labels = {}
+      }
+
+      loki.write "loki_infrastructure" {
+        endpoint {
+          url = "{{ .Values.alloy.lokiUrl.infrastructure }}"
         }
 
         external_labels = {}
