@@ -4,6 +4,11 @@ environments:
       # needed to use the chartVersion
       - values/common.yaml
       - values/{{ .Environment.Name }}.yaml
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/common.yaml
+      - values/{{ .Environment.Name }}.yaml
   toolsbeta:
     values:
       # needed to use the chartVersion
