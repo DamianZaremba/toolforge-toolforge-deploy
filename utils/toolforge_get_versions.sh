@@ -100,7 +100,8 @@ show_package_version() {
     local component="${1?}"
     local package="${NAME_TO_APT_PACKAGE[$component]}"
     local cur_version \
-        last_apt_history_entry \
+        apt_policy \
+        installed_source \
         installed_mr \
         registry_file \
         comment=""
@@ -108,15 +109,20 @@ show_package_version() {
     # Check if package exists first
     # The output of apt policy will have the installed version starting
     # with three ***, or *** will not be there if it's not installed
-    if ! apt policy "$package" 2>/dev/null | grep -q '\*\*\*'; then
+    apt_policy=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' --after 1)
+    if ! [[ "$apt_policy" =~ ^\ \*\*\* ]]; then
         echo -e "| $component | package | $package | ${RED}missing${ENDCOLOR} | |"
         return 0
     fi
 
-    cur_version=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' | awk '{print $2}')
-    last_apt_history_entry=$(grep "$package" /var/log/apt/history.log | grep "^Commandline" | tail -n 1 || :)
+    cur_version=$(echo "$apt_policy"| head -n1 | awk '{print $2}')
+    installed_source=$(\
+        echo "$apt_policy" \
+        | tail -n 1 \
+        | awk '{print $2}'\
+    )
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
-    if [[ "$last_apt_history_entry" == *_all.deb ]]; then
+    if [[ "$installed_source" == /var/lib/dpkg/status ]]; then
         installed_mr=$( \
             jq '.mr_number' 2>/dev/null < "$registry_file" \
             || echo "$registry_file" \
