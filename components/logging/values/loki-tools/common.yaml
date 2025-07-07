@@ -1,9 +1,9 @@
 nameOverride: loki-tools
 
-# This only needs to be present on one Loki deployment
-# to have it provisioned in the right namespace.
-# We use loki-tools for that.
 extraObjects:
+  # This only needs to be present on one Loki deployment
+  # to have it provisioned in the right namespace.
+  # We use loki-tools for that.
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
@@ -23,3 +23,33 @@ extraObjects:
           ports:
             - protocol: UDP
               port: 53
+
+  # The networkPolicy.ingress stanza in loki values only allows
+  # provisioning a single rule, and we already use that to alloy Alloy
+  # to ingest data into Loki. So we manually provision an another
+  # policy here to allow jobs-api to read log data here.
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: loki-tools-allow-jobs-api
+    spec:
+      policyTypes:
+        - Ingress
+      podSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values: [loki-tools]
+          - key: app.kubernetes.io/component
+            operator: In
+            # read for tools/toolsbeta, single-binary for local development
+            values: [read, single-binary]
+      ingress:
+        - from:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: jobs-api
+          ports:
+            # http
+            - protocol: TCP
+              port: 3100
