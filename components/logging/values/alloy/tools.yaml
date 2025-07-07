@@ -9,13 +9,25 @@ controller:
                 values:
                   - tools-k8s-worker-102
                   - tools-k8s-worker-103
+                  - tools-k8s-worker-105
                   - tools-k8s-worker-106
+                  - tools-k8s-worker-107
                   - tools-k8s-worker-108
                   - tools-k8s-worker-109
                   - tools-k8s-worker-110
+                  - tools-k8s-worker-111
+                  - tools-k8s-worker-nfs-3
+                  - tools-k8s-worker-nfs-7
                   - tools-k8s-worker-nfs-12
+                  - tools-k8s-worker-nfs-17
                   - tools-k8s-worker-nfs-23
+                  - tools-k8s-worker-nfs-27
+                  - tools-k8s-worker-nfs-30
                   - tools-k8s-worker-nfs-36
                   - tools-k8s-worker-nfs-41
+                  - tools-k8s-worker-nfs-42
+                  - tools-k8s-worker-nfs-48
                   - tools-k8s-worker-nfs-54
+                  - tools-k8s-worker-nfs-61
+                  - tools-k8s-worker-nfs-66
                   - tools-k8s-worker-nfs-72
