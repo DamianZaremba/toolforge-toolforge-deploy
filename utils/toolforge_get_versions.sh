@@ -17,6 +17,7 @@ declare -A NAME_TO_APT_PACKAGE=(
     ["components-cli"]="toolforge-components-cli"
     ["envvars-cli"]="toolforge-envvars-cli"
     ["jobs-cli"]="toolforge-jobs-framework-cli"
+    ["misctools-cli"]="toolforge-misctools-cli"
     ["toolforge-cli"]="toolforge-cli"
     ["tools-webservice"]="toolforge-webservice"
     ["toolforge-weld"]="python3-toolforge-weld"
