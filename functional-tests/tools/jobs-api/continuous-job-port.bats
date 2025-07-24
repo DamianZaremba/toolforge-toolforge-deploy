@@ -12,7 +12,7 @@ setup() {
 @test "run a continuous job without port shows no port" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "while true; do echo '$rand_string' > '$rand_string'; sleep 10; done" \
@@ -22,7 +22,7 @@ setup() {
         "$rand_string"
     assert_success
 
-    run toolforge jobs show "$rand_string"
+    run --separate-stderr toolforge jobs show "$rand_string"
     assert_line --regexp 'Port:.*none'
 }
 
@@ -39,7 +39,7 @@ setup() {
         --image=python3.11 \
         "$rand_string"
 
-    run toolforge jobs show "$rand_string"
+    run --separate-stderr toolforge jobs show "$rand_string"
     assert_line --regexp 'Port:.*1234'
 }
 
@@ -65,7 +65,7 @@ setup() {
         --image python3.11 \
         check-$rand_string
 
-    run cat "check-$rand_string.out"
+    run --separate-stderr cat "check-$rand_string.out"
     assert_line "OK"
 }
 

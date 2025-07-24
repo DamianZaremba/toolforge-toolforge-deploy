@@ -11,14 +11,14 @@ setup(){
 @test "get harbor health without auth works" {
     run bash -c "curl --verbose --fail-with-body --insecure '$HARBOR_URL/health'"
     assert_success
-    assert_line --partial "200"
+    assert_line --partial "200 OK"
     assert_line --partial "],\"status\":\"healthy\"}"
 }
 
 @test "harbor authentication works" {
 
     run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X GET $HARBOR_URL/audit-logs"
-    assert_line --partial "200" \
+    assert_line --partial "200 OK" \
     "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n
     Harbor authentication failed.\n
     You may need to verify that you have \"harbor-auth-secret\" k8s secret\n

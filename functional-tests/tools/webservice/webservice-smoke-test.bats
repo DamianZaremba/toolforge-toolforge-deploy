@@ -19,25 +19,25 @@ setup_file() {
 
 
 @test "status of stopped webservice" {
-    run toolforge webservice status
+    run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice is not running"
 }
 
 
 @test "start webservice" {
-    run toolforge webservice start
+    run --separate-stderr toolforge webservice start
     assert_success
     assert_line --partial "Starting webservice"
 
-    run toolforge webservice status
+    run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice of type php7.4 is running"
 }
 
 
 @test "get logs" {
-    run retry "toolforge webservice logs"
+    run --separate-stderr retry "toolforge webservice logs"
     assert_success
     assert_line --partial "/usr/sbin/lighttpd"
 }
@@ -45,11 +45,11 @@ setup_file() {
 
 @test "restart" {
     last_line=$(toolforge webservice logs | tail -n 1)
-    run toolforge webservice logs
+    run --separate-stderr toolforge webservice logs
     assert_success
     assert_line "$last_line"
 
-    run toolforge webservice restart
+    run --separate-stderr toolforge webservice restart
     assert_success
     assert_line --partial "Restarting"
 
@@ -80,11 +80,11 @@ setup_file() {
 
 
 @test "stop" {
-    run toolforge webservice stop
+    run --separate-stderr toolforge webservice stop
     assert_success
     assert_line "Stopping webservice"
 
-    run toolforge webservice status
+    run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice is not running"
 }
@@ -92,7 +92,7 @@ setup_file() {
 
 @test "shell starts and echoes" {
     random_token="$RANDOM-token"
-    run bash -c "toolforge webservice php7.4 shell -- echo '$random_token'"
+    run --separate-stderr bash -c "toolforge webservice php7.4 shell -- echo '$random_token'"
     assert_success
     assert_line --partial "$random_token"
 }

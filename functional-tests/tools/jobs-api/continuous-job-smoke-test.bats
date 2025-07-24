@@ -12,7 +12,7 @@ setup() {
 @test "run a simple continuous job" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "while true; do echo '$rand_string' > '$rand_string'; sleep 10; done" \

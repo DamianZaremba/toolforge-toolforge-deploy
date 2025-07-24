@@ -28,7 +28,7 @@ setup(){
     # loop through repos and delete all
     for path in $(echo "$repos" | jq -r '.[].name'); do
         path="${path//\//\/repositories\/}"
-        run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
+        run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
     done
 
     # Check if all repos are deleted
@@ -38,13 +38,13 @@ setup(){
 
 @test "delete empty harbor tool project" {
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--delete-empty-tool-projects-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--delete-empty-tool-projects-cron"
 
     assert_success
 
     retry "$SUKUBECTL get pods | grep \"$job_name\" | grep 'Completed'"
 
-    run bash -c "$CURL -X GET \"$HARBOR_URL/projects\" | jq -r '.'"
+    run --separate-stderr bash -c "$CURL -X GET \"$HARBOR_URL/projects\" | jq -r '.'"
 
     assert_success
     refute_line --partial "\"name\": \"$HARBOR_PROJECT_NAME\""

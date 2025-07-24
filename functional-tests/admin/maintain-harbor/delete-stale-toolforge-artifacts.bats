@@ -11,11 +11,12 @@ setup(){
 
 @test "delete stale toolforge artifacts" {
     job_name="test-$RANDOM"
-    run $SUKUBECTL create job "$job_name" --from=cronjob/mh--delete-stale-toolforge-artifacts-cron
+    # shellcheck disable=SC2086
+    run --separate-stderr $SUKUBECTL create job "$job_name" --from=cronjob/mh--delete-stale-toolforge-artifacts-cron
 
     assert_success
 
-    run retry "$SUKUBECTL logs -f $($SUKUBECTL get pods -o name | grep "$job_name" )" 60
+    run --separate-stderr retry "$SUKUBECTL logs -f $($SUKUBECTL get pods -o name | grep "$job_name" )" 60
 
     assert_success
     assert_line --regexp "Cleaning up stale artifacts of toolforge project repositories"

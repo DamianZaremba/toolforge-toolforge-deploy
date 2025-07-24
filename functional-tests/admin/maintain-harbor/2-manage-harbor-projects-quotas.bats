@@ -24,7 +24,7 @@ setup(){
 @test "manage-harbor-projects-quotas job can be triggered successfully" {
     # trigger job and verify it runs to completion
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
     assert_success
     retry "$SUKUBECTL get pods | grep \"$job_name\" | grep 'Completed'"
 }
@@ -43,7 +43,7 @@ setup(){
 
     # trigger job and verify that the quota is reset to default
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
     assert_success
     retry "$SUKUBECTL get pods | grep \"$job_name\" | grep 'Completed'"
     quota=$($CURL -X GET "$HARBOR_URL/quotas/$quota_id")
@@ -58,12 +58,12 @@ setup(){
 
     # add override to the configmap
     harbor_config_with_override=$(echo "$HARBOR_CONFIGMAP" | jq '.data.MAINTAIN_HARBOR_PROJECT_QUOTA |= (fromjson | .overrides["'"$HARBOR_PROJECT_NAME"'"] = 1000 | tojson)')
-    run bash -c "echo '$harbor_config_with_override' | $SUKUBECTL replace -f -"
+    run --separate-stderr bash -c "echo '$harbor_config_with_override' | $SUKUBECTL replace -f -"
     assert_success
 
     # trigger job and verify that override is applied
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-harbor-projects-quotas-cron"
     assert_success
     retry "$SUKUBECTL get pods | grep \"$job_name\" | grep 'Completed'"
     quota=$($CURL -X GET "$HARBOR_URL/quotas/$quota_id")

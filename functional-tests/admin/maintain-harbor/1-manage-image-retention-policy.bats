@@ -15,7 +15,7 @@ setup(){
     # Delete retention policy
     if [ "$retention_id" != "null" ]; then
         run bash -c "$CURL_VERBOSE -X DELETE \"$HARBOR_URL/retentions/$retention_id\""
-        assert_line --regexp "200|no such Retention policy with id"
+        assert_line --regexp "200 OK|no such Retention policy with id"
     fi
 
     # Get all project repositories
@@ -24,11 +24,11 @@ setup(){
     # loop through repos and delete all
     for path in $(echo "$repos" | jq -r '.[].name'); do
         path="${path//\//\/repositories\/}"
-        run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
+        run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
     done
 
     # Delete project
-    run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$HARBOR_PROJECT_NAME\""
+    run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$HARBOR_PROJECT_NAME\""
 }
 
 # bats test_tags=slow
@@ -45,7 +45,7 @@ setup(){
 
 @test "create image retention" {
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-image-retention-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-image-retention-cron"
 
     assert_success
 
@@ -68,7 +68,7 @@ setup(){
 
     # update retention policy. This should reset retention policy to the accepted value
     job_name="test-$RANDOM"
-    run bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-image-retention-cron"
+    run --separate-stderr bash -c "$SUKUBECTL create job \"$job_name\" --from=cronjob/mh--manage-image-retention-cron"
 
     assert_success
 

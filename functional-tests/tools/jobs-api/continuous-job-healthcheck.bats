@@ -12,7 +12,7 @@ setup() {
 @test "run a continuous job with script healthcheck passing" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "echo 'ok' > /tmp/healthcheck; while true; do sleep 10; done" \
@@ -30,7 +30,7 @@ setup() {
 @test "run a continuous job with script healthcheck failing" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "while true; do sleep 10; done" \
@@ -42,7 +42,7 @@ setup() {
     assert_success
 
     # TODO: Find a faster way to check this
-    run retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'" 10
+    run --separate-stderr retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'" 10
     assert_failure
 }
 

@@ -28,7 +28,7 @@ type: php8.2
 extra_args: ""
 replicas: 1
 EOT
-    run toolforge webservice start --template=service.template
+    run --separate-stderr toolforge webservice start --template=service.template
     assert_success
     assert_line --partial "Starting webservice"
 
@@ -43,11 +43,11 @@ EOT
     # sometimes we are too fast and the logs are not yet available
     retry "toolforge webservice logs"
     last_line=$(toolforge webservice logs | tail -n 1)
-    run toolforge webservice logs
+    run --separate-stderr toolforge webservice logs
     assert_success
     assert_line "$last_line"
 
-    run toolforge webservice restart
+    run --separate-stderr toolforge webservice restart
     assert_success
     assert_line --partial "Restarting"
 
@@ -71,7 +71,7 @@ EOT
     assert_line --partial "Starting webservice"
     assert_line --partial "Your template file (service.template) contains unknown keys"
 
-    run toolforge webservice status
+    run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice of type php8.2 is running"
 }
@@ -86,7 +86,7 @@ EOT
 - an
 - array
 EOT
-    run toolforge webservice start --template=service.template
+    run --separate-stderr toolforge webservice start --template=service.template
     assert_failure
 }
 

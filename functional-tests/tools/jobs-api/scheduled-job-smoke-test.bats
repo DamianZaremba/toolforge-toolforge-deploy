@@ -12,7 +12,7 @@ setup() {
 
 @test "run a simple scheduled job" {
     rand_string="test-$RANDOM"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --schedule '* * * * *' \

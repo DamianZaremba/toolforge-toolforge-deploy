@@ -7,6 +7,7 @@ setup_suite() {
     # cleanup the skip file on the first run
     rm -f "$BATS_SKIP_FILE"
     export TOOLFORGE_API_URL=$(grep api_gateway -A 2 /etc/toolforge/common.yaml | grep url: | grep -o 'http.*$')
+    bats_require_minimum_version 1.5.0
 }
 
 

@@ -24,7 +24,7 @@ setup_file() {
 
 
 @test "list build" {
-    run toolforge build list
+    run --separate-stderr toolforge build list
     assert_line --partial "$SAMPLE_REPO_URL"
 }
 
@@ -66,14 +66,14 @@ setup_file() {
     build_id="$(toolforge build list --json | jq -r '.builds[0].build_id')"
     toolforge build delete --yes-i-know "$build_id"
 
-    run toolforge build list
+    run --separate-stderr toolforge build list
     refute_line --partial "$build_id"
     assert_line --partial "No builds found"
 }
 
 
 @test "quota" {
-    run toolforge build quota
+    run --separate-stderr toolforge build quota
     assert_line --partial Available
     assert_line --partial Capacity
     assert_line --partial Limit
@@ -87,7 +87,7 @@ setup_file() {
 
 @test "clean" {
     toolforge build clean --yes-i-know
-    run toolforge build list
+    run --separate-stderr toolforge build list
     assert_line --partial "No builds found"
 }
 

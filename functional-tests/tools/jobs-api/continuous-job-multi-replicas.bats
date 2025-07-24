@@ -12,7 +12,7 @@ setup() {
 @test "run a continuous job that defaults to 1 replica" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "while true; do sleep 10; done" \
@@ -22,7 +22,7 @@ setup() {
         "$rand_string"
     assert_success
 
-    run toolforge jobs show "$rand_string"
+    run --separate-stderr toolforge jobs show "$rand_string"
     assert_line --regexp 'Replicas:.*1'
 }
 
@@ -30,7 +30,7 @@ setup() {
 @test "run a continuous job with 2 replicas configured" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
-    run toolforge \
+    run --separate-stderr toolforge \
         jobs \
         run \
         --command "while true; do sleep 10; done" \
@@ -41,7 +41,7 @@ setup() {
         "$rand_string"
     assert_success
 
-    run toolforge jobs show "$rand_string"
+    run --separate-stderr toolforge jobs show "$rand_string"
     assert_line --regexp 'Replicas:.*2'
 }
 
