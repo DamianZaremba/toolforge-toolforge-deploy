@@ -107,3 +107,10 @@ crds:
     image:
       registry: "docker-registry.svc.toolforge.org"
       repository: "toolforge-kyverno-kyverno-cli"
+
+# Needed for our alerts to get data with namespaces
+# see T401681
+metricsConfig:
+  metricsExposure:
+    kyverno_policy_rule_info_total:
+      disabledLabelDimensions: []

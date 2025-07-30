@@ -11,7 +11,7 @@ releases:
     # see version matrix at https://kyverno.io/docs/installation/#compatibility-matrix
     # you can see the chart that matches a version by changing to the corresponding tag:
     #    https://github.com/kyverno/kyverno/blob/release-1.12/charts/kyverno/Chart.yaml
-    version: 3.2.6
+    version: 3.3.9
     values:
       - values/common/settings.yaml
       # this allows us to override the common one
@@ -21,3 +21,8 @@ environments:
   tools: {}
   toolsbeta: {}
   local: {}
+
+helmDefaults:
+  # 30min, it needs a lot of time to run hooks, as it iterates through all namespaces
+  #   see T401684
+  timeout: 1800

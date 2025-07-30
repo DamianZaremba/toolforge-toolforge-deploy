@@ -1,6 +1,6 @@
 ---
 # NOTE: never delete this file, keep for deploy script
-kubeVersion: ">= 1.26 <= 1.29"
+kubeVersion: ">= 1.26 <= 1.31"
 
 admissionController:
   replicas: 1
