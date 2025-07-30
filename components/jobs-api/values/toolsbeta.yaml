@@ -7,3 +7,5 @@ webservice:
     name: "toolsbeta-harbor.wmcloud.org/toolforge/jobs-api"
 certificates:
   internalClusterDomain: "toolsbeta.local"
+loki:
+  url: http://loki-tools-read.loki.svc.toolsbeta.local:3100/loki
