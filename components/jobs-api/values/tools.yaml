@@ -4,3 +4,5 @@ harbor:
   host: tools-harbor.wmcloud.org
 certificates:
   internalClusterDomain: "tools.local"
+loki:
+  url: http://loki-tools-read.loki.svc.tools.local:3100/loki
