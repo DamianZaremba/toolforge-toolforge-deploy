@@ -19,7 +19,7 @@ declare -A NAME_TO_APT_PACKAGE=(
     ["jobs-cli"]="toolforge-jobs-cli"
     ["misctools-cli"]="toolforge-misctools-cli"
     ["toolforge-cli"]="toolforge-cli"
-    ["tools-webservice"]="toolforge-webservice"
+    ["webservice-cli"]="toolforge-webservice"
     ["toolforge-weld"]="python3-toolforge-weld"
 )
 
