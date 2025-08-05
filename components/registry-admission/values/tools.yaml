@@ -1,4 +1,4 @@
-chartVersion: 0.0.62-20250701092808-3c3a9b27
+chartVersion: 0.0.63-20250805004617-1686e33f
 chartRepository: tools
 allowedRegistries:
   - "docker-registry.svc.toolforge.org"
