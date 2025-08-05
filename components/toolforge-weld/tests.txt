@@ -3,4 +3,4 @@ components-api
 jobs-api
 envvars-api
 builds-api
-webservice
+webservice-cli

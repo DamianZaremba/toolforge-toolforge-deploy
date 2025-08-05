@@ -1,3 +1,4 @@
 builds-api
 components-api
 direct-api
+webservice-cli

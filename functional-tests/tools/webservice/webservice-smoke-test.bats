@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-# bats file_tags=tools,webservice,smoke
+# bats file_tags=tools,webservice-cli,smoke
 
 
 set -o nounset

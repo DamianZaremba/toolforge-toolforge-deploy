@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-# bats file_tags=webservice,service_template,template
+# bats file_tags=webservice-cli,service_template,template
 
 
 set -o nounset

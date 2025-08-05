@@ -1,2 +1,2 @@
 jobs-api
-webservice
+webservice-cli
