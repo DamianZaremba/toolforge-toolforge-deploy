@@ -28,6 +28,7 @@ extraObjects:
   # provisioning a single rule, and we already use that to alloy Alloy
   # to ingest data into Loki. So we manually provision an another
   # policy here to allow jobs-api to read log data here.
+  # TODO: remove the jobs-api one once the functionality is moved to logs-api
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
@@ -49,6 +50,32 @@ extraObjects:
             - namespaceSelector:
                 matchLabels:
                   kubernetes.io/metadata.name: jobs-api
+          ports:
+            # http
+            - protocol: TCP
+              port: 3100
+
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: loki-tools-allow-logs-api
+    spec:
+      policyTypes:
+        - Ingress
+      podSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values: [loki-tools]
+          - key: app.kubernetes.io/component
+            operator: In
+            # read for tools/toolsbeta, single-binary for local development
+            values: [read, single-binary]
+      ingress:
+        - from:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: logs-api
           ports:
             # http
             - protocol: TCP

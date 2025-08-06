@@ -25,6 +25,12 @@ backends:
       namespace: components-api
       service: components-api
       port: 8443
+  - name: logs-api
+    path: /logs
+    target:
+      namespace: logs-api
+      service: logs-api
+      port: 8443
 
 app:
   log_level: debug
@@ -35,8 +41,9 @@ app:
     jobs: "https://jobs-api.jobs-api.svc.toolsbeta.local:8443"
     envvars: "https://envvars-api.envvars-api.svc.toolsbeta.local:8443"
     components: "https://components-api.components-api.svc.toolsbeta.local:8443"
+    logs: "https://logs-api.logs-api.svc.toolsbeta.local:8443"
   openapi_docs:
-    components: true
+    logs: true
     external_servers:
       - url: "https://api.svc.beta.toolforge.org"
         description: "External server."

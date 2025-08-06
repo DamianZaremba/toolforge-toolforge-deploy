@@ -1,0 +1,4 @@
+chartVersion: 0.0.3-20251016123221-369dbf70
+chartRepository: tools
+certificates:
+  internalClusterDomain: tools.local

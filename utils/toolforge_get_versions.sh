@@ -39,6 +39,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["jobs-api"]="jobs-api"
     ["jobs-emailer"]="jobs-emailer"
     ["kyverno"]="kyverno"
+    ["logs-api"]="logs-api"
     ["maintain-kubeusers"]="maintain-kubeusers"
     ["registry-admission"]="registry-admission"
     ["volume-admission"]="volume-admission"

@@ -15,8 +15,9 @@ app:
     jobs: "https://jobs-api.jobs-api.svc.cluster.local:8443"
     envvars: "https://envvars-api.envvars-api.svc.cluster.local:8443"
     components: "https://components-api.components-api.svc.cluster.local:8443"
+    logs: "https://logs-api.logs-api.svc.cluster.local:8443"
   openapi_docs:
-    components: true
+    logs: true
     external_servers:
       - url: "https://127.0.0.1:30003"
         description: "External server."

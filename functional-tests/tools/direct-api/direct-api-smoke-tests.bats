@@ -133,6 +133,24 @@ do_curl() {
     assert_line --partial "200 OK"
 }
 
+@test "get logs openapi definition without auth works" {
+    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/logs/openapi.json' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+@test "get logs health without auth works" {
+    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/logs/v1/healthz' | jq"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+@test "get logs for other tool fails with forbidden" {
+    run do_curl "$TOOLFORGE_API_URL/logs/v1/tool/$TOOL_NAME.notthistool/job/idontexist/logs"
+    assert_line --partial "403 Forbidden"
+}
+
+
 teardown() {
     _global_teardown
 }

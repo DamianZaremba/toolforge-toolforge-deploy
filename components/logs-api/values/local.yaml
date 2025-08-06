@@ -1,0 +1,17 @@
+chartVersion: 0.0.3-20251016123221-369dbf70
+chartRepository: tools
+replicas: 1
+config:
+  debug: true
+  runtime_loki_url: "http://loki-tools.loki.svc:3100/loki"
+certificates:
+  internalClusterDomain: cluster.local
+image:
+  pullPolicy: Always
+resources:
+  limits:
+    memory: ~
+    cpu: ~
+  requests:
+    memory: ~
+    cpu: ~
