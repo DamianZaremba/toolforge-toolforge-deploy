@@ -15,7 +15,8 @@ setup(){
     # Delete retention policy
     if [ "$retention_id" != "null" ]; then
         run bash -c "$CURL_VERBOSE -X DELETE \"$HARBOR_URL/retentions/$retention_id\""
-        assert_line --regexp "200 OK|no such Retention policy with id"
+        # Note that there's no `OK` in http2
+        assert_line --regexp "HTTP/2 200|no such Retention policy with id"
     fi
 
     # Get all project repositories
