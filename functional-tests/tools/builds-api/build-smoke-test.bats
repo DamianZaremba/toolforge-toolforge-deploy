@@ -48,16 +48,19 @@ setup_file() {
     # need the mount=all for the results
     user="${USER#*.}"
     image="tool-$user/tool-$user:latest"
+    command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out"
     toolforge \
         jobs \
         run \
         --wait 120 \
-        --command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out" \
+        --command="$command" \
         --mount=all \
         --image="$image" \
         "$rand_string"
 
     retry "grep '$rand_string' '$HOME/$rand_string.out'"
+    run --separate-stderr bash -c "toolforge jobs show \"$rand_string\""
+    assert_line --partial "launcher $command"
 }
 
 
