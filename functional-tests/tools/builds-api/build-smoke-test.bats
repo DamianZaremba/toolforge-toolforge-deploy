@@ -59,7 +59,8 @@ setup_file() {
         "$rand_string"
 
     retry "grep '$rand_string' '$HOME/$rand_string.out'"
-    run --separate-stderr bash -c "toolforge jobs show \"$rand_string\""
+    # the `launcher` prefix is not shown in the job list/show, only from k8s
+    run --separate-stderr bash -c "kubectl get pod -l "app.kubernetes.io/name=$rand_string" -o json | jq '.items[0].spec.containers[0].command[-1]'"
     assert_line --partial "launcher $command"
 }
 
