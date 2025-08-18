@@ -1,9 +1,9 @@
 # See [../README.md](README.md) to learn more about these values
 chartVersion: 0.0.21-20241104102245-a6f60a0d
 chartRepository: toolsbeta
-kubeStateMetricsChartVersion: v5.21.0
+kubeStateMetricsChartVersion: v6.1.4
 metricsServerApiCertsChartVersion: v0.3.0
 metricsServerChartVersion: v3.12.2
 
 # The following is a combination of kube-state-metrics version requirement and metrics-server
-kubeVersion: ">=1.19 <=1.29"
+kubeVersion: ">=1.19 <=1.32"
