@@ -1,4 +1,4 @@
-chartVersion: 0.0.404-20250819125010-072af549
+chartVersion: 0.0.407-20250821080315-aa0d79f8
 chartRepository: toolsbeta
 harbor:
   host: toolsbeta-harbor.wmcloud.org
