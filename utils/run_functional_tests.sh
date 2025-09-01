@@ -139,7 +139,8 @@ setup_venv() {
         if inside_toolforge_deployment; then
             # shellcheck disable=SC2016
             # double -- as the `toolforge` cli swallows it (T370184)
-            toolforge webservice python3.11 shell -- -- bash -c 'python3 -m venv "$TOOL_DATA_DIR/venv"'
+            # This is done as webservice because we don't have venv installed in the bastion
+            toolforge webservice python3.13 shell -- -- bash -c 'python3 -m venv "$TOOL_DATA_DIR/venv"'
             local retries=10
             while ! [[ -e "$HOME/venv/bin/activate" ]]; do
                 echo "Waiting for nfs to sync up..."
