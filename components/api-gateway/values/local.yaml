@@ -1,4 +1,4 @@
-chartVersion: 0.0.75-20250805004735-9b30c822
+chartVersion: 0.0.78-20250902142533-4768f899
 chartRepository: toolsbeta
 certificates:
   internalClusterDomain: cluster.local
@@ -17,6 +17,11 @@ app:
     components: "https://components-api.components-api.svc.cluster.local:8443"
   openapi_docs:
     components: true
+    external_servers:
+      - url: "https://127.0.0.1:30003"
+        description: "External server."
+      - url: "https://127.0.0.1:30003"
+        description: "Internal server, only reachable from within toolforge."
 
 resources:
   limits:

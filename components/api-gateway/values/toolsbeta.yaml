@@ -1,4 +1,4 @@
-chartVersion: 0.0.75-20250805004735-9b30c822
+chartVersion: 0.0.78-20250902142533-4768f899
 chartRepository: toolsbeta
 backends:
   - name: jobs-api
@@ -37,7 +37,11 @@ app:
     components: "https://components-api.components-api.svc.toolsbeta.local:8443"
   openapi_docs:
     components: true
-    external_api_url: "https://api.svc.beta.toolforge.org"
+    external_servers:
+      - url: "https://api.svc.beta.toolforge.org"
+        description: "External server."
+      - url: "https://api.svc.toolsbeta.eqiad1.wikimedia.cloud:30003"
+        description: "Internal server, only reachable from within toolforge."
 
 nginx:
   replicas: 3
