@@ -125,6 +125,26 @@ setup() {
 }
 
 
+@test "jobs-load does not recreate cli-created jobs" {
+    bats_require_minimum_version "$MIN_BATS_VERSION"
+    rand_string="test-$RANDOM"
+    toolforge \
+        jobs \
+        run \
+        --schedule '* * * * *' \
+        --command "echo '$rand_string'" \
+        --image=python3.11 \
+        "$rand_string"
+    toolforge jobs dump > "$rand_string.yaml"
+
+    run --separate-stderr toolforge jobs load "$rand_string.yaml"
+    assert_line --partial "already up to date"
+    run --separate-stderr  toolforge jobs list -o name
+    assert_output "$rand_string"
+
+}
+
+
 teardown() {
     _jobs_teardown
 }
