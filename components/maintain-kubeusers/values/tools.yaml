@@ -25,6 +25,11 @@ quotas:
     citationhunt:
       version: custom1
       jobs: 30
+    cluebotng-review:
+      version: T403964
+      cpu: 16
+      memory: 16
+      pods: 25
     deltabot:
       version: T347951
       cronjobs: 100
