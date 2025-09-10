@@ -33,13 +33,14 @@ setup() {
         run \
         --no-filelog \
         --schedule '* * * * *' \
-        --command "echo '$rand_string'" \
+        --command "echo 'extraword-$rand_string'" \
         --image=python3.11 \
         "$rand_string"
     assert_success
 
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
-    assert_line --partial "$rand_string"
+    assert_success
+    assert_line --partial "extraword-$rand_string"
 }
 
 

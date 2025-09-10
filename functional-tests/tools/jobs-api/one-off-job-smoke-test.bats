@@ -31,12 +31,13 @@ setup() {
         jobs \
         run \
         --no-filelog \
-        --command "for i in \$(seq 5); do echo '$rand_string'; sleep 1; done" \
+        --command "for i in \$(seq 5); do echo 'extraword-$rand_string'; sleep 1; done" \
         --image=python3.11 \
         "$rand_string"
 
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
-    assert_line --partial "$rand_string"
+    assert_success
+    assert_line --partial "extraword-$rand_string"
 }
 
 
