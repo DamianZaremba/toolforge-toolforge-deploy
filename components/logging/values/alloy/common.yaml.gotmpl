@@ -74,6 +74,7 @@ alloy:
 
       local.file_match "pods" {
         path_targets = discovery.relabel.pods.output
+        sync_period = "1s"
       }
 
       loki.source.file "pod_logs" {
