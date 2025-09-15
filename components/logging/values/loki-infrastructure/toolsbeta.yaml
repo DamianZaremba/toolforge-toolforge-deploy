@@ -1,0 +1,6 @@
+loki:
+  storage:
+    bucketNames:
+      chunks: toolsbeta-loki-infrastructure-chunks
+      ruler: toolsbeta-loki-infrastructure-ruler
+      admin: toolsbeta-loki-infrastructure-admin

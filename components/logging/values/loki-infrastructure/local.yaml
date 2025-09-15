@@ -1,0 +1,3 @@
+minio:
+  serviceAccount:
+    create: false

@@ -5,4 +5,5 @@ alloy:
   lokiUrl:
     # In addition to the cluster domain (here cluster.local), the service name
     # might be different if running Loki in non-SingleBinary deployment mode.
+    infrastructure: http://loki-infrastructure.loki.svc.cluster.local:3100/loki/api/v1/push
     tools: http://loki-tools.loki.svc.cluster.local:3100/loki/api/v1/push
