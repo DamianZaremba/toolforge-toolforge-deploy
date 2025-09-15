@@ -1,0 +1,31 @@
+extraObjects:
+{{- $base := (readFile "common.yaml" | fromYaml) -}}
+{{- $base.extraObjects | toYaml | nindent 2 }}
+  # This is needed to workaround https://github.com/grafana/loki/issues/19199
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: loki-tools-allow-single-binary
+    spec:
+      policyTypes:
+        - Ingress
+      podSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/component
+            operator: In
+            # single-binary for local development
+            values: [single-binary]
+        matchLabels:
+          app.kubernetes.io/instance: loki-tools
+          app.kubernetes.io/name: loki-tools
+      ingress:
+        - from:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: alloy
+              podSelector:
+                matchLabels:
+                  app.kubernetes.io/name: alloy
+          ports:
+            - port: http-metrics
+              protocol: TCP
