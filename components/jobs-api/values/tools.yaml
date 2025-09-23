@@ -2,6 +2,8 @@ chartVersion: 0.0.416-20250923131926-45b7b4f9
 chartRepository: tools
 harbor:
   host: tools-harbor.wmcloud.org
+webservice:
+  default_cpu_limit: "1000m"
 certificates:
   internalClusterDomain: "tools.local"
 loki:

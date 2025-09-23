@@ -3,6 +3,7 @@ chartRepository: toolsbeta
 harbor:
   host: toolsbeta-harbor.wmcloud.org
 webservice:
+  default_cpu_limit: "1000m"
   image:
     name: "toolsbeta-harbor.wmcloud.org/toolforge/jobs-api"
 certificates:
