@@ -8,8 +8,7 @@ image:
 quotas:
   overrides:
     add-text:
-      version: T337718
-      cpu: 16
+      version: T337718-2
       memory: 24
     anchor-corrector:
       version: T350484-3
@@ -26,8 +25,8 @@ quotas:
       version: custom1
       jobs: 30
     cluebotng-review:
-      version: T403964
-      cpu: 16
+      version: T403964-2
+      cpu: 25
       memory: 16
       pods: 25
     deltabot:
@@ -58,10 +57,8 @@ quotas:
       version: T353104-2
       memory: 32
     video-answer-tool:
-      version: T376505-2
-      cpu: 6
+      version: T376505-3
       pod_cpu: 6
-      memory: 8
       pod_memory: 8
     wd-shex-infer:
       version: T357209-3
@@ -71,8 +68,8 @@ quotas:
       version: T315719
       cronjobs: 100
     yifeibot:
-      version: T329350-3
-      cpu: 10
+      version: T329350-4
+      cpu: 20
       memory: 12
       pods: 20
     multichill:
