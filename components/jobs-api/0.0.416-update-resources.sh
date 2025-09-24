@@ -27,13 +27,13 @@ update_cronjob_resources() {
         cat <<EOC
         Would have run:
     :\$ kubectl -n "$namespace" patch cronjob "$cronjob" --type json -p='[
-        {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/limits/cpu", "value":"4000m"},
+        {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/limits/cpu", "value":"1000m"},
         {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu", "value":"100m"}
     ]'
 EOC
     else
         kubectl -n "$namespace" patch cronjob "$cronjob" --type json -p='[
-            {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/limits/cpu", "value":"4000m"},
+            {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/limits/cpu", "value":"1000m"},
             {"op": "replace", "path": "/spec/jobTemplate/spec/template/spec/containers/0/resources/requests/cpu", "value":"100m"}
         ]'
     fi
@@ -48,13 +48,13 @@ update_deployment_resources() {
         cat <<EOC
         Would have run:
         :\$ kubectl -n "$namespace" patch deployment "$deployment" --type json -p='[
-            {"op": "replace", "path": "/spec/template/spec/containers/0/resources/limits/cpu", "value":"4000m"},
+            {"op": "replace", "path": "/spec/template/spec/containers/0/resources/limits/cpu", "value":"1000m"},
             {"op": "replace", "path": "/spec/template/spec/containers/0/resources/requests/cpu", "value":"100m"}
         ]'
 EOC
     else
         kubectl -n "$namespace" patch deployment "$deployment" --type json -p='[
-            {"op": "replace", "path": "/spec/template/spec/containers/0/resources/limits/cpu", "value":"4000m"},
+            {"op": "replace", "path": "/spec/template/spec/containers/0/resources/limits/cpu", "value":"1000m"},
             {"op": "replace", "path": "/spec/template/spec/containers/0/resources/requests/cpu", "value":"100m"}
         ]'
     fi
