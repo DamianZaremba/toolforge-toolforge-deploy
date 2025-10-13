@@ -110,13 +110,11 @@ alloy:
         // }
 
         stage.limit {
-          rate  = 5
-          burst = 100
-          drop  = true
-
-          // This is per-node, so no need to cache entries for that many tools.
-          // 500 is still totally overkill.
-          max_distinct_labels = 500
+          # there's ~40 pods per worker, so worst case scenario a pod gets 10 logs/s ensured
+          rate  = 400
+          burst = 4000
+          # we can't drop as we are using files as the source, and files have many lines that are processed at once and that will trigger the rate limiting.
+          # instead we just queue the logs
         }
 
         stage.tenant {
