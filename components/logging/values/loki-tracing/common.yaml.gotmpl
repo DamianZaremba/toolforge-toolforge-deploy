@@ -1,0 +1,61 @@
+nameOverride: loki-tracing
+
+gateway:
+  enabled: true
+  containerPort: 8443
+  image:
+    registry: docker-registry.svc.toolforge.org
+    repository: nginx
+    tag: latest
+  service:
+    type: NodePort
+    nodePort: 30004
+    port: 3001
+  ingress:
+    enabled: true
+    annotations: {}
+    tls:
+      - hosts:
+        - {{ (readFile (printf "../%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
+    hosts:
+      - host: {{ (readFile (printf "../%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
+        paths:
+          - path: /
+            pathType: Prefix
+  basicAuth:
+    enabled: true
+    existingSecret: loki-tracing-basic-auth
+  nginxConfig:
+    ssl: true
+
+
+extraObjects:
+  # Block any ingress by default
+#  - apiVersion: networking.k8s.io/v1
+#    kind: NetworkPolicy
+#    metadata:
+#      name: loki-tracing-forbid-ingress
+#    spec:
+#      policyTypes:
+#        - Ingress
+  # This needs to be present on each Loki deployment
+  # to have it provisioned in the right namespace.
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: loki-tracing-allow-dns
+    spec:
+      policyTypes:
+        - Egress
+      podSelector: {}
+      egress:
+        - to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: kube-system
+              podSelector:
+                matchLabels:
+                  k8s-app: kube-dns
+          ports:
+            - protocol: UDP
+              port: 53

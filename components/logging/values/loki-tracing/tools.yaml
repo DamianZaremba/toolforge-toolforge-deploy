@@ -1,0 +1,6 @@
+loki:
+  storage:
+    bucketNames:
+      chunks: tools-loki-tracing-chunks
+      ruler: tools-loki-tracing-ruler
+      admin: tools-loki-tracing-admin

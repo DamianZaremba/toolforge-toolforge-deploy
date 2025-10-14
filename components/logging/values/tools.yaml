@@ -1,5 +1,7 @@
 loki:
   chartVersion: 6.30.1
+lokiTracing:
+  hostname: loki-tracing-write.loki.svc.tools.local
 alloy:
   chartVersion: 1.1.1
   lokiUrl:

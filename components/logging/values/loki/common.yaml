@@ -43,8 +43,6 @@ networkPolicy:
     cidrs:
       - 127.0.0.1/32
 
-gateway:
-  enabled: false
 lokiCanary:
   enabled: false
 test:

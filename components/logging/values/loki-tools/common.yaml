@@ -1,9 +1,11 @@
 nameOverride: loki-tools
 
+gateway:
+  enabled: false
+
 extraObjects:
-  # This only needs to be present on one Loki deployment
+  # This needs to be present on each Loki deployment
   # to have it provisioned in the right namespace.
-  # We use loki-tools for that.
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
