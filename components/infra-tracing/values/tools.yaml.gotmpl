@@ -1,0 +1,21 @@
+loki:
+  chartVersion: 6.45.2
+  storage:
+    bucketNames:
+      chunks: tools-loki-infra-tracing-chunks
+      ruler: tools-loki-infra-tracing-ruler
+      admin: tools-loki-infra-tracing-admin
+
+infraTracingLoki:
+  htpasswd: {{ exec "../../helpers/get_secret.sh" (list "infraTracingLokiHtpasswd") | quote }}
+
+gateway:
+  ingress:
+    tls:
+      - hosts:
+        - infra-tracing-loki-write.loki.svc.tools.local
+    hosts:
+      - host: infra-tracing-loki-write.loki.svc.tools.local
+        paths:
+          - path: /
+            pathType: Prefix

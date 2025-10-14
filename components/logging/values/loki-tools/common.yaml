@@ -1,9 +1,30 @@
 nameOverride: loki-tools
 
+gateway:
+  enabled: false
+
+networkPolicy:
+  enabled: true
+  ingress:
+    podSelector:
+      matchLabels:
+        app.kubernetes.io/name: alloy
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: alloy
+  externalStorage:
+    cidrs:
+      # object.eqiad1.wikimediacloud.org
+      - 185.15.56.161/32
+      - 2a02:ec80:a000:4000::1/128
+    ports: [443]
+  metrics:
+    cidrs:
+      - 127.0.0.1/32
+
 extraObjects:
-  # This only needs to be present on one Loki deployment
+  # This needs to be present on each Loki deployment
   # to have it provisioned in the right namespace.
-  # We use loki-tools for that.
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:

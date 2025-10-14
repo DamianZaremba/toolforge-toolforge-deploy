@@ -1,0 +1,115 @@
+nameOverride: infra-tracing-loki
+
+gateway:
+  enabled: true
+  containerPort: 8443
+  image:
+    registry: docker-registry.svc.toolforge.org
+    repository: nginx
+    tag: latest
+  service:
+    type: NodePort
+    nodePort: 30004
+    port: 8443
+  ingress:
+    enabled: true
+  basicAuth:
+    enabled: true
+    existingSecret: infra-tracing-loki-basic-auth
+  nginxConfig:
+    ssl: true
+    serverSnippet: |
+      ssl_certificate     /etc/tls/tls.crt;
+      ssl_certificate_key /etc/tls/tls.key;
+  extraVolumes:
+    - name: infra-tracing-loki-tls
+      secret:
+        secretName: infra-tracing-loki-tls-secret
+  extraVolumeMounts:
+    - name: infra-tracing-loki-tls
+      mountPath: /etc/tls
+      readOnly: true
+  readinessProbe:
+    httpGet: null
+    exec:
+      command:
+      - curl
+      - --fail
+      - --silent
+      - --insecure # Required for the curl command to work
+      - https://localhost:8443/
+
+networkPolicy:
+  enabled: true
+  externalStorage:
+    cidrs:
+      # object.eqiad1.wikimediacloud.org
+      - 185.15.56.161/32
+      - 2a02:ec80:a000:4000::1/128
+    ports: [443]
+  metrics:
+    cidrs:
+      - 127.0.0.1/32
+
+extraObjects:
+  # This needs to be present on each Loki deployment
+  # to have it provisioned in the right namespace.
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: infra-tracing-loki-allow-dns
+    spec:
+      policyTypes:
+        - Egress
+      podSelector: {}
+      egress:
+        - to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: kube-system
+              podSelector:
+                matchLabels:
+                  k8s-app: kube-dns
+          ports:
+            - protocol: UDP
+              port: 53
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: infra-tracing-loki-allow-gateway-ingress
+      namespace: infra-tracing-loki
+    spec:
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: infra-tracing-loki
+          app.kubernetes.io/instance: infra-tracing-loki
+          app.kubernetes.io/component: gateway
+      policyTypes:
+        - Ingress
+      ingress:
+        - from:
+          ports:
+            - protocol: TCP
+              port: 8443
+  - apiVersion: cert-manager.io/v1
+    kind: Issuer
+    metadata:
+      name: infra-tracing-loki-tls
+    spec:
+      selfSigned: {}
+  - apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: infra-tracing-loki-tls
+      namespace: infra-tracing-loki
+    spec:
+      secretName: infra-tracing-loki-tls-secret
+      issuerRef:
+        name: infra-tracing-loki-tls
+        kind: Issuer
+        group: cert-manager.io
+      commonName: infra-tracing-loki.loki.svc.cluster.local
+      dnsNames:
+        - infra-tracing-loki.loki.svc.cluster.local
+        - infra-tracing-loki-write.loki.svc.tools.local
+        - infra-tracing-loki-write.loki.svc.toolsbeta.local
