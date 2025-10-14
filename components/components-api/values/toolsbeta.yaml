@@ -1,4 +1,4 @@
-chartVersion: 0.0.168-20251014130725-6239a491
+chartVersion: 0.0.169-20251014142952-77be153f
 chartRepository: toolsbeta
 config:
   debug: true
