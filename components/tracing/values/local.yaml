@@ -1,0 +1,23 @@
+loki:
+  chartVersion: 6.45.2
+  storage:
+    bucketNames:
+      chunks: chunks
+      ruler: ruler
+      admin: admin
+
+lokiTracing:
+  # username: loki-tracing, password: password, generated with:
+  # htpasswd -c .htpasswd loki-tracing
+  htpasswd: "loki-tracing:$apr1$koLXwviI$8SSBVyyXBc.Umm5n/Bev01"
+
+gateway:
+  ingress:
+    tls:
+      - hosts:
+        - loki-tracing.loki.svc.cluster.local
+    hosts:
+      - host: loki-tracing.loki.svc.cluster.local
+        paths:
+          - path: /
+            pathType: Prefix
