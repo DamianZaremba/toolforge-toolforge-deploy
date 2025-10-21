@@ -1,4 +1,4 @@
-chartVersion: 0.0.169-20251014142952-77be153f
+chartVersion: 0.0.170-20251021000227-485a8fbc
 # Use tools for now, as we are developing too quick without deploying
 # and the toolsbeta images are getting deleted
 chartRepository: tools
