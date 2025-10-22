@@ -1,6 +1,9 @@
-chartVersion: 4.11.5
+chartVersion: 4.13.3
 controller:
   replicaCount: 1
+  image:
+    tag: "v1.13.3"
+    digest: sha256:2f22420d180ebe195c28efe9a7a1d135efa0ed09ea1be92e1c482ba0268b3b1c
   extraArgs:
     default-backend-service: null
   config:
@@ -10,4 +13,4 @@ controller:
 # When changing the chart version, make sure to update kubeVersion
 # See:
 #    https://github.com/kubernetes/ingress-nginx/tree/main#supported-versions-table
-kubeVersion: ">=1.26 <=1.30"
+kubeVersion: ">=1.29 <=1.33"
