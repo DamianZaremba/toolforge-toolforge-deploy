@@ -6,8 +6,8 @@ controller:
   name: controller
   replicaCount: 3
   image:
-    tag: "v1.11.5"
-    digest: sha256:9c1b15cf9a5aa97527ec254fdc403fb407a45d5ca60968819e24c296ddf33c56
+    tag: "v1.13.3"
+    digest: sha256:2f22420d180ebe195c28efe9a7a1d135efa0ed09ea1be92e1c482ba0268b3b1c
     repository: docker-registry.svc.toolforge.org/nginx-ingress-controller
     pullPolicy: IfNotPresent
     # www-data -> uid 101
