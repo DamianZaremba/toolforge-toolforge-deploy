@@ -6,6 +6,9 @@ kubeVersion: ">=1.29 <=1.33"
 
 # override resources, in toolsbeta the worker VMs are smaller
 controller:
+  image:
+    tag: "v1.13.3"
+    digest: sha256:2f22420d180ebe195c28efe9a7a1d135efa0ed09ea1be92e1c482ba0268b3b1c
   resources:
     limits:
       cpu: 1
