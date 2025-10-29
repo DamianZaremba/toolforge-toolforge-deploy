@@ -28,3 +28,8 @@ environments:
     values:
       # needed to use the chartVersion
       - values/{{ .Environment.Name }}.yaml*
+
+helmDefaults:
+  # Bump timeout to half an hour since upgrading all of the node pods takes
+  # a really long time
+  timeout: 1800
