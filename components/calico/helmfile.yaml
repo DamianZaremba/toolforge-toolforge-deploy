@@ -30,6 +30,6 @@ environments:
       - values/{{ .Environment.Name }}.yaml*
 
 helmDefaults:
-  # Bump timeout to half an hour since upgrading all of the node pods takes
-  # a really long time
-  timeout: 1800
+  # Bump timeout to an hour since upgrading all of the node pods takes
+  # a really really long time
+  timeout: 3600
