@@ -65,6 +65,59 @@ setup_file() {
 }
 
 
+@test "ensure default mount is none for buildservice image" {
+    rand_string="test-$RANDOM"
+    user="${USER#*.}"
+    image="tool-$user/tool-$user:latest"
+    toolforge \
+        jobs \
+        run \
+        --command="date" \
+        --image="$image" \
+        "$rand_string"
+
+    run --separate-stderr toolforge jobs show "$rand_string"
+
+    assert_line --regexp 'Mounts: *| none'
+}
+
+
+@test "ensure mount=all sets the mount all for buildservice image" {
+    rand_string="test-$RANDOM"
+    user="${USER#*.}"
+    image="tool-$user/tool-$user:latest"
+    toolforge \
+        jobs \
+        run \
+        --command="date" \
+        --mount=all \
+        --image="$image" \
+        "$rand_string"
+
+    run --separate-stderr toolforge jobs show "$rand_string"
+
+    assert_line --regexp 'Mounts: *| all'
+}
+
+
+@test "ensure mount=none sets mount none for buildservice image" {
+    rand_string="test-$RANDOM"
+    user="${USER#*.}"
+    image="tool-$user/tool-$user:latest"
+    toolforge \
+        jobs \
+        run \
+        --command="date" \
+        --mount=none \
+        --image="$image" \
+        "$rand_string"
+
+    run --separate-stderr toolforge jobs show "$rand_string"
+
+    assert_line --regexp 'Mounts: *| none'
+}
+
+
 @test "delete build" {
     local build_id
     build_id="$(toolforge build list --json | jq -r '.builds[0].build_id')"
