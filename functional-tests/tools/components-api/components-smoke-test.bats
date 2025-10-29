@@ -45,15 +45,11 @@ get_toolforge_url() {
 }
 
 @test "config create works" {
-    toolforge components config delete --yes-im-sure &>/dev/null || :
     run --separate-stderr toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
     assert_success
 }
 
 @test "config show works" {
-    toolforge components config delete --yes-im-sure &>/dev/null || :
-    toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
-
     run --separate-stderr toolforge components config show
     assert_success
     assert_line --partial "component1:"
@@ -208,9 +204,6 @@ get_toolforge_url() {
 }
 
 @test "config delete works" {
-    toolforge components config delete --yes-im-sure &>/dev/null || :
-    toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
-
     run --separate-stderr toolforge components config delete --yes-im-sure
     assert_success
 
