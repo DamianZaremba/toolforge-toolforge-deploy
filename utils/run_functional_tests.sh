@@ -253,7 +253,7 @@ source "$test_tool_home/venv/bin/activate" && bats_core_pkg \\
     --recursive \\
     --setup-suite-file "${test_tool_home}/toolforge-deploy/functional-tests/setup_suite.bash" \\
     "${test_tool_home}/toolforge-deploy/functional-tests/${dir}" \\
-    "${extra_args[@]}"
+    ${extra_args[@]}
 EOM
     # shellcheck disable=SC1091
     source "$test_tool_home/venv/bin/activate" && bats_core_pkg \
