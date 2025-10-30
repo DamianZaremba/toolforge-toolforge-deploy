@@ -8,7 +8,8 @@ set -o nounset
 setup_file() {
     load "components-common"
     export BATS_NO_PARALLELIZE_WITHIN_FILE=true
-    flush_everything
+
+    [[ ! -f "$BATS_SKIP_FILE" ]] && flush_everything
 }
 
 setup() {
