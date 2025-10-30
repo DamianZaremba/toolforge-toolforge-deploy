@@ -244,9 +244,14 @@ run_tests() {
 
     # we need to be in the home of the tool, where the jobs will create the logs
     cd "$test_tool_home"
+    local extra_env=""
+    if [[ "${TEST_TOOL_UID:-}" != "" ]]; then
+        extra_env="env TEST_TOOL_UID='$TEST_TOOL_UID'"
+    fi
     cat <<EOM
-## Command run for easy copy-paste
-source "$test_tool_home/venv/bin/activate" && bats_core_pkg \\
+## Command run for easy copy-paste (as $USER)
+source "$test_tool_home/venv/bin/activate" \\
+&& $extra_env bats_core_pkg \\
     --verbose-run \\
     --pretty \\
     --timing \\
