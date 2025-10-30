@@ -43,7 +43,7 @@ app:
     components: "https://components-api.components-api.svc.tools.local:8443"
     logs: "https://logs-api.logs-api.svc.tools.local:8443"
   openapi_docs:
-    logs: false
+    logs: true
 
 nginx:
   replicas: 3
