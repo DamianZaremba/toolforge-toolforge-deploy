@@ -177,7 +177,7 @@ setup_toolforge_deploy() {
     git fetch --all 2>/dev/null
     if ! git branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
         echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\". Defaulting to \"main\""
-        branch="main"
+        exit 1
     fi
 
     git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
