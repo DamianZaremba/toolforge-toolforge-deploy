@@ -1,6 +1,11 @@
 loki:
+  chartVersion: 6.30.1
   storage:
     bucketNames:
       chunks: toolsbeta-loki-tools-chunks
       ruler: toolsbeta-loki-tools-ruler
       admin: toolsbeta-loki-tools-admin
+alloy:
+  chartVersion: 1.1.1
+  lokiUrl:
+    tools: http://loki-tools-write.loki.svc.toolsbeta.local:3100/loki/api/v1/push

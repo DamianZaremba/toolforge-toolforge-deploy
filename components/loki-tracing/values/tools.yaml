@@ -1,4 +1,5 @@
 loki:
+  chartVersion: 6.30.1
   storage:
     bucketNames:
       chunks: tools-loki-tracing-chunks

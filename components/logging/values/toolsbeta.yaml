@@ -1,8 +1,0 @@
-loki:
-  chartVersion: 6.30.1
-lokiTracing:
-  hostname: loki-tracing-write.loki.svc.toolsbeta.local
-alloy:
-  chartVersion: 1.1.1
-  lokiUrl:
-    tools: http://loki-tools-write.loki.svc.toolsbeta.local:3100/loki/api/v1/push
