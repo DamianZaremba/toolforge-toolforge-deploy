@@ -16,9 +16,9 @@ gateway:
     annotations: {}
     tls:
       - hosts:
-        - {{ (readFile (printf "../%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
+        - {{ (readFile (printf "./%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
     hosts:
-      - host: {{ (readFile (printf "../%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
+      - host: {{ (readFile (printf "./%s.yaml" .Environment.Name) | fromYaml).lokiTracing.hostname }}
         paths:
           - path: /
             pathType: Prefix
