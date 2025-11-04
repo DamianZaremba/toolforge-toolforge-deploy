@@ -21,6 +21,9 @@ help() {
             -h|--help
                 Show this help
 
+            -u|--url
+                toolforge-deploy repository url. defaults to ${TOOLFORGE_DEPLOY_URL}
+
             -r|--refetch-tests
                 If passed, it will make sure the tests are in the latest version
                 by fetching the latest commit from the toolforge deploy repo:
@@ -168,15 +171,21 @@ setup_venv() {
 setup_toolforge_deploy() {
     local refetch="${1?}"
     local branch="${2?}"
+    local repo_url="${3?}"
     echo "@@@@@@@@ Configuring toolforge-deploy for $USER"
     if ! [[ -e "$HOME"/toolforge-deploy ]]; then
-        git clone "$TOOLFORGE_DEPLOY_URL" "$HOME"/toolforge-deploy
+        git clone "$repo_url" "$HOME"/toolforge-deploy
     fi
 
     cd "$HOME"/toolforge-deploy
+    if ! git remote get-url origin | grep -qwE "$repo_url"; then
+        echo "Origin url mismatched, setting to \"$repo_url\""
+        git remote set-url origin "$repo_url"
+    fi
+
     git fetch --all 2>/dev/null
     if ! git branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
-        echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\". Defaulting to \"main\""
+        echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\"."
         exit 1
     fi
 
@@ -186,7 +195,7 @@ setup_toolforge_deploy() {
     fi
 
     cd -
-    echo "@@@@@@@@ Configured toolforge-deploy for $USER. Branch: $(git -C "$HOME"/toolforge-deploy branch | grep '^\*')"
+    echo "@@@@@@@@ Configured toolforge-deploy for $USER. Branch: $branch. Repo: $repo_url"
 }
 
 get_component_test_tags() {
@@ -276,6 +285,7 @@ main() {
     local refetch="no"
     local verbose="no"
     local git_branch="main"
+    local repo_url="$TOOLFORGE_DEPLOY_URL"
     local -a components=()
     local opts \
         test_tool_uid \
@@ -283,7 +293,7 @@ main() {
         test_tool_name=""
 
 
-    opts=$(getopt -o 'hrvt:b:c:' --long 'help,verbose,refetch-tests,test-tool:,branch:,component:' -n "$0" -- "$@")
+    opts=$(getopt -o 'hrvt:b:c:u:' --long 'help,verbose,refetch-tests,test-tool:,branch:,component:,url:' -n "$0" -- "$@")
     # shellcheck disable=SC2181
     if [[ $? -ne 0 ]]; then
         echo 'Wrong options' >&2
@@ -318,6 +328,11 @@ main() {
             ;;
             '-b'|'--branch')
                 git_branch="$2"
+                shift 2
+                continue
+            ;;
+            '-u'|'--url')
+                repo_url="$2"
                 shift 2
                 continue
             ;;
@@ -395,8 +410,8 @@ main() {
         sudo cp "$(realpath "$0")" "$test_tool_home/$SOURCE_FILE_NAME"
 
         sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_venv"
-        setup_toolforge_deploy "$refetch" "$git_branch"
-        sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_toolforge_deploy \"\$@\"" -- "$refetch" "$git_branch"
+        setup_toolforge_deploy "$refetch" "$git_branch" "$repo_url"
+        sudo -i -u "$TEST_TOOL_UID" bash -c "source $test_tool_home/$SOURCE_FILE_NAME && setup_toolforge_deploy \"\$@\"" -- "$refetch" "$git_branch" "$repo_url"
 
         local components_str="all"
         if [[ ${#components[@]} -gt 0 ]]; then
@@ -429,7 +444,7 @@ main() {
         echo -e "\n"
 
         setup_venv
-        setup_toolforge_deploy "$refetch" "$git_branch"
+        setup_toolforge_deploy "$refetch" "$git_branch" "$repo_url"
 
         local components_str="all"
         if [[ ${#components[@]} -gt 0 ]]; then
