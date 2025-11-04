@@ -167,7 +167,7 @@ EOC
     bats_require_minimum_version "$MIN_BATS_VERSION"
     # reuses the deployment created earlier
     local deployment_id=$(toolforge components deployment list --json | jq -r '.data.deployments[-1].deploy_id')
-    retry "toolforge components deployment show $deployment_id --json | jq -e '.status == \"successful\"'" 300
+    wait_for_successful_deployment "${deployment_id}"
     toolforge jobs dump > "$BATS_FILE_TMPDIR"/before_generate.yaml
 
     # Generate config works
@@ -181,10 +181,9 @@ EOC
     assert_success
 
     # this one should be fast as it reuses the build and the job
-    run --separate-stderr toolforge components deployment create
-    local deployment_id=$(toolforge components deployment list --json | jq -r '.data.deployments[-1].deploy_id')
-    retry "toolforge components deployment show $deployment_id --json | jq -e '.status == \"successful\"'"
-    run --separate-stderr  toolforge jobs dump
+    local deployment_id=$(create_deployment)
+    wait_for_successful_deployment "${deployment_id}"
+    run --separate-stderr toolforge jobs dump
 
     # The job the deploy generates is the same that was there
     assert_output "$(cat "$BATS_FILE_TMPDIR"/before_generate.yaml)"

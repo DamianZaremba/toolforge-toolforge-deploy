@@ -52,19 +52,15 @@ EOC
 @test "creating deploy with same ref reuses the build" {
     toolforge components config delete --yes-im-sure &>/dev/null || :
     toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
-    toolforge components deployment create
-    retry "toolforge components deployment list --json | jq -e '.data.deployments[0].status == \"successful\"'"
+    local deployment_id=$(create_deployment)
+    wait_for_successful_deployment "${deployment_id}"
     old_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
 
-    toolforge components deployment create
-    retry "toolforge components deployment list --json | jq -e '.data.deployments[0].builds.component1.build_id != \"no-id-yet\"'"
+    local deployment_id=$(create_deployment)
+    wait_for_successful_deployment "${deployment_id}"
     new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
 
     assert_equal "$old_build_id" "$new_build_id"
-
-    # make sure it worked, short-circuit if it failed
-    retry "toolforge components deployment show --json | jq -e '.status | IN (\"successful\", \"failed\", \"skipped\", \"cancelled\")'" 300
-    retry "toolforge components deployment show --json | jq -e '.status == \"successful\"'" 2
 }
 
 
@@ -72,17 +68,13 @@ EOC
     toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config-with-scheduled.yaml
     old_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
 
-    toolforge components deployment create
-    retry "toolforge components deployment list --json | jq -e '.data.deployments[0].builds.component1.build_id != \"no-id-yet\"'"
+    local deployment_id=$(create_deployment)
+    wait_for_successful_deployment "${deployment_id}"
     first_component_new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
     second_component_new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.cron1.build_id')
 
     assert_equal "$old_build_id" "$first_component_new_build_id"
     assert_equal "$old_build_id" "$second_component_new_build_id"
-
-    # make sure it worked, short-circuit if it failed
-    retry "toolforge components deployment show --json | jq -e '.status | IN (\"successful\", \"failed\", \"skipped\", \"cancelled\")'" 300
-    retry "toolforge components deployment show --json | jq -e '.status == \"successful\"'" 2
 }
 
 
