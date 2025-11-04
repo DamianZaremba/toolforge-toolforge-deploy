@@ -40,10 +40,6 @@ components:
 EOC
 }
 
-get_toolforge_url() {
-    grep api_gateway -A 2 /etc/toolforge/common.yaml | grep url: | grep -o 'http.*$'
-}
-
 @test "config create works" {
     run --separate-stderr toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
     assert_success
@@ -111,10 +107,9 @@ get_toolforge_url() {
 }
 
 @test "creating a deployment with invalid token fails" {
-    local toolforge_url=$(get_toolforge_url)
     local invalid_token="3fae991e-193c-4b86-9f6a-im1nv4l1d"
 
-    run --separate-stderr bash -c "curl --insecure -X POST '$toolforge_url/components/v1/tool/$TOOL_NAME/deployment?token=$invalid_token' | jq"
+    run --separate-stderr bash -c "curl --insecure -X POST '$TOOLFORGE_API_URL/components/v1/tool/$TOOL_NAME/deployment?token=$invalid_token' | jq"
     assert_success
     assert_line --partial "does not match the tool's token"
 }
@@ -132,13 +127,12 @@ get_toolforge_url() {
 }
 
 @test "can create deployment using the token" {
-    local toolforge_url=$(get_toolforge_url)
     local token=$(toolforge components deploy-token show --json | jq -r '.token')
     # we can only have one deployment at a time, so flush any existing deployments
     flush_deployments
     flush_builds
 
-    run --separate-stderr bash -c "curl --silent -v --insecure -X POST '$toolforge_url/components/v1/tool/$TOOL_NAME/deployment?token=$token' | jq -r .messages.info[0]"
+    run --separate-stderr bash -c "curl --silent -v --insecure -X POST '$TOOLFORGE_API_URL/components/v1/tool/$TOOL_NAME/deployment?token=$token' | jq -r .messages.info[0]"
     assert_success
     assert_line "Deployment for $TOOL_NAME created successfully."
 }
