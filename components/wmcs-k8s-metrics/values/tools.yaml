@@ -1,5 +1,5 @@
 # See [../README.md](README.md) to learn more about these values
-chartVersion: 0.0.22-20250901160038-e95a0711
+chartVersion: 0.0.23-20251110182132-11bda1bb
 chartRepository: tools
 kubeStateMetricsChartVersion: v6.1.4
 metricsServerApiCertsChartVersion: v0.3.0
