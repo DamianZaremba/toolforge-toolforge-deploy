@@ -24,27 +24,7 @@ loki:
     retention_delete_worker_count: 150
     delete_request_store: s3
 
-networkPolicy:
-  enabled: true
-  ingress:
-    podSelector:
-      matchLabels:
-        app.kubernetes.io/name: alloy
-    namespaceSelector:
-      matchLabels:
-        kubernetes.io/metadata.name: alloy
-  externalStorage:
-    cidrs:
-      # object.eqiad1.wikimediacloud.org
-      - 185.15.56.161/32
-      - 2a02:ec80:a000:4000::1/128
-    ports: [443]
-  metrics:
-    cidrs:
-      - 127.0.0.1/32
 
-gateway:
-  enabled: false
 lokiCanary:
   enabled: false
 test:

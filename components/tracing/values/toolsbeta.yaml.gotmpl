@@ -1,0 +1,21 @@
+loki:
+  chartVersion: 6.30.1
+  storage:
+    bucketNames:
+      chunks: toolsbeta-loki-tracing-chunks
+      ruler: toolsbeta-loki-tracing-ruler
+      admin: toolsbeta-loki-tracing-admin
+
+lokiTracing:
+  htpasswd: {{ exec "../../../helpers/get_secret.sh" (list "lokiTracingHtpasswd") | quote }}
+
+gateway:
+  ingress:
+    tls:
+      - hosts:
+        - loki-tracing-write.loki.svc.toolsbeta.local
+    hosts:
+      - host: loki-tracing-write.loki.svc.toolsbeta.local
+        paths:
+          - path: /
+            pathType: Prefix
