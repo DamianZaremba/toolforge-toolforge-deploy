@@ -74,6 +74,12 @@ im_inside_cloudvps() {
 
 get_toolforge_deploy_version() {
     local component="${1?}"
+    local project
+    if im_inside_cloudvps; then
+        project="$(cat /etc/wmcs-project)"
+    else
+        project="local"
+    fi
     if [[ "$component" =~ (cert-manager|kyverno) ]]; then
         # it stores the version in the helmfile
         echo "$component-$(grep version "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/helmfile.yaml | awk '{print $2}' | tail -n 1)"
@@ -81,7 +87,7 @@ get_toolforge_deploy_version() {
     elif [[ "$component" == ingress-nginx-gen2 ]]; then
         # naming does not match the component name
         local dir_name=ingress-nginx
-        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/local.yaml | awk '{print $2}' | tail -n 1)"
+        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
         return 0
     elif [[ "$component" == wmcs-metrics ]]; then
         # naming does not match the component name
@@ -89,11 +95,11 @@ get_toolforge_deploy_version() {
         # FIXME: we are only showing the version of wmcs-metrics, we should show
         # the versions of the other charts as well (tracked in T388382)
         local dir_name=wmcs-k8s-metrics
-        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/local.yaml | awk '{print $2}' | tail -n 1)"
+        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
         return 0
     fi
 
-    echo "$component-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/values/local.yaml* | awk '{print $2}')"
+    echo "$component-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/values/"$project".yaml* | awk '{print $2}')"
     return 0
 }
 
