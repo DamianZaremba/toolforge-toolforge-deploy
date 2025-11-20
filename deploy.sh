@@ -9,7 +9,7 @@ BASE_DIR=$(dirname "$(realpath -s "$0")")
 
 
 cd "$BASE_DIR/components"
-COMPONENTS=(!(helpers))
+COMPONENTS=(!(helpers|common))
 cd -
 
 

@@ -1,0 +1,23 @@
+loki:
+  chartVersion: 6.45.2
+  storage:
+    bucketNames:
+      chunks: chunks
+      ruler: ruler
+      admin: admin
+
+infraTracingLoki:
+  # username: infra-tracing-loki, password: password, generated with:
+  # htpasswd -c .htpasswd infra-tracing-loki
+  htpasswd: "infra-tracing-loki:$apr1$GUWPdURl$BDzFY.dl4MFNqHb9jfQox0"
+
+gateway:
+  ingress:
+    tls:
+      - hosts:
+        - infra-tracing-loki.loki.svc.cluster.local
+    hosts:
+      - host: infra-tracing-loki.loki.svc.cluster.local
+        paths:
+          - path: /
+            pathType: Prefix

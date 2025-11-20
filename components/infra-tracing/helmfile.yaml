@@ -20,23 +20,26 @@ repositories:
     url: https://grafana.github.io/helm-charts
 
 releases:
-  # Instance for storing tool logs.
-  - name: loki-tools
-    namespace: loki
+  - name: infra-tracing-loki-secret
+    chart: wmf-stable/raw
+    version: 0.3.0
+    namespace: infra-tracing-loki
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: infra-tracing-loki-basic-auth
+            type: Opaque
+            stringData:
+              .htpasswd: "{{ .Values.infraTracingLoki.htpasswd | trim }}"
+  - name: infra-tracing-loki
+    namespace: infra-tracing-loki
     createNamespace: true
     chart: grafana/loki
     version: "{{ .Values.loki.chartVersion }}"
     values:
       - ../common/values/loki/common.yaml*
       - ../common/values/loki/{{ .Environment.Name }}.yaml*
-      - values/loki-tools/common.yaml*
-      - values/loki-tools/{{ .Environment.Name }}.yaml*
-  - name: alloy
-    # This needs a separate namespace for network policy reasons.
-    namespace: alloy
-    createNamespace: true
-    chart: grafana/alloy
-    version: "{{ .Values.alloy.chartVersion }}"
-    values:
-      - values/alloy/common.yaml*
-      - values/alloy/{{ .Environment.Name }}.yaml*
+      - values/common.yaml*
+      - values/{{ .Environment.Name }}.yaml*
