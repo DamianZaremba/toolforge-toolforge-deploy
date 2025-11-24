@@ -21,6 +21,10 @@ gateway:
     serverSnippet: |
       ssl_certificate     /etc/tls/tls.crt;
       ssl_certificate_key /etc/tls/tls.key;
+    # The OrgID name must match the OrgID in the Grafana instance where Loki is used as datasource
+    # Force the X-Scope-OrgID header in all location snippets
+    locationSnippet: |
+      proxy_set_header X-Scope-OrgID "tools-teams";
   extraVolumes:
     - name: infra-tracing-loki-tls
       secret:
