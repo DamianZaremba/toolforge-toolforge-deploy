@@ -55,6 +55,10 @@ networkPolicy:
     cidrs:
       - 127.0.0.1/32
 
+loki:
+  limits_config:
+    retention_period: 60d
+
 extraObjects:
   # This needs to be present on each Loki deployment
   # to have it provisioned in the right namespace.
