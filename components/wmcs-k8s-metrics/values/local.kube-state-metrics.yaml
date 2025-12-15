@@ -1,2 +1,5 @@
 ---
 # use this file to override variables, if required
+
+# no need for multiple replicas here
+replicas: 1
