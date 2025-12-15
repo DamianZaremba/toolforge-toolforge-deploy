@@ -1,7 +1,7 @@
 # See [../README.md](README.md) to learn more about these values
 chartVersion: 0.0.23-20251110182132-11bda1bb
 chartRepository: tools
-kubeStateMetricsChartVersion: v6.1.4
+kubeStateMetricsChartVersion: v7.0.0
 metricsServerApiCertsChartVersion: v0.3.0
 metricsServerChartVersion: v3.12.2
 
