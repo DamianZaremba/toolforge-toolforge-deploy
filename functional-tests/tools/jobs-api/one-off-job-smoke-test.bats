@@ -57,21 +57,21 @@ setup() {
 }
 
 
-@test "run a simple one-off job using prebuilt image web variant" {
+@test "verify that base image variants gets translated to web image variants" {
     rand_string="test-$RANDOM"
     toolforge \
         jobs \
         run \
         --no-filelog \
         --command "for i in \$(seq 5); do echo 'extraword-$rand_string'; sleep 1; done" \
-        --image=toolforge-python39-sssd-web \
+        --image=toolforge-python39-sssd-base \
         "$rand_string"
 
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
     assert_success
     assert_line --partial "extraword-$rand_string"
 
-    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest\"'"
+    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest\"'"
     assert_success
 }
 
