@@ -64,7 +64,7 @@ setup() {
         run \
         --no-filelog \
         --command "for i in \$(seq 5); do echo 'extraword-$rand_string'; sleep 1; done" \
-        --image=docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest \
+        --image=docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest \
         "$rand_string"
 
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
@@ -73,21 +73,21 @@ setup() {
 }
 
 
-@test "run a simple one-off job using prebuilt image web variant" {
+@test "run a simple one-off job using prebuilt image base variant" {
     rand_string="test-$RANDOM"
     toolforge \
         jobs \
         run \
         --no-filelog \
         --command "for i in \$(seq 5); do echo 'extraword-$rand_string'; sleep 1; done" \
-        --image=docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest \
+        --image=docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest \
         "$rand_string"
 
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
     assert_success
     assert_line --partial "extraword-$rand_string"
 
-    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest\"'"
+    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest\"'"
     assert_success
 }
 
@@ -106,7 +106,7 @@ setup() {
     assert_success
     assert_line --partial "extraword-$rand_string"
 
-    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest\"'"
+    run bash -c "kubectl get job \"$rand_string\" -o json | jq -e '.spec.template.spec.containers[0].image == \"docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest\"'"
     assert_success
 }
 
@@ -114,7 +114,7 @@ setup() {
 @test "simple one-off k8s job using web image variant get parsed correctly" {
     rand_string="test-$RANDOM"
     tool_name="${USER#*.}"
-    web_image_variant="docker-registry.tools.wmflabs.org/toolforge-python39-sssd-web:latest"
+    web_image_variant="docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest"
 
     run --separate-stderr kubectl create -f - <<EOF
 apiVersion: batch/v1
