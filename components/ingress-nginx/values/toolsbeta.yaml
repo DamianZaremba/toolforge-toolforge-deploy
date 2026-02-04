@@ -1,8 +1,8 @@
-chartVersion: 4.13.3
+chartVersion: 4.14.3
 # When changing the chart version, make sure to update kubeVersion
 # See:
 #    https://github.com/kubernetes/ingress-nginx/tree/main#supported-versions-table
-kubeVersion: ">=1.29 <=1.33"
+kubeVersion: ">=1.30 <=1.34"
 
 # override resources, in toolsbeta the worker VMs are smaller
 controller:
