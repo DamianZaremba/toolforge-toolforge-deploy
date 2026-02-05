@@ -27,6 +27,7 @@ type: php8.2
 # test that we don't consider extra_args unknown T380141
 extra_args: ""
 replicas: 1
+backend: kubernetes
 EOT
     run --separate-stderr toolforge webservice start --template=service.template
     assert_success
@@ -65,6 +66,7 @@ some_stray_key: something
 mem: 512Mi
 replicas: 1
 type: php8.2
+backend: kubernetes
 EOT
     run toolforge webservice start --template=service.template
     assert_success

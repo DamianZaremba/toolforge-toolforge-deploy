@@ -12,38 +12,40 @@ setup() {
 
 setup_file() {
     # cleanup just in case
-    toolforge webservice stop &>/dev/null || :
+    toolforge webservice --backend=jobs-api stop &>/dev/null || :
     rm -f "service.manifest"
     rm -f "service.template"
 }
 
 
-@test "status of stopped webservice" {
-    run --separate-stderr toolforge webservice --backend=kubernetes status
+@test "status of stopped jobs-api webservice" {
+    run --separate-stderr toolforge webservice --backend=jobs-api status
     assert_success
     assert_line --partial "webservice is not running"
 }
 
 
-@test "start webservice" {
-    run --separate-stderr toolforge webservice --backend=kubernetes start
+@test "start webservice defaults to jobs-api backend" {
+    run --separate-stderr toolforge webservice start
     assert_success
     assert_line --partial "Starting webservice"
 
     run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice of type php7.4 is running"
+
+    retry "grep 'backend: jobs-api' '$HOME/service.manifest'" 100
 }
 
 
-@test "get logs" {
+@test "get logs of jobs-api webservice" {
     run --separate-stderr retry "toolforge webservice logs"
     assert_success
     assert_line --partial "/usr/sbin/lighttpd"
 }
 
 
-@test "restart" {
+@test "restart jobs-api webservice" {
     last_line=$(toolforge webservice logs | tail -n 1)
     run --separate-stderr toolforge webservice logs
     assert_success
@@ -58,7 +60,7 @@ setup_file() {
 }
 
 
-@test "can be reached by external url" {
+@test "jobs-api webservice can be reached by external url" {
     tool="${USER#*.}"
 
     case $PROJECT in
@@ -79,22 +81,14 @@ setup_file() {
 }
 
 
-@test "stop" {
+@test "stop jobs-api webservice" {
     run --separate-stderr toolforge webservice stop
     assert_success
     assert_line "Stopping webservice"
 
-    run --separate-stderr toolforge webservice --backend=kubernetes status
+    run --separate-stderr toolforge webservice status
     assert_success
     assert_line --partial "webservice is not running"
-}
-
-
-@test "shell starts and echoes" {
-    random_token="$RANDOM-token"
-    run --separate-stderr bash -c "toolforge webservice php7.4 shell -- echo '$random_token'"
-    assert_success
-    assert_line --partial "$random_token"
 }
 
 
