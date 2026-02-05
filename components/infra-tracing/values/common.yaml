@@ -58,6 +58,8 @@ networkPolicy:
 loki:
   limits_config:
     retention_period: 60d
+    max_query_series: 5000
+    query_timeout: 3m
 
 extraObjects:
   # This needs to be present on each Loki deployment
