@@ -45,10 +45,10 @@ setup_file() {
 
 @test "run job with built image" {
     rand_string="test-$RANDOM"
-    # need the mount=all for the results
     user="${USER#*.}"
     image="tool-$user/tool-$user:latest"
     command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out"
+    # need the mount=all for the results
     toolforge \
         jobs \
         run \
@@ -62,6 +62,32 @@ setup_file() {
     # the `launcher` prefix is not shown in the job list/show, only from k8s
     run --separate-stderr bash -c "kubectl get pod -l "app.kubernetes.io/name=$rand_string" -o json | jq '.items[0].spec.containers[0].command[-1]'"
     assert_line --partial "launcher $command"
+}
+
+
+@test "run job with built image passing SHA, returns the sha" {
+    # we might want to move this out of the builds api tests
+    rand_string="test-$RANDOM"
+    user="${USER#*.}"
+    image="$(toolforge build show --json | jq -r '.build.destination_image')"
+    short_name="${image#*/}"
+
+    [[ $image =~ @sha ]] || exit 1
+    command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out"
+    toolforge \
+        jobs \
+        run \
+        --wait 120 \
+        --command="$command" \
+        --mount=all \
+        --image="$image" \
+        "$rand_string"
+
+    retry "grep '$rand_string' '$HOME/$rand_string.out'"
+    run --separate-stderr bash -c "kubectl get pod -l "app.kubernetes.io/name=$rand_string" -o json | jq -r '.items[0].spec.containers[0].image'"
+    assert_line "$image"
+    run --separate-stderr toolforge jobs show "$rand_string"
+    assert_line --partial "$short_name"
 }
 
 
