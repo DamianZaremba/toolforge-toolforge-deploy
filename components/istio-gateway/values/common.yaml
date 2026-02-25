@@ -1,0 +1,35 @@
+resources:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: gateway-config
+    data:
+      deployment: |
+        spec:
+          replicas: 2
+      service: |
+        spec:
+          type: NodePort
+          ports:
+            - port: 80
+              nodePort: 30000
+            - $patch: delete
+              port: 15021
+  - apiVersion: gateway.networking.k8s.io/v1
+    kind: Gateway
+    metadata:
+      name: toolforge
+    spec:
+      gatewayClassName: istio
+      infrastructure:
+        parametersRef:
+          group: ""
+          kind: ConfigMap
+          name: gateway-config
+      listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+          allowedRoutes:
+            namespaces:
+              from: All

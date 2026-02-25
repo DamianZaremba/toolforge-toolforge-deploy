@@ -1,0 +1,17 @@
+repositories:
+  - name: wmf-stable
+    url: https://helm-charts.wikimedia.org/stable
+
+releases:
+  - name: toolforge-istio
+    namespace: istio-gateway
+    createNamespace: true
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - values/common.yaml
+
+environments:
+  local: {}
+  tools: {}
+  toolsbeta: {}
