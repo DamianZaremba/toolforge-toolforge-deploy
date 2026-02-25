@@ -2,3 +2,4 @@ builds-api
 jobs-api
 components-api
 direct-api
+logs-api
