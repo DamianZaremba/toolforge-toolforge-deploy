@@ -1,0 +1,10 @@
+This "component" manages the [Gateway API] CRD installation on
+Toolforge. It is a bit non-standard as the CRDs are not available as a
+Helm chart, instead the upstream manifests are applied directly with
+`kubectl apply`.
+
+To update the manifests, use the utils/upgrade_gateway_api.sh script in
+the root of this repository, for example:
+$ utils/upgrade_gateway_api.sh 1.4.1
+
+[Gateway API]: https://gateway-api.sigs.k8s.io/

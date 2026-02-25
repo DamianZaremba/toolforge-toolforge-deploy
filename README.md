@@ -316,3 +316,16 @@ adding tests for new components, that helps filtering out later with
 
 More information:
 <https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Kubernetes#Monitoring>
+
+### Non-Helm components
+
+Occasionally there are use cases for having components that are not
+managed by Helm. (A good example is something that purely manages
+CustomResourceDefinitions and nothing else.) In those cases, instead of
+a `helmfile.yaml`, you can add a `override-deploy.sh` script in the
+component directory, and deploy.sh will call that script instead.
+
+This option should be needed very rarely, please ask if you are unsure
+first. In many cases, using e.g. the `raw` chart is a better option
+than directly applying resources to keep track of individual managed
+resources and have the option for clean uninstalls.
