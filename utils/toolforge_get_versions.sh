@@ -36,6 +36,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["image-config"]="image-config"
     ["ingress-admission"]="ingress-admission"
     ["ingress-nginx"]="ingress-nginx-gen2"
+    ["istio-system"]="istio-base"
     ["jobs-api"]="jobs-api"
     ["jobs-emailer"]="jobs-emailer"
     ["kyverno"]="kyverno"
@@ -151,6 +152,11 @@ show_chart_version() {
     fi
 
     cur_version="$(get_all_charts | grep "^$chart " | awk '{print $9}')"
+    if [[ "$component" == "istio-system" ]]; then
+        # istio-base chart version does not include the component name
+        cur_version="${cur_version/#base-/istio-system-}"
+    fi
+
     td_version=$(get_toolforge_deploy_version "$component")
     if [[ "$cur_version" =~ ^.*-dev-mr-(.*)$ ]]; then
         cur_version="$YELLOW$cur_version$ENDCOLOR"
