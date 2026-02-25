@@ -65,6 +65,14 @@ main() {
     # this script without having to cd to the deployment directory
     cd "$BASE_DIR/components/$component"
 
+    # give components the ability to override the deployment process from
+    # the standard helmfile. this is needed at least for Gateway API CRDs
+    # which are not distributed as a Helm chart
+    if [[ -e "override-deploy.sh" ]]; then
+        exec ./override-deploy.sh
+        exit 0
+    fi
+
     project=$(cat /etc/wmcs-project 2>/dev/null || echo "local")
     # If we got any flags, no env was passed, ex. --wait
     if [[ "${1:-}" != --* ]]; then
@@ -93,9 +101,9 @@ main() {
     # use -i (interactive) to ask for confirmation for changing
     # live cluster state if stdin is a tty
     if [[ -t 0 ]]; then
-            interactive_param="-i"
+        interactive_param="-i"
     else
-            interactive_param=""
+        interactive_param=""
     fi
 
     # We use "helmfile diff" + "helmfile sync", instead of "helmfile apply",
