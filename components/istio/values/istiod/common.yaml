@@ -1,0 +1,5 @@
+autoscaleEnabled: false
+replicaCount: 3
+
+global:
+  hub: docker-registry.svc.toolforge.org/istio
