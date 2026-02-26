@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  labels:
+    app.kubernetes.io/component: cronjobs
+    app.kubernetes.io/created-by: maintain-harbor
+    app.kubernetes.io/managed-by: toolforge-jobs-framework
+    app.kubernetes.io/name: test-cronjob-migration
+    app.kubernetes.io/version: "1"
+    jobs.toolforge.org/command-new-format: "yes"
+    jobs.toolforge.org/emails: none
+    jobs.toolforge.org/filelog: "yes"
+    toolforge: tool
+  name: test-cronjob-migration
+  namespace: tool-maintain-harbor
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: cronjobs
+            app.kubernetes.io/created-by: maintain-harbor
+            app.kubernetes.io/managed-by: toolforge-jobs-framework
+            app.kubernetes.io/name: test-cronjob-migration
+            app.kubernetes.io/version: "1"
+            jobs.toolforge.org/command-new-format: "yes"
+            jobs.toolforge.org/emails: none
+            jobs.toolforge.org/filelog: "yes"
+            toolforge: tool
+        spec:
+          containers:
+            - command:
+                - /bin/sh
+                - -c
+                - --
+                - exec 1>>test-cronjob-migration.out;exec 2>>test-cronjob-migration.err;/data/project/maintain-harbor/test_cron_script.sh
+              image: docker-registry.tools.wmflabs.org/toolforge-python37-sssd-base:latest
+              imagePullPolicy: Always
+              name: test-cronjob-migration
+              resources: {}
+              workingDir: /data/project/maintain-harbor
+          restartPolicy: Never
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      ttlSecondsAfterFinished: 30
+  schedule: "*/1 * * * *"
+  startingDeadlineSeconds: 30
+  successfulJobsHistoryLimit: 0
