@@ -36,6 +36,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["image-config"]="image-config"
     ["ingress-admission"]="ingress-admission"
     ["ingress-nginx"]="ingress-nginx-gen2"
+    ["istio"]="istio-base"
     ["jobs-api"]="jobs-api"
     ["jobs-emailer"]="jobs-emailer"
     ["kyverno"]="kyverno"
@@ -88,6 +89,11 @@ get_toolforge_deploy_version() {
         # naming does not match the component name
         local dir_name=ingress-nginx
         echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
+        return 0
+    elif [[ "$component" == istio-base ]]; then
+        # naming does not match the component name
+        local dir_name=istio
+        echo "base-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
         return 0
     elif [[ "$component" == wmcs-metrics ]]; then
         # naming does not match the component name

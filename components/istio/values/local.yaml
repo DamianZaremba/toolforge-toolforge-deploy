@@ -1,0 +1,5 @@
+chartVersion: 1.29.0
+# When changing the chart version, make sure to update kubeVersion
+# See:
+#    https://istio.io/latest/docs/releases/supported-releases/
+kubeVersion: ">=1.31 <=1.35"
