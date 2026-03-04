@@ -84,22 +84,9 @@ get_toolforge_deploy_version() {
         # it stores the version in the helmfile
         echo "$component-$(grep version "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/helmfile.yaml | awk '{print $2}' | tail -n 1)"
         return 0
-    elif [[ "$component" == ingress-nginx-gen2 ]]; then
-        # naming does not match the component name
-        local dir_name=ingress-nginx
-        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
-        return 0
-    elif [[ "$component" == wmcs-metrics ]]; then
-        # naming does not match the component name
-        # additionally, this component contains 4 helm charts
-        # FIXME: we are only showing the version of wmcs-metrics, we should show
-        # the versions of the other charts as well (tracked in T388382)
-        local dir_name=wmcs-k8s-metrics
-        echo "$dir_name-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$dir_name"/values/"$project".yaml | awk '{print $2}' | tail -n 1)"
-        return 0
     fi
 
-    echo "$component-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/values/"$project".yaml* | awk '{print $2}')"
+    echo "$component-$(grep chartVersion "$TOOLFORGE_DEPLOY_REPO"/components/"$component"/values/"$project".yaml* | awk '{print $2}' | tail -n 1)"
     return 0
 }
 
@@ -164,7 +151,7 @@ show_chart_version() {
     fi
 
     cur_version="$(get_all_charts | grep "^$chart " | awk '{print $9}')"
-    td_version=$(get_toolforge_deploy_version "$chart")
+    td_version=$(get_toolforge_deploy_version "$component")
     if [[ "$cur_version" =~ ^.*-dev-mr-(.*)$ ]]; then
         cur_version="$YELLOW$cur_version$ENDCOLOR"
         comment="${YELLOW}mr:$component!${BASH_REMATCH[1]}$ENDCOLOR"
