@@ -6,7 +6,41 @@ resources:
     data:
       deployment: |
         spec:
-          replicas: 2
+          replicas: 3
+          template:
+            spec:
+              containers:
+                - name: istio-proxy
+                  resources:
+                    limits:
+                      cpu: 3
+                      memory: 6G
+                    requests:
+                      cpu: 2
+                      memory: 5G
+              tolerations:
+                - key: "toolforge.org/gateway"
+                  operator: "Equal"
+                  value: "true"
+                  effect: "NoSchedule"
+              affinity:
+                nodeAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 100
+                      preference:
+                        matchExpressions:
+                          - key: kubernetes.io/role
+                            operator: In
+                            values:
+                              - "gateway"
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: ScheduleAnyway
+                  labelSelector:
+                    matchLabels:
+                      gateway.networking.k8s.io/gateway-class-name: istio
+                      gateway.networking.k8s.io/gateway-name: toolforge
       service: |
         spec:
           type: NodePort
@@ -15,6 +49,7 @@ resources:
               nodePort: 30000
             - $patch: delete
               port: 15021
+
   - apiVersion: gateway.networking.k8s.io/v1
     kind: Gateway
     metadata:
