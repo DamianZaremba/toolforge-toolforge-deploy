@@ -147,7 +147,7 @@ show_chart_version() {
     fi
 
     if ! get_all_charts | grep -q "^$chart "; then
-        echo -e "| $name | chart | $chart | ${RED}missing${ENDCOLOR} | $comment |"
+        echo -e "| $component | chart | $chart | ${RED}missing${ENDCOLOR} | $comment |"
         return
     fi
 
