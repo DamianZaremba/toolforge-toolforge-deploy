@@ -5,10 +5,13 @@ config:
   harborRepository: https://toolsbeta-harbor.wmcloud.org
   harborUsername: {{ exec "../../helpers/get_secret.sh" (list "harborUsername") }}
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
-  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.20.7
-  runner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24
-  latestBuilder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.21.5
-  latestRunner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24_0.21.5
+  builder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.21.5
+  runner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24_0.21.5
+  latestBuilder: toolsbeta-harbor.wmcloud.org/toolforge/heroku-builder:24_0.21.7
+  latestRunner: toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:24_0.21.7
+  deprecatedBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:22_20240105
+  deprecatedRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb
+  deprecatedValidUntil: 2026-04-27
 
 certificates:
   internalClusterDomain: toolsbeta.local
