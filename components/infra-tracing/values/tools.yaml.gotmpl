@@ -8,14 +8,3 @@ loki:
 
 infraTracingLoki:
   htpasswd: {{ exec "../../helpers/get_secret.sh" (list "infraTracingLokiHtpasswd") | quote }}
-
-gateway:
-  ingress:
-    tls:
-      - hosts:
-        - infra-tracing-loki-write.loki.svc.tools.local
-    hosts:
-      - host: infra-tracing-loki-write.loki.svc.tools.local
-        paths:
-          - path: /
-            pathType: Prefix
