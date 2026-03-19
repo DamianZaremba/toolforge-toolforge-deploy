@@ -11,8 +11,6 @@ gateway:
     type: NodePort
     nodePort: 30004
     port: 8443
-  ingress:
-    enabled: true
   basicAuth:
     enabled: true
     existingSecret: infra-tracing-loki-basic-auth
