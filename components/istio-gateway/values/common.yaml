@@ -44,11 +44,12 @@ resources:
       service: |
         spec:
           type: NodePort
+          externalTrafficPolicy: Local
           ports:
             - port: 80
               nodePort: 30000
-            - $patch: delete
-              port: 15021
+            - port: 15021
+              nodePort: 30021
 
   - apiVersion: gateway.networking.k8s.io/v1
     kind: Gateway
