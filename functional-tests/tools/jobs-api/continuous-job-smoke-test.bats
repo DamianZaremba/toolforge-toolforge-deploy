@@ -24,6 +24,10 @@ setup() {
     assert_success
 
     retry "grep '$rand_string' '$HOME/$rand_string.out'"
+
+    run toolforge jobs logs "$rand_string"
+    assert_failure
+    assert_line --partial "Job '$rand_string' does not have any logs available"
 }
 
 
@@ -33,7 +37,7 @@ setup() {
         jobs \
         run \
         --no-filelog \
-        --command "while true; do echo 'extraword-$rand_string'; sleep 10; done" \
+        --command "while true; do echo 'extraword-$rand_string'; sleep 1; done" \
         --continuous \
         --mount=all \
         --image=python3.11 \
@@ -42,6 +46,12 @@ setup() {
     run --separate-stderr retry "toolforge jobs logs \"$rand_string\"" 100
     assert_success
     assert_line --partial "extraword-$rand_string"
+
+    run --separate-stderr toolforge jobs logs "$rand_string" --last=1
+    assert_success
+    line_count=$(echo "$output" | grep -c "extraword-$rand_string")
+    # check that only one line is returned
+    [ "$line_count" -eq 1 ]
 }
 
 

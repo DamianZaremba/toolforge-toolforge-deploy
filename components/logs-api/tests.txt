@@ -1,2 +1,3 @@
 direct-api
 jobs-api
+logs-api
