@@ -42,6 +42,11 @@ quotas:
     montage:
       version: T348894
       memory: 16
+    multichill:
+      # this is temporary, as we need at least 1 free cronjob quota to do the
+      # dry run creation for jobs loads
+      version: T399417-1
+      cronjobs: 60
     oabot:
       version: T273601
       memory: 20
@@ -72,8 +77,4 @@ quotas:
       cpu: 20
       memory: 12
       pods: 20
-    multichill:
-      # this is temporary, as we need at least 1 free cronjob quota to do the
-      # dry run creation for jobs loads
-      version: T399417-1
-      cronjobs: 60
+    # Please keep this list in alphabetical order.
