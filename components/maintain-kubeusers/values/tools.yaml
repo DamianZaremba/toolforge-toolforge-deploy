@@ -58,6 +58,12 @@ quotas:
       version: T376338-1
       memory: 9
       pod_memory: 7
+    techactivity:
+      version: T421292
+      cpu: 24
+      jobs: 30
+      memory: 16
+      pod_memory: 8
     toc:
       version: T353104-2
       memory: 32
