@@ -9,9 +9,18 @@ releases:
     chart: wmf-stable/raw
     version: v0.3.0
     values:
-      - values/common.yaml
+      - values/common.yaml*
 
 environments:
-  local: {}
-  tools: {}
-  toolsbeta: {}
+  local:
+    values:
+      # needed to use the resources
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the resources
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the resources
+      - values/{{ .Environment.Name }}.yaml*

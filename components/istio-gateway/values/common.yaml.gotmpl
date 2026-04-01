@@ -82,7 +82,7 @@ resources:
     data:
       deployment: |
         spec:
-          replicas: 3
+          replicas: {{ .Values.replicas }}
           template:
             metadata:
               annotations:
@@ -90,13 +90,7 @@ resources:
             spec:
               containers:
                 - name: istio-proxy
-                  resources:
-                    limits:
-                      cpu: 3
-                      memory: 6G
-                    requests:
-                      cpu: 2
-                      memory: 5G
+                  resources: {{ .Values.resources | toJson }}
               tolerations:
                 - key: "toolforge.org/gateway"
                   operator: "Equal"
