@@ -6,6 +6,7 @@ webservice:
   default_cpu_limit: "1000m"
   image:
     name: "toolsbeta-harbor.wmcloud.org/toolforge/jobs-api"
+  enable_storage: "true"
 certificates:
   internalClusterDomain: "toolsbeta.local"
 loki:

@@ -4,6 +4,7 @@ harbor:
   host: tools-harbor.wmcloud.org
 webservice:
   default_cpu_limit: "1000m"
+  enable_storage: "true"
 certificates:
   internalClusterDomain: "tools.local"
 loki:
