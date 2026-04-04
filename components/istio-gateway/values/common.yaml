@@ -1,4 +1,80 @@
 resources:
+  - apiVersion: telemetry.istio.io/v1
+    kind: Telemetry
+    metadata:
+      name: toolforge-logging
+      # This needs to be in the istio-system namespace to be applied globally.
+      namespace: istio-system
+    spec:
+      # For reference, see
+      #  - https://istio.io/latest/docs/tasks/observability/metrics/telemetry-api/
+      #  - https://istio.io/latest/docs/reference/config/metrics/
+      #  - https://istio.io/latest/docs/reference/config/telemetry/
+      metrics:
+        - providers:
+            - name: prometheus
+          overrides:
+            # Remove grpc-specific labels, not relevant to us
+            - tagOverrides:
+                grpc_response_status:
+                  operation: REMOVE
+            # Remove source information labels, knowing the request came from the Gateway
+            # is not interesting
+            - tagOverrides:
+                reporter:
+                  operation: REMOVE
+                source_workload:
+                  operation: REMOVE
+                source_workload_namespace:
+                  operation: REMOVE
+                source_principal:
+                  operation: REMOVE
+                source_app:
+                  operation: REMOVE
+                source_version:
+                  operation: REMOVE
+                source_canonical_service:
+                  operation: REMOVE
+                source_canonical_revision:
+                  operation: REMOVE
+                source_cluster:
+                  operation: REMOVE
+            # Remove other labels not relevant to us
+            - tagOverrides:
+                destination_workload:
+                  operation: REMOVE
+                destination_principal:
+                  operation: REMOVE
+                destination_app:
+                  operation: REMOVE
+                destination_version:
+                  operation: REMOVE
+                destination_canonical_service:
+                  operation: REMOVE
+                destination_canonical_revision:
+                  operation: REMOVE
+                destination_cluster:
+                  operation: REMOVE
+                request_protocol:
+                  operation: REMOVE
+                connection_security_policy:
+                  operation: REMOVE
+            # Remove high-cardinality bytes counters
+            - disabled: true
+              match:
+                metric: REQUEST_SIZE
+            - disabled: true
+              match:
+                metric: RESPONSE_SIZE
+            # Reduce cardinality from response time metric
+            - match:
+                metric: REQUEST_DURATION
+              tagOverrides:
+                response_flags:
+                  operation: REMOVE
+                response_code:
+                  operation: REMOVE
+
   - apiVersion: v1
     kind: ConfigMap
     metadata:
