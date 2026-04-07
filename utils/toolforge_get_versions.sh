@@ -97,7 +97,6 @@ show_package_version() {
     local package="${NAME_TO_APT_PACKAGE[$component]}"
     local cur_version \
         apt_policy \
-        installed_source \
         installed_mr \
         registry_file \
         comment=""
@@ -112,13 +111,8 @@ show_package_version() {
     fi
 
     cur_version=$(echo "$apt_policy"| head -n1 | awk '{print $2}')
-    installed_source=$(\
-        echo "$apt_policy" \
-        | tail -n 1 \
-        | awk '{print $2}'\
-    )
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
-    if [[ "$installed_source" == /var/lib/dpkg/status ]]; then
+    if [[ -e "$registry_file" ]]; then
         installed_mr=$( \
             jq '.mr_number' 2>/dev/null < "$registry_file" \
             || echo "$registry_file" \
