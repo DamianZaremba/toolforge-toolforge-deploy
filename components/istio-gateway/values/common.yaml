@@ -84,6 +84,9 @@ resources:
         spec:
           replicas: 3
           template:
+            metadata:
+              annotations:
+                "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 1 } }'
             spec:
               containers:
                 - name: istio-proxy
