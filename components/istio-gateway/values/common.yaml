@@ -120,6 +120,11 @@ resources:
                     matchLabels:
                       gateway.networking.k8s.io/gateway-class-name: istio
                       gateway.networking.k8s.io/gateway-name: toolforge
+        strategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 1
+            maxSurge: 0
       service: |
         spec:
           type: NodePort
