@@ -16,6 +16,7 @@ loki:
     enabled: true
   limits_config:
     retention_period: 336h  # 14d
+    max_query_length: 336h  # for why we have to set this, see T422453
   compactor:
     working_directory: /data/retention
     compaction_interval: 10m
@@ -23,7 +24,6 @@ loki:
     retention_delete_delay: 2h
     retention_delete_worker_count: 150
     delete_request_store: s3
-
 
 lokiCanary:
   enabled: false
