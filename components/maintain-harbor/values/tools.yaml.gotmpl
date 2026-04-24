@@ -13,7 +13,7 @@ maintainHarbor:
         - delete-empty-tool-projects
 
     - name: mh--delete-stale-toolforge-artifacts-cron
-      schedule: "0 8 * * 3"
+      schedule: "30 8 * * 3"
       args:
         - delete-stale-toolforge-artifacts
 
@@ -23,9 +23,21 @@ maintainHarbor:
         - manage-image-retention
 
     - name: mh--manage-harbor-projects-quotas-cron
-      schedule: "0 * * * *"
+      schedule: "30 * * * *"
       args:
         - manage-harbor-projects-quotas
+
+    - name: mh--manage-harbor-toolforge-project-cron
+      schedule: "23 * * * *"
+      args:
+        - --debug
+        - manage-harbor-toolforge-project
+
+    - name: mh--manage-toolforge-proj-immutable-tag-rules-cron
+      schedule: "30 * * * *"
+      args:
+        - --debug
+        - manage-toolforge-proj-immutable-tag-rules
 
   harborAuth:
     harborURL: "https://tools-harbor.wmcloud.org/api/v2.0"
