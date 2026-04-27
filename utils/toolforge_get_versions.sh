@@ -35,7 +35,6 @@ declare -A NAME_TO_HELM_CHART=(
     ["envvars-api"]="envvars-api"
     ["image-config"]="image-config"
     ["ingress-admission"]="ingress-admission"
-    ["ingress-nginx"]="ingress-nginx-gen2"
     ["istio-system"]="istio-base"
     ["jobs-api"]="jobs-api"
     ["jobs-emailer"]="jobs-emailer"
