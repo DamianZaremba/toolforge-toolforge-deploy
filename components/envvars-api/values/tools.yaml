@@ -1,4 +1,4 @@
-chartVersion: 0.0.83-20260402143135-c3f2dcc8
+chartVersion: 0.0.84-20260428143331-13957a07
 chartRepository: tools
 certificates:
   internalClusterDomain: tools.local
