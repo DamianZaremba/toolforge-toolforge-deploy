@@ -63,7 +63,7 @@ setup_file() {
 
     case $PROJECT in
         lima-kilo)
-            external_url="http://$tool.local:30002"
+            external_url="http://$tool.local:30000"
             ;;
         toolsbeta)
             external_url="https://$tool.beta.toolforge.org"
