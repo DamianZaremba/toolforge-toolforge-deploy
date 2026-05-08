@@ -88,8 +88,10 @@ resources:
               annotations:
                 "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 1 } }'
             spec:
+              volumes: {{ .Values.volumes | toJson }}
               containers:
                 - name: istio-proxy
+                  volumeMounts: {{ .Values.volumeMounts | toJson }}
                   resources: {{ .Values.resources | toJson }}
               tolerations:
                 - key: "toolforge.org/gateway"
