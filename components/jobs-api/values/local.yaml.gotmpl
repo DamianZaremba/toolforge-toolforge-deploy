@@ -2,7 +2,7 @@ chartVersion: 0.0.492-20260511175921-794ae97d
 chartRepository: toolsbeta
 replicas: 1
 harbor:
-  host: {{ exec "../../helpers/get_harbor_ip.sh" (list) }}
+  host: harbor.local
   protocol: "http"
 
 webservice:

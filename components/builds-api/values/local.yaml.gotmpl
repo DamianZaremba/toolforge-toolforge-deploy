@@ -7,8 +7,8 @@ image:
 
 config:
   debug: true
-  # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
-  harborRepository: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}
+  # You can override this by exporting the env var HARBOR_HOSTNAME before running ./depoy.sh
+  harborRepository: http://harbor.local
   okBuildsToKeep: 1
   failedBuildsToKeep: 2
   harborUsername: "robot$maintain-harbor"

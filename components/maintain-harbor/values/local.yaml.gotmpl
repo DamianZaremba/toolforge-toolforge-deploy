@@ -4,7 +4,7 @@ environment: local
 
 maintainHarbor:
   harborAuth:
-    harborURL: "http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}/api/v2.0"
+    harborURL: "http://harbor.local/api/v2.0"
     harborUsername: "robot$maintain-harbor"
     harborPassword: "Dummyr0botpass"
 

@@ -5,13 +5,13 @@ withLocalVolume: true
 repository:
   username: "robot$local-image-builder"
   password: "Dummyr0botpass"
-  # You can override this by exporting the env var HARBOR_IP before running ./depoy.sh
-  url: http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}
+  # You can override this by exporting the env var HARBOR_HOSTNAME before running ./depoy.sh
+  url: http://harbor.local
 
 imagesSource:
   runImage:
     toolforge: "toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb"
 
-dockerconfig: '{"insecure-registries": ["http://{{ exec "../../helpers/get_harbor_ip.sh" (list) }}"]}'
+dockerconfig: '{"insecure-registries": ["http://harbor.local"]}'
 
 kubeVersion: ">=1.21"
