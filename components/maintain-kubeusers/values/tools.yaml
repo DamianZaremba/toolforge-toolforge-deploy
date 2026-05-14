@@ -75,6 +75,9 @@ quotas:
       version: T357209-3
       memory: 16
       pod_memory: 10
+    wiki-tts:
+      version: T425804-1
+      memory: 24
     xiplus:
       version: T315719
       cronjobs: 100
