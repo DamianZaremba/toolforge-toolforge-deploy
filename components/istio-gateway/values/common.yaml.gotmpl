@@ -101,9 +101,8 @@ resources:
               affinity:
                 nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
-                    - weight: 100
-                      preference:
-                        matchExpressions:
+                    nodeSelectorTerms:
+                      - matchExpressions:
                           - key: kubernetes.io/role
                             operator: In
                             values:
