@@ -75,6 +75,38 @@ resources:
                 response_code:
                   operation: REMOVE
 
+  - apiVersion: networking.istio.io/v1alpha3
+    kind: EnvoyFilter
+    metadata:
+      name: remove-headers
+      # This needs to be in the istio-system namespace to be applied globally.
+      namespace: istio-system
+    spec:
+      configPatches:
+      - applyTo: NETWORK_FILTER
+        match:
+          listener:
+            filterChain:
+              filter:
+                name: "envoy.filters.network.http_connection_manager"
+        patch:
+          operation: MERGE
+          value:
+            typed_config:
+              "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager"
+      - applyTo: ROUTE_CONFIGURATION
+        patch:
+          operation: MERGE
+          # Disable Envoy metadata headers which have causing issues with header buffers.
+          # The istio proxyHeaders.metadataExchangeHeaders: IN_MESH setting does not seem
+          # to actually disable those for Toolforge tools, even though that traffic does not
+          # use Istio's mesh functionality. So an Envoy filter it is.
+          # https://phabricator.wikimedia.org/T392356#11866031
+          value:
+            request_headers_to_remove:
+              - "X-Envoy-Peer-Metadata"
+              - "X-Envoy-Peer-Metadata-Id"
+
   - apiVersion: v1
     kind: ConfigMap
     metadata:
