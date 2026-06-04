@@ -86,7 +86,20 @@ resources:
           template:
             metadata:
               annotations:
-                "proxy.istio.io/config": '{"gatewayTopology" : { "numTrustedProxies": 1 } }'
+                proxy.istio.io/config: |
+                  gatewayTopology:
+                    numTrustedProxies: 1
+                  proxyHeaders:
+                    # Recude Envoy metadata headers which have been causing issues with header buffers
+                    # https://phabricator.wikimedia.org/T392356#11866031
+                    attemptCount:
+                      disabled: true
+                    envoyDebugHeaders:
+                      disabled: true
+                    metadataExchangeHeaders:
+                      mode: IN_MESH
+                    server:
+                      disabled: true
             spec:
               volumes: {{ .Values.volumes | toJson }}
               containers:
