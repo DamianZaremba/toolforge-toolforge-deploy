@@ -7,6 +7,8 @@ resources:
     cpu: 50m
     memory: 128Mi
 
+enableAffinity: false
+
 # volumes and volumeMounts required for macOS lima-kilo;
 # otherwise istio-gateway fails with "Failed to create temporary file" (T425479).
 volumes:
