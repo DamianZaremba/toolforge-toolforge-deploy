@@ -10,8 +10,8 @@ releases:
     chart: kyverno/kyverno
     # see version matrix at https://kyverno.io/docs/installation/#compatibility-matrix
     # you can see the chart that matches a version by changing to the corresponding tag:
-    #    https://github.com/kyverno/kyverno/blob/release-1.12/charts/kyverno/Chart.yaml
-    version: 3.3.9
+    #    https://github.com/kyverno/kyverno/blob/release-1.16/charts/kyverno/Chart.yaml
+    version: 3.6.4
     values:
       - values/common/settings.yaml
       # this allows us to override the common one

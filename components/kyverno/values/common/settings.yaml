@@ -73,34 +73,34 @@ reportsController:
 webhooksCleanup:
   image:
     registry: "docker-registry.svc.toolforge.org"
-    repository: "bitnami-kubectl"
+    repository: "kubectl"
 
 policyReportsCleanup:
   image:
     registry: "docker-registry.svc.toolforge.org"
-    repository: "bitnami-kubectl"
+    repository: "kubectl"
 
 cleanupJobs:
   admissionReports:
     image:
       registry: "docker-registry.svc.toolforge.org"
-      repository: "bitnami-kubectl"
+      repository: "kubectl"
   clusterAdmissionReports:
     image:
       registry: "docker-registry.svc.toolforge.org"
-      repository: "bitnami-kubectl"
+      repository: "kubectl"
   updateRequests:
     image:
       registry: "docker-registry.svc.toolforge.org"
-      repository: "bitnami-kubectl"
+      repository: "kubectl"
   ephemeralReports:
     image:
       registry: "docker-registry.svc.toolforge.org"
-      repository: "bitnami-kubectl"
+      repository: "kubectl"
   clusterEphemeralReports:
     image:
       registry: "docker-registry.svc.toolforge.org"
-      repository: "bitnami-kubectl"
+      repository: "kubectl"
 
 crds:
   migration:
