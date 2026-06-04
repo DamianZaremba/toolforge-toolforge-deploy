@@ -98,6 +98,7 @@ resources:
                   operator: "Equal"
                   value: "true"
                   effect: "NoSchedule"
+{{- if .Values.enableAffinity }}
               affinity:
                 nodeAffinity:
                   requiredDuringSchedulingIgnoredDuringExecution:
@@ -115,6 +116,7 @@ resources:
                     matchLabels:
                       gateway.networking.k8s.io/gateway-class-name: istio
                       gateway.networking.k8s.io/gateway-name: toolforge
+{{- end }}
           strategy:
             type: RollingUpdate
             rollingUpdate:
