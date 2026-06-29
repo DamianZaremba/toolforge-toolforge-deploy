@@ -149,7 +149,8 @@ setup_file() {
     build_id="$(toolforge build list --json | jq -r '.builds[0].build_id')"
     toolforge build delete --yes-i-know "$build_id"
 
-    run --separate-stderr toolforge build list
+    # outputs on stderr
+    run toolforge build list
     refute_line --partial "$build_id"
     assert_line --partial "No builds found"
 }
@@ -170,7 +171,8 @@ setup_file() {
 
 @test "clean" {
     toolforge build clean --yes-i-know
-    run --separate-stderr toolforge build list
+    # outputs on stderr
+    run toolforge build list
     assert_line --partial "No builds found"
 }
 
