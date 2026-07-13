@@ -47,7 +47,7 @@ setup_file() {
     rand_string="test-$RANDOM"
     user="${USER#*.}"
     image="tool-$user/tool-$user:latest"
-    command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out"
+    command="bash -c \"echo '$rand_string' | tee \\\$TOOL_DATA_DIR/$rand_string.out\""
     # need the mount=all for the results
     toolforge \
         jobs \
@@ -60,8 +60,8 @@ setup_file() {
 
     retry "grep '$rand_string' '$HOME/$rand_string.out'"
     # the `launcher` prefix is not shown in the job list/show, only from k8s
-    run --separate-stderr bash -c "kubectl get pod -l "app.kubernetes.io/name=$rand_string" -o json | jq '.items[0].spec.containers[0].command[-1]'"
-    assert_line --partial "launcher $command"
+    run --separate-stderr bash -c "kubectl get pod -l "app.kubernetes.io/name=$rand_string" -o json | jq '.items[0].spec.containers[0].command | join(\" \")'"
+    assert_line --partial "launcher bash -c"
 }
 
 
@@ -73,7 +73,7 @@ setup_file() {
     short_name="${image#*/}"
 
     [[ $image =~ @sha ]] || exit 1
-    command="echo '$rand_string' | tee \$TOOL_DATA_DIR/$rand_string.out"
+    command="bash -c \"echo '$rand_string' | tee \\\$TOOL_DATA_DIR/$rand_string.out\""
     toolforge \
         jobs \
         run \
