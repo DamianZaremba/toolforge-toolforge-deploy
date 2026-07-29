@@ -58,6 +58,9 @@ quotas:
       version: T376338-1
       memory: 9
       pod_memory: 7
+    statanalyser:
+      version: T433184-1
+      pod_memory: 10
     techactivity:
       version: T421292
       cpu: 24
