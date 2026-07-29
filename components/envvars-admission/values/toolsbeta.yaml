@@ -7,5 +7,3 @@ config:
       value: "https://api.svc.toolsbeta.eqiad1.wikimedia.cloud:30003"
     - name: TOOL_REDIS_URI
       value: "redis://redis.svc.toolsbeta.eqiad1.wikimedia.cloud:6379"
-    - name: TOOL_ELASTICSEARCH_URL
-      value: "http://elasticsearch.svc.toolsbeta.eqiad1.wikimedia.cloud:80"

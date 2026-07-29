@@ -9,3 +9,5 @@ config:
       value: "redis://redis.svc.tools.eqiad1.wikimedia.cloud:6379"
     - name: TOOL_ELASTICSEARCH_URL
       value: "http://elasticsearch.svc.tools.eqiad1.wikimedia.cloud:80"
+    - name: TOOL_OPENSEARCH_URL
+      value: "http://opensearch.svc.tools.eqiad1.wikimedia.cloud:80"
