@@ -9,7 +9,9 @@ certificates:
 app:
   log_level: debug
   superusers:
-    - service:components-api
+    "service:components-api": ["^.*$"]
+    "service:jobs-api":
+      - "^/logs/v1/tool/[^/]+/source/jobs-api/log$"
   api_maps:
     builds: "https://builds-api.builds-api.svc.cluster.local:8443"
     jobs: "https://jobs-api.jobs-api.svc.cluster.local:8443"
