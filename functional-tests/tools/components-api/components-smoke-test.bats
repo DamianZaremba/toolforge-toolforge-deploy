@@ -38,6 +38,19 @@ components:
     run:
       command: web
 EOC
+    cat > "$BATS_FILE_TMPDIR"/publish-test-config.yaml <<EOC
+config_version: "v1beta1"
+components:
+  component1:
+    component_type: continuous
+    build:
+      repository: $SAMPLE_REPO_URL
+      ref: main
+    run:
+      command: web
+      port: 8000
+      publish: "/"
+EOC
 }
 
 @test "config create works" {
@@ -189,6 +202,24 @@ EOC
 
     # The job the deploy generates is the same that was there
     assert_output "$(cat "$BATS_FILE_TMPDIR"/before_generate.yaml)"
+}
+
+@test "published component job shows publish status in show output" {
+    run --separate-stderr toolforge components config create "$BATS_FILE_TMPDIR"/publish-test-config.yaml
+    assert_success
+
+    local deployment_id=$(create_deployment)
+    wait_for_successful_deployment "${deployment_id}"
+
+    run --separate-stderr toolforge jobs show component1
+    assert_success
+    assert_line --regexp 'Public:.*https?://'
+}
+
+@test "generated config includes publish for the published job" {
+    run toolforge components config generate
+    assert_success
+    assert_line --partial "publish: /"
 }
 
 @test "deployment delete works" {
