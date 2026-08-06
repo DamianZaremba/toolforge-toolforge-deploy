@@ -17,6 +17,7 @@ loki:
   limits_config:
     retention_period: 336h  # 14d
     max_query_length: 336h  # for why we have to set this, see T422453
+    allow_structured_metadata: true # T432969
   compactor:
     working_directory: /data/retention
     compaction_interval: 10m
