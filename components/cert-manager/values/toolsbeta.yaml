@@ -1,2 +1,2 @@
 # Keep for the deploy script
-kubeVersion: ">=1.21"
+kubeVersion: ">=1.32"

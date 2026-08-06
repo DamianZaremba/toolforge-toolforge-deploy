@@ -4,6 +4,14 @@ repositories:
   - name: jetstack
     url: https://charts.jetstack.io
 
+environments:
+  toolsbeta: {}
+  tools: {}
+  local: {}
+
+helmDefaults:
+  timeout: 600
+
 releases:
   - name: reloader
     namespace: cert-manager
@@ -19,11 +27,6 @@ releases:
     createNamespace: true
     chart: jetstack/cert-manager
     # see https://artifacthub.io/packages/helm/cert-manager/cert-manager for chart versions
-    version: v1.15.3
+    version: v1.20.3
     values:
       - chart-values/cert-manager.yaml
-
-environments:
-  toolsbeta: {}
-  tools: {}
-  local: {}
