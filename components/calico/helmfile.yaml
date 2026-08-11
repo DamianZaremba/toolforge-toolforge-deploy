@@ -3,15 +3,15 @@ environments:
   local:
     values:
       # needed to use the chartVersion
-      - values/local.yaml
+      - values/{{ .Environment.Name }}.yaml*
   toolsbeta:
     values:
       # needed to use the chartVersion
-      - values/toolsbeta.yaml
+      - values/{{ .Environment.Name }}.yaml*
   tools:
     values:
       # needed to use the chartVersion
-      - values/tools.yaml
+      - values/{{ .Environment.Name }}.yaml*
 
 ---
 repositories:
