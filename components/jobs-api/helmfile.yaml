@@ -1,3 +1,19 @@
+---
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+
+---
 repositories:
   - name: toolsbeta
     url: toolsbeta-harbor.wmcloud.org/toolforge
@@ -13,18 +29,4 @@ releases:
     namespace: jobs-api
     createNamespace: true
     values:
-      - values/{{ .Environment.Name }}.yaml*
-
-environments:
-  local:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  toolsbeta:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  tools:
-    values:
-      # needed to use the chartVersion
       - values/{{ .Environment.Name }}.yaml*
