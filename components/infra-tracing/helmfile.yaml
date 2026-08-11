@@ -4,17 +4,17 @@ environments:
     values:
       # needed to use the chartVersion
       - values/common.yaml*
-      - values/{{ .Environment.Name }}.yaml*
+      - values/local.yaml*
   tools:
     values:
       # needed to use the chartVersion
       - values/common.yaml*
-      - values/{{ .Environment.Name }}.yaml*
+      - values/tools.yaml*
   toolsbeta:
     values:
       # needed to use the chartVersion
       - values/common.yaml*
-      - values/{{ .Environment.Name }}.yaml*
+      - values/toolsbeta.yaml*
 
 ---
 repositories:
