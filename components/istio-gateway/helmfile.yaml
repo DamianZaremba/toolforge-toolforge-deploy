@@ -1,16 +1,3 @@
-repositories:
-  - name: wmf-stable
-    url: https://helm-charts.wikimedia.org/stable
-
-releases:
-  - name: istio-gateway
-    namespace: istio-gateway
-    createNamespace: true
-    chart: wmf-stable/raw
-    version: v0.3.0
-    values:
-      - values/common.yaml*
-
 environments:
   local:
     values:
@@ -24,3 +11,18 @@ environments:
     values:
       # needed to use the resources
       - values/{{ .Environment.Name }}.yaml*
+
+---
+
+repositories:
+  - name: wmf-stable
+    url: https://helm-charts.wikimedia.org/stable
+
+releases:
+  - name: istio-gateway
+    namespace: istio-gateway
+    createNamespace: true
+    chart: wmf-stable/raw
+    version: v0.3.0
+    values:
+      - values/common.yaml*
