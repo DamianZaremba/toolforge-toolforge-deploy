@@ -1,10 +1,10 @@
+---
 environments:
   tools: {}
   toolsbeta: {}
   local: {}
 
 ---
-
 repositories:
   - name: kyverno
     url: https://kyverno.github.io/kyverno
