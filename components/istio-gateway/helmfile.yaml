@@ -12,6 +12,8 @@ environments:
       # needed to use the resources
       - values/{{ .Environment.Name }}.yaml*
 
+---
+
 repositories:
   - name: wmf-stable
     url: https://helm-charts.wikimedia.org/stable
