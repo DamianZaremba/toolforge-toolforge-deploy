@@ -14,7 +14,7 @@ environments:
       # needed to use the chartVersion
       - values/common.yaml*
       - values/{{ .Environment.Name }}.yaml*
----
+
 repositories:
   - name: grafana
     url: https://grafana.github.io/helm-charts
