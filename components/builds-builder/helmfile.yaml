@@ -11,9 +11,7 @@ environments:
     values:
       # needed to use the chartVersion
       - values/{{ .Environment.Name }}.yaml*
-
---
-
+---
 repositories:
   - name: toolsbeta
     url: toolsbeta-harbor.wmcloud.org/toolforge
