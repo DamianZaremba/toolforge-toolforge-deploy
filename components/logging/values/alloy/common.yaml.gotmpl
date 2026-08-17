@@ -120,6 +120,28 @@ alloy:
         stage.tenant {
           label = "namespace"
         }
+
+        stage.static_labels {
+          values = {
+            source = "run-logs",
+          }
+        }
+
+        stage.structured_metadata {
+          values = {
+            job_name = "job",
+          }
+        }
+
+        // Only needed during migration T432969:
+        // stage.structured_metadata removes corresponding labels, see:
+        // https://grafana.com/docs/alloy/latest/reference/components/loki/loki.process/#stagestructured_metadata
+        // This re-adds the "job" label from Alloy’s "extracted map".
+        stage.labels {
+          values = {
+            job = "",
+          }
+        }
       }
 
       loki.write "loki_tools" {
