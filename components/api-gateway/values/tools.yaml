@@ -1,4 +1,4 @@
-chartVersion: 0.0.103-20260804102750-cee3756e
+chartVersion: 0.0.104-20260818140643-0b8520a0
 chartRepository: tools
 backends:
   - name: jobs-api
@@ -35,7 +35,9 @@ backends:
 app:
   log_level: info
   superusers:
-    - service:components-api
+    "service:components-api": ["^.*$"]
+    "service:jobs-api":
+      - "^/logs/v1/tool/[^/]+/source/jobs-api/log$"
   api_maps:
     builds: "https://builds-api.builds-api.svc.tools.local:8443"
     jobs: "https://jobs-api.jobs-api.svc.tools.local:8443"
