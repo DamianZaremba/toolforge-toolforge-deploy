@@ -91,7 +91,7 @@ extraObjects:
           - key: app.kubernetes.io/component
             operator: In
             # read for tools/toolsbeta, single-binary for local development
-            values: [read, single-binary]
+            values: [read, write, single-binary]
       ingress:
         - from:
             - namespaceSelector:
