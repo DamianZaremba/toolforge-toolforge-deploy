@@ -3,7 +3,8 @@ chartRepository: tools
 replicas: 1
 config:
   debug: true
-  runtime_loki_url: "http://loki-tools.loki.svc:3100/loki"
+  runtime_loki_read_url: "http://loki-tools.loki.svc:3100/loki"
+  runtime_loki_write_url: "http://loki-tools.loki.svc:3100/loki"
 certificates:
   internalClusterDomain: cluster.local
 image:
