@@ -77,7 +77,11 @@ setup(){
 
     updated_retention=$($CURL -X GET "$HARBOR_URL/retentions/$retention_id")
 
-    assert_equal "$(echo "$retention" | jq -S .)" "$(echo "$updated_retention" | jq -S .)"
+    # Harbor updates this value independently when the schedule advances.
+    expected_retention=$(echo "$retention" | jq -S 'del(.trigger.settings.next_scheduled_time)')
+    actual_retention=$(echo "$updated_retention" | jq -S 'del(.trigger.settings.next_scheduled_time)')
+
+    assert_equal "$expected_retention" "$actual_retention"
 }
 
 teardown(){
