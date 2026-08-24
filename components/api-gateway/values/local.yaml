@@ -11,7 +11,7 @@ app:
   superusers:
     "service:components-api": ["^.*$"]
     "service:jobs-api":
-      - "^/logs/v1/tool/[^/]+/source/jobs-api/log$"
+      - "^/logs/v1/tool/[^/]+/source/jobs/log$"
   api_maps:
     builds: "https://builds-api.builds-api.svc.cluster.local:8443"
     jobs: "https://jobs-api.jobs-api.svc.cluster.local:8443"
