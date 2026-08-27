@@ -1,3 +1,19 @@
+---
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/local.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/{{ .Environment.Name }}.yaml*
+
+---
 repositories:
   - name: istio
     url: https://istio-release.storage.googleapis.com/charts
@@ -15,17 +31,3 @@ releases:
     values:
       - values/istiod/common.yaml
       - values/istiod/{{ .Environment.Name }}.yaml
-
-environments:
-  local:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  toolsbeta:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  tools:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*

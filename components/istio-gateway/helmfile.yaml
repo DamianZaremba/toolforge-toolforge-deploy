@@ -1,3 +1,19 @@
+---
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/local.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/toolsbeta.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/tools.yaml*
+
+---
 repositories:
   - name: wmf-stable
     url: https://helm-charts.wikimedia.org/stable
@@ -10,17 +26,3 @@ releases:
     version: v0.3.0
     values:
       - values/common.yaml*
-
-environments:
-  local:
-    values:
-      # needed to use the resources
-      - values/{{ .Environment.Name }}.yaml*
-  toolsbeta:
-    values:
-      # needed to use the resources
-      - values/{{ .Environment.Name }}.yaml*
-  tools:
-    values:
-      # needed to use the resources
-      - values/{{ .Environment.Name }}.yaml*
