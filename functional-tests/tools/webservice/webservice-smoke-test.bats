@@ -75,7 +75,7 @@ setup_file() {
 
     mkdir -p public_html
     echo "OK" > public_html/healthz
-    retry "curl --insecure -v '$external_url/healthz' | grep '^OK\$'"
+    retry "curl --insecure '$external_url/healthz' | grep '^OK\$'"
 }
 
 

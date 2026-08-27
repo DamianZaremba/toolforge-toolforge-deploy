@@ -60,7 +60,7 @@ setup() {
     retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'"
 
     toolforge jobs run \
-        --command "curl -v 'http://$rand_string.tool-$tool_name.svc.$CLUSTER_DOMAIN:1234/status'" \
+        --command "curl 'http://$rand_string.tool-$tool_name.svc.$CLUSTER_DOMAIN:1234/status'" \
         --wait 120 \
         --image python3.11 \
         check-$rand_string

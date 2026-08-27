@@ -9,7 +9,7 @@ setup(){
 }
 
 @test "get harbor health without auth works" {
-    run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY $HARBOR_URL/health"
+    run bash -c "$CURL_WITH_HEADERS_FAIL_WITH_BODY $HARBOR_URL/health"
     assert_success
     # Note that there's no `OK` in http2, and lima-kilo uses http1 while toolsbeta/tools uses http2
     assert_line --regexp "HTTP/.* 200"
@@ -18,7 +18,7 @@ setup(){
 
 @test "harbor authentication works" {
 
-    run bash -c "$CURL_VERBOSE_FAIL_WITH_BODY $HARBOR_URL/audit-logs"
+    run bash -c "$CURL_WITH_HEADERS_FAIL_WITH_BODY $HARBOR_URL/audit-logs"
     # Note that there's no `OK` in http2, and lima-kilo uses http1 while toolsbeta/tools uses http2
     if ! assert_line --regexp "HTTP.* 200"; then
         fail "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n

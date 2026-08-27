@@ -28,7 +28,7 @@ setup(){
     # loop through repos and delete all
     for path in $(echo "$repos" | jq -r '.[].name'); do
         path="${path//\//\/repositories\/}"
-        run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
+        run --separate-stderr bash -c "$CURL_WITH_HEADERS_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
     done
 
     # Check if all repos are deleted
