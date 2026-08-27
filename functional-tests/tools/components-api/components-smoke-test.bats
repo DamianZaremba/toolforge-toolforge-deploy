@@ -146,7 +146,7 @@ EOC
     flush_deployments
     flush_builds
 
-    run --separate-stderr bash -c "curl --silent -v --insecure -X POST '$TOOLFORGE_API_URL/components/v1/tool/$TOOL_NAME/deployment?token=$token' | jq -r .messages.info[0]"
+    run --separate-stderr bash -c "curl --silent --insecure -X POST '$TOOLFORGE_API_URL/components/v1/tool/$TOOL_NAME/deployment?token=$token' | jq -r .messages.info[0]"
     assert_success
     assert_line "Deployment for $TOOL_NAME created successfully."
 }

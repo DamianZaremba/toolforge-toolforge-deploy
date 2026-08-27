@@ -10,43 +10,50 @@ setup() {
     _global_setup
 }
 
-
 do_curl() {
     curl \
-        --verbose \
+        --include \
         --insecure \
         --cert ~/.toolskube/client.crt \
         --key ~/.toolskube/client.key \
-        "$@" \
-        2>&1
+        "$@"
 }
 
 
 @test "get openapi definition" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/openapi.json' | jq"
+    assert_success
 }
 
 
 @test "get envvars openapi definition without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/envvars/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/envvars/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/envvars/openapi.json' | jq"
+    assert_success
 }
 
 
 @test "get envvars metrics without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/envvars/v1/metrics'"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/envvars/v1/metrics'"
     assert_success
     assert_line --partial "200 OK"
 }
 
 
 @test "get envvars health without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/envvars/v1/healthz' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/envvars/v1/healthz'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/envvars/v1/healthz' | jq"
+    assert_success
 }
 
 
@@ -61,23 +68,29 @@ do_curl() {
 }
 
 @test "get jobs openapi definition without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/jobs/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/jobs/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/jobs/openapi.json' | jq"
+    assert_success
 }
 
 
 @test "get jobs metrics without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/jobs/v1/metrics'"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/jobs/v1/metrics'"
     assert_success
     assert_line --partial "200 OK"
 }
 
 
 @test "get jobs health without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/jobs/v1/healthz' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/jobs/v1/healthz'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/jobs/v1/healthz' | jq"
+    assert_success
 }
 
 @test "get jobs list for current tool works" {
@@ -92,23 +105,29 @@ do_curl() {
 
 
 @test "get builds openapi definition without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/builds/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/builds/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/builds/openapi.json' | jq"
+    assert_success
 }
 
 
 @test "get builds metrics without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/builds/v1/metrics'"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/builds/v1/metrics'"
     assert_success
     assert_line --partial "200 OK"
 }
 
 
 @test "get builds health without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/builds/v1/healthz' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/builds/v1/healthz'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/builds/v1/healthz' | jq"
+    assert_success
 }
 
 @test "get builds list for current tool works" {
@@ -122,27 +141,39 @@ do_curl() {
 }
 
 @test "get components openapi definition without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/components/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/components/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/components/openapi.json' | jq"
+    assert_success
 }
 
 @test "get components health without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/components/v1/healthz' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/components/v1/healthz'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/components/v1/healthz' | jq"
+    assert_success
 }
 
 @test "get logs openapi definition without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/logs/openapi.json' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/logs/openapi.json'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/logs/openapi.json' | jq"
+    assert_success
 }
 
 @test "get logs health without auth works" {
-    run bash -c "curl --verbose --insecure '$TOOLFORGE_API_URL/logs/v1/healthz' | jq"
+    run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/logs/v1/healthz'"
     assert_success
     assert_line --partial "200 OK"
+
+    run bash -c "curl --insecure '$TOOLFORGE_API_URL/logs/v1/healthz' | jq"
+    assert_success
 }
 
 @test "get logs for other tool fails with forbidden" {

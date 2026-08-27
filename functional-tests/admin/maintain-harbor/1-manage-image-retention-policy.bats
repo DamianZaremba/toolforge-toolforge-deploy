@@ -14,7 +14,7 @@ setup(){
 
     # Delete retention policy
     if [ "$retention_id" != "null" ]; then
-        run bash -c "$CURL_VERBOSE -X DELETE \"$HARBOR_URL/retentions/$retention_id\""
+        run bash -c "$CURL_WITH_HEADERS -X DELETE \"$HARBOR_URL/retentions/$retention_id\""
         # Note that there's no `OK` in http2, and lima-kilo uses http1 while toolsbeta/tools uses http2
         assert_line --regexp "HTTP/.* 200|no such Retention policy with id"
     fi
@@ -25,11 +25,11 @@ setup(){
     # loop through repos and delete all
     for path in $(echo "$repos" | jq -r '.[].name'); do
         path="${path//\//\/repositories\/}"
-        run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
+        run --separate-stderr bash -c "$CURL_WITH_HEADERS_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$path\""
     done
 
     # Delete project
-    run --separate-stderr bash -c "$CURL_VERBOSE_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$HARBOR_PROJECT_NAME\""
+    run --separate-stderr bash -c "$CURL_WITH_HEADERS_FAIL_WITH_BODY -X DELETE \"$HARBOR_URL/projects/$HARBOR_PROJECT_NAME\""
 }
 
 # bats test_tags=slow

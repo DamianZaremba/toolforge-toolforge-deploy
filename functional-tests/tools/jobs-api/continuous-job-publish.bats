@@ -55,7 +55,7 @@ _get_external_url() {
     retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'" 100
 
     external_url="$(_get_external_url "$tool_name")"
-    retry "curl --insecure -v '$external_url/status' | grep '^OK\$'"
+    retry "curl --insecure '$external_url/status' | grep '^OK\$'"
 }
 
 @test "published continuous job shows port in show output" {
@@ -85,7 +85,7 @@ _get_external_url() {
     retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'" 100
 
     external_url="$(_get_external_url "$tool_name")"
-    retry "curl --insecure -v '$external_url/status' | grep '^OK\$'"
+    retry "curl --insecure '$external_url/status' | grep '^OK\$'"
 }
 
 @test "updating a published job's port keeps external access" {
@@ -99,7 +99,7 @@ _get_external_url() {
     retry "toolforge jobs show '$rand_string' | grep 'Status' | grep 'Running'" 100
 
     external_url="$(_get_external_url "$tool_name")"
-    retry "curl --insecure -v '$external_url/status' | grep '^OK\$'"
+    retry "curl --insecure '$external_url/status' | grep '^OK\$'"
 }
 
 
