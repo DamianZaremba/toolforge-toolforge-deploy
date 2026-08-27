@@ -1,4 +1,10 @@
 ---
+environments:
+  tools: {}
+  toolsbeta: {}
+  local: {}
+
+---
 repositories:
   - name: kyverno
     url: https://kyverno.github.io/kyverno
@@ -16,11 +22,6 @@ releases:
       - values/common/settings.yaml
       # this allows us to override the common one
       - values/{{ .Environment.Name }}.yaml*
-
-environments:
-  tools: {}
-  toolsbeta: {}
-  local: {}
 
 helmDefaults:
   # 30min, it needs a lot of time to run hooks, as it iterates through all namespaces

@@ -1,3 +1,19 @@
+---
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/local.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/toolsbeta.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/tools.yaml*
+
+---
 repositories:
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
@@ -49,18 +65,4 @@ releases:
       - values/common/metrics-server.yaml
       # this next entry allows overwriting the common one
       - values/{{ .Environment.Name }}.metrics-server.yaml
-      - values/{{ .Environment.Name }}.yaml*
-
-environments:
-  local:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  toolsbeta:
-    values:
-      # needed to use the chartVersion
-      - values/{{ .Environment.Name }}.yaml*
-  tools:
-    values:
-      # needed to use the chartVersion
       - values/{{ .Environment.Name }}.yaml*
