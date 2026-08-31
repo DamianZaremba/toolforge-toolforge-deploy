@@ -9,5 +9,5 @@ config:
       value: "https://api-gateway.api-gateway.svc"
     - name: TOOL_REDIS_URI
       value: "notsetup"
-    - name: TOOL_ELASTICSEARCH_URL
+    - name: TOOL_OPENSEARCH_URL
       value: "notsetup"
