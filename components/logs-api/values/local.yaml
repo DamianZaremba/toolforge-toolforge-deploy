@@ -1,4 +1,4 @@
-chartVersion: 0.0.45-20260826093712-2d6a3f95
+chartVersion: 0.0.47-20260902135501-fabf4256
 chartRepository: tools
 replicas: 1
 config:
