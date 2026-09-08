@@ -78,6 +78,10 @@ quotas:
       version: T357209-3
       memory: 16
       pod_memory: 10
+    wiki-economics:
+      version: T436614-1
+      memory: 24
+      pod_cpu: 4
     wiki-tts:
       version: T425804-1
       memory: 24
