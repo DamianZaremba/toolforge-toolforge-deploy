@@ -1,2 +1,9 @@
 chartVersion: 0.0.6-20260918131347-8faad192
 chartRepository: tools
+
+poller:
+  # These must be updated when the hosts are rebuilt.
+  # TODO: update from Hiera directly or set up DNS CNAMEs.
+  prometheusUrls:
+    - "http://tools-prometheus-8.tools.eqiad1.wikimedia.cloud/tools/api/v1/alerts"
+    - "http://tools-prometheus-9.tools.eqiad1.wikimedia.cloud/tools/api/v1/alerts"

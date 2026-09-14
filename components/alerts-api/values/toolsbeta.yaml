@@ -3,3 +3,8 @@ chartRepository: toolsbeta
 
 poller:
   debug: true
+  # These must be updated when the hosts are rebuilt.
+  # Note: toolsbeta currently has a single Prometheus host.
+  # TODO: update from Hiera directly or set up DNS CNAMEs.
+  prometheusUrls:
+    - "http://toolsbeta-prometheus-2.toolsbeta.eqiad1.wikimedia.cloud/tools/api/v1/alerts"
