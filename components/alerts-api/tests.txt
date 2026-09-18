@@ -1,0 +1,6 @@
+# There are currently no functional tests for alerts-api.
+# We will add some tests when we add the REST API with the ingress.
+#
+# "alerts-api" tag matches no test on purpose, an empty file
+# would run the whole suite.
+alerts-api
