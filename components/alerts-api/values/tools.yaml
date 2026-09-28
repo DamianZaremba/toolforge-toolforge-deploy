@@ -2,6 +2,12 @@ chartVersion: 0.0.11-20261002103146-d9ef1155
 chartRepository: tools
 
 poller:
+  # the same mail server and domains as
+  # components/jobs-emailer/values/tools.yaml
+  sendEmails: true
+  smtpHost: "mail.tools.wmcloud.org"
+  emailFrom: "noreply@toolforge.org"
+  emailToDomain: "toolforge.org"
   # These must be updated when the hosts are rebuilt.
   # TODO: update from Hiera directly or set up DNS CNAMEs.
   prometheusUrls:
