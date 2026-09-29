@@ -5,5 +5,5 @@ poller:
   # These must be updated when the hosts are rebuilt.
   # TODO: update from Hiera directly or set up DNS CNAMEs.
   prometheusUrls:
-    - "http://tools-prometheus-8.tools.eqiad1.wikimedia.cloud/tools/api/v1/alerts"
-    - "http://tools-prometheus-9.tools.eqiad1.wikimedia.cloud/tools/api/v1/alerts"
+    - "http://tools-prometheus-8.tools.eqiad1.wikimedia.cloud/tools"
+    - "http://tools-prometheus-9.tools.eqiad1.wikimedia.cloud/tools"
