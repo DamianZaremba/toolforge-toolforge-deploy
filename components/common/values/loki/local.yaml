@@ -6,6 +6,14 @@ minio:
   enabled: true
   networkPolicy:
     enabled: true
+  # Temporary hack, the Grafana loki community Helm chart is planning to
+  # deprecate minio entirely, so we must find a better replacement.
+  image:
+    repository: docker.io/pgsty/silo
+    tag: RELEASE.2026-09-16T00-00-00Z
+  mcImage:
+    repository: docker.io/pgsty/silo
+    tag: RELEASE.2026-09-16T00-00-00Z
 
 deploymentMode: SingleBinary
 singleBinary:
