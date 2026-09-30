@@ -1,4 +1,4 @@
-chartVersion: 0.0.6-20260918131347-8faad192
+chartVersion: 0.0.9-20260929163209-a3bb1242
 chartRepository: toolsbeta
 
 poller:
@@ -7,4 +7,4 @@ poller:
   # Note: toolsbeta currently has a single Prometheus host.
   # TODO: update from Hiera directly or set up DNS CNAMEs.
   prometheusUrls:
-    - "http://toolsbeta-prometheus-2.toolsbeta.eqiad1.wikimedia.cloud/tools/api/v1/alerts"
+    - "http://toolsbeta-prometheus-2.toolsbeta.eqiad1.wikimedia.cloud/tools"
