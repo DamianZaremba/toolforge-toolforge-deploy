@@ -2,6 +2,16 @@ chartVersion: 0.0.11-20261002103146-d9ef1155
 chartRepository: toolsbeta
 
 poller:
+  # the same mail server and domains as
+  # components/jobs-emailer/values/toolsbeta.yaml
+  sendEmails: true
+  smtpHost: "mail.toolsbeta.wmcloud.org"
+  emailFrom: "noreply@beta.toolforge.org"
+  emailToDomain: "beta.toolforge.org"
+  # the emails link to the webservice and to the toolsadmin page of the tool,
+  # both on different domains in toolsbeta
+  toolUrlDomain: "beta.toolforge.org"
+  toolsadminUrl: "https://toolsadmin-toolsbeta.wikimedia.org"
   debug: true
   # These must be updated when the hosts are rebuilt.
   # Note: toolsbeta currently has a single Prometheus host.
