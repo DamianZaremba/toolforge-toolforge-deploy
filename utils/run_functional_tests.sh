@@ -184,10 +184,13 @@ setup_toolforge_deploy() {
     fi
 
     git fetch --all 2>/dev/null
+    # For debugging T440224
+    set -x
     if ! git branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
         echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\"."
         exit 1
     fi
+    set +x
 
     git switch --track origin/"$branch" 2>/dev/null || git switch "$branch"
     if [[ "$refetch" == "yes" ]]; then
