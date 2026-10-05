@@ -54,6 +54,8 @@ quotas:
     signature-checker:
       version: T353104-2
       memory: 32
+    spacemedia:
+      envvars: 120
     sqid:
       version: T376338-1
       memory: 9
