@@ -5,6 +5,7 @@ harbor:
 image:
   args: ["/app/maintain_kubeusers_cli.py"]
 
+# These quotas are mostly defined in maintain_kubeusers/quota.py
 quotas:
   overrides:
     add-text:
@@ -55,7 +56,8 @@ quotas:
       version: T353104-2
       memory: 32
     spacemedia:
-      envvars: 120
+      version: T439237-1
+      secrets: 120
     sqid:
       version: T376338-1
       memory: 9
