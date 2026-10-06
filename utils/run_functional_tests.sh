@@ -187,6 +187,7 @@ setup_toolforge_deploy() {
     # For debugging T440224
     set -x
     if ! git branch -a | grep -qwE "$branch|remotes/origin/$branch"; then
+        git branch -a
         echo "Branch \"$branch\" not found in \"$HOME/toolforge-deploy\" or \"$TOOLFORGE_DEPLOY_URL\"."
         exit 1
     fi
