@@ -11,7 +11,6 @@ ENDCOLOR="\e[0m"
 TOOLFORGE_DEPLOY_REPO=~/toolforge-deploy
 TOOLFORGE_PACKAGE_REGISTRY_DIR=~/.lima-kilo/installed_packages
 
-
 declare -A NAME_TO_APT_PACKAGE=(
     ["builds-cli"]="toolforge-builds-cli"
     ["components-cli"]="toolforge-components-cli"
@@ -23,7 +22,6 @@ declare -A NAME_TO_APT_PACKAGE=(
     ["webservice-cli"]="toolforge-webservice"
     ["toolforge-weld"]="python3-toolforge-weld"
 )
-
 
 declare -A NAME_TO_HELM_CHART=(
     ["api-gateway"]="api-gateway"
@@ -50,7 +48,6 @@ declare -A NAME_TO_HELM_CHART=(
 
 ALL_CHARTS_CACHE=""
 
-
 # helm list -A takes quite a while in tools/toolsbeta, so we cache it
 get_all_charts() {
     declare -a extra_opts
@@ -66,12 +63,10 @@ get_all_charts() {
     echo "$ALL_CHARTS_CACHE"
 }
 
-
 im_inside_cloudvps() {
-    [[ -e "/etc/wmcs-project" ]] \
-    && grep -q -e '^\(tools\|toolsbeta\)$' "/etc/wmcs-project"
+    [[ -e "/etc/wmcs-project" ]] &&
+        grep -q -e '^\(tools\|toolsbeta\)$' "/etc/wmcs-project"
 }
-
 
 get_toolforge_deploy_version() {
     local component="${1?}"
@@ -91,7 +86,6 @@ get_toolforge_deploy_version() {
     return 0
 }
 
-
 show_package_version() {
     local component="${1?}"
     local package="${NAME_TO_APT_PACKAGE[$component]}"
@@ -104,25 +98,24 @@ show_package_version() {
     # Check if package exists first
     # The output of apt policy will have the installed version starting
     # with three ***, or *** will not be there if it's not installed
-    apt_policy=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' --after 1)
+    apt_policy=$(apt policy "$package" 2>/dev/null | grep '\*\*\*' --after 1 || :)
     if ! [[ "$apt_policy" =~ ^\ \*\*\* ]]; then
         echo -e "| $component | package | $package | ${RED}missing${ENDCOLOR} | |"
         return 0
     fi
 
-    cur_version=$(echo "$apt_policy"| head -n1 | awk '{print $2}')
+    cur_version=$(echo "$apt_policy" | head -n1 | awk '{print $2}')
     registry_file="$TOOLFORGE_PACKAGE_REGISTRY_DIR/$package"
     if [[ -e "$registry_file" ]]; then
-        installed_mr=$( \
-            jq '.mr_number' 2>/dev/null < "$registry_file" \
-            || echo "$registry_file" \
+        installed_mr=$(
+            jq '.mr_number' 2>/dev/null <"$registry_file" ||
+                echo "$registry_file"
         )
         cur_version="$YELLOW$cur_version$ENDCOLOR"
         comment="${YELLOW}mr:$component!$installed_mr$ENDCOLOR"
     fi
     echo -e "| $component | package | $package | $cur_version | $comment |"
 }
-
 
 show_chart_version() {
     local component="${1?}"
@@ -170,14 +163,13 @@ main() {
         show_package_version "$component"
     done
 
-    if [[ "$USER" != "root" ]] && sudo -n true 2>/dev/null;then # trying to show deployed charts as tool user errors out
+    if [[ "$USER" != "root" ]] && sudo -n true 2>/dev/null; then # trying to show deployed charts as tool user errors out
         # shellcheck disable=SC1078
         for component in "${!NAME_TO_HELM_CHART[@]}"; do
             show_chart_version "$component"
         done
     fi
 }
-
 
 echo '| component | type | package name | version | comment |'
 echo '| :-------: | :--: | :----------: | :-----: | :-----: |'
