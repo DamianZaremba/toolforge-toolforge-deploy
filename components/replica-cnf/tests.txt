@@ -1,0 +1,3 @@
+# We don't run any functional tests for replica-cnf here
+# we might want to run them on the nfs servers directly instead
+donotruntests

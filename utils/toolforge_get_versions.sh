@@ -18,9 +18,10 @@ declare -A NAME_TO_APT_PACKAGE=(
     ["jobs-cli"]="toolforge-jobs-cli"
     ["logs-cli"]="toolforge-logs-cli"
     ["misctools-cli"]="toolforge-misctools-cli"
+    ["replica-cnf"]="toolforge-replica-cnf"
     ["toolforge-cli"]="toolforge-cli"
-    ["webservice-cli"]="toolforge-webservice"
     ["toolforge-weld"]="python3-toolforge-weld"
+    ["webservice-cli"]="toolforge-webservice"
 )
 
 declare -A NAME_TO_HELM_CHART=(
