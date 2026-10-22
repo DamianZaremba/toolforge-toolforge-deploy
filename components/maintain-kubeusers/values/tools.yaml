@@ -52,6 +52,9 @@ quotas:
       version: T273601
       memory: 20
       pod_memory: 8
+    oka-bot:
+      version: T441425
+      memory: 16
     signature-checker:
       version: T353104-2
       memory: 32
