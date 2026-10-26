@@ -8,10 +8,11 @@ config:
   harborPassword: {{ exec "../../helpers/get_secret.sh" (list "harborPassword") }}
   builder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_20261023
   runner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24_20261023
-  latestBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_20261023
-  latestRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24_20261023
-  deprecatedBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_20261023
-  deprecatedRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24_20261023
+  # they are the same images, just using different tag due to https://phabricator.wikimedia.org/T442364
+  latestBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_20261023_for_latest
+  latestRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24_20261023_for_latest
+  deprecatedBuilder: tools-harbor.wmcloud.org/toolforge/heroku-builder:24_20261023_for_deprecated
+  deprecatedRunner: tools-harbor.wmcloud.org/toolforge/heroku-runner:24_20261023_for_deprecated
   deprecatedValidUntil: 2026-04-27
 
 certificates:
