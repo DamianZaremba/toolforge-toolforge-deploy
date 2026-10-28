@@ -26,13 +26,13 @@ setup_file() {
 
 
 @test "start webservice" {
-    run --separate-stderr toolforge webservice start
+    run --separate-stderr toolforge webservice php8.4 start
     assert_success
     assert_line --partial "Starting webservice"
 
     run --separate-stderr toolforge webservice status
     assert_success
-    assert_line --partial "webservice of type php7.4 is running"
+    assert_line --partial "webservice of type php8.4 is running"
 }
 
 
@@ -92,7 +92,7 @@ setup_file() {
 
 @test "shell starts and echoes" {
     random_token="$RANDOM-token"
-    run --separate-stderr bash -c "toolforge webservice php7.4 shell -- echo '$random_token'"
+    run --separate-stderr bash -c "toolforge webservice php8.4 shell -- echo '$random_token'"
     assert_success
     assert_line --partial "$random_token"
 }
