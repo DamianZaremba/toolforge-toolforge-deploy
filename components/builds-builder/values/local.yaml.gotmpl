@@ -12,6 +12,7 @@ imagesSource:
   runImage:
     toolforge: "toolsbeta-harbor.wmcloud.org/toolforge/heroku-runner:22-cnb"
 
+insecureRegistries: harbor.local
 dockerconfig: '{"insecure-registries": ["http://harbor.local"]}'
 
 kubeVersion: ">=1.21"
