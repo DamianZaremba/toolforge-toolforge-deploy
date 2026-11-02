@@ -91,7 +91,7 @@ See $GITLAB_REPO_BASE/$component/$GITLAB_RELEASE_SUFFIX
 $(get_bugs_for_upgrade "$GITLAB_REPO_BASE/$component" "$prev_version" "$new_version")
 "
     echo -e "Branch branch_$component ready to push, if you have the gitlab cli you can:\n"\
-        "glab mr create --fill --label 'Needs review' --remove-source-branch --yes\n"\
+        "glab mr create --fill --remove-source-branch --yes\n"\
         "otherwise you can push and manually create the MR."
 }
 

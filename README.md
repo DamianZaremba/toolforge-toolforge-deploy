@@ -69,7 +69,7 @@ pushed and a merge request can be created.
 For GitLab CLI users, you can create a merge request with:
 
 ```bash
-glab mr create --fill --label 'Needs review' --remove-source-branch --yes
+glab mr create --fill --remove-source-branch --yes
 ```
 
 Otherwise, you can push the branch and manually create the merge request.
