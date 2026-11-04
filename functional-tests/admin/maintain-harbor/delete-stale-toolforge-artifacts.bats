@@ -24,7 +24,7 @@ setup(){
 
     assert_line --regexp "Cleaning up stale artifacts of toolforge project repositories"
     assert_line --regexp "Got .* repositories for project .*"
-    assert_line --regexp "Found .* toolforge project repositories with stale artifacts"
+    assert_line --regexp "Found .* toolforge project repositories with potentially stale artifacts"
     assert_line --regexp "Disabled immutable rule .* for project .*"
     assert_line --regexp "Enabled immutable rule .* project .*"
 }
