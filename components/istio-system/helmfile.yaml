@@ -16,7 +16,7 @@ environments:
 ---
 repositories:
   - name: istio
-    url: https://istio-release.storage.googleapis.com/charts
+    url: https://blob.istio.io/istio-release/charts
 
 releases:
   - name: istio-base
