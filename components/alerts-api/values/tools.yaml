@@ -1,6 +1,12 @@
 chartVersion: 0.0.17-20261110120537-e233ddd3
 chartRepository: tools
 
+# These must be updated when the hosts are rebuilt.
+# TODO: update from Hiera directly or set up DNS CNAMEs.
+prometheusUrls:
+  - "http://tools-prometheus-8.tools.eqiad1.wikimedia.cloud/tools"
+  - "http://tools-prometheus-9.tools.eqiad1.wikimedia.cloud/tools"
+
 poller:
   # the same mail server and domains as
   # components/jobs-emailer/values/tools.yaml
@@ -8,8 +14,3 @@ poller:
   smtpHost: "mail.tools.wmcloud.org"
   emailFrom: "noreply@toolforge.org"
   emailToDomain: "toolforge.org"
-  # These must be updated when the hosts are rebuilt.
-  # TODO: update from Hiera directly or set up DNS CNAMEs.
-  prometheusUrls:
-    - "http://tools-prometheus-8.tools.eqiad1.wikimedia.cloud/tools"
-    - "http://tools-prometheus-9.tools.eqiad1.wikimedia.cloud/tools"
