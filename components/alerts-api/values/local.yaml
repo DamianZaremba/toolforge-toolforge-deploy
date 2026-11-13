@@ -1,5 +1,8 @@
 chartVersion: 0.0.17-20261110120537-e233ddd3
 chartRepository: toolsbeta
 
+prometheusUrls:
+  - "https://prometheus.svc.toolforge.org/tools"
+
 poller:
   debug: true
