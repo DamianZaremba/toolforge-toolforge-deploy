@@ -76,6 +76,8 @@ Otherwise, you can push the branch and manually create the merge request.
 
 ## Deploying on Toolsbeta and Toolforge
 
+For a security fix under embargo, see [Deploying embargoed security fixes](https://wikitech.wikimedia.org/wiki/Portal:Toolforge/Admin/Deploying_embargoed_security_fixes).
+
 We use a cookbook to deploy the components on this repository, that will clone
 this repository and deploy the component on the right cluster. The cookbook is
 [`wmcs.toolforge.component.deploy`](https://gerrit.wikimedia.org/g/cloud/wmcs-cookbooks#installation%20cookbook):
