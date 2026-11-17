@@ -3,8 +3,8 @@ chartVersion: 0.0.20-20261117184447-af8f7bc6
 chartRepository: toolsbeta
 # When changing the chart version, make sure to update kubeVersion
 # See
-#  https://docs.tigera.io/calico/3.29/getting-started/kubernetes/requirements
+#  https://docs.tigera.io/calico/3.31/getting-started/kubernetes/requirements
 #   and https://gitlab.wikimedia.org/repos/cloud/toolforge/calico/-/blob/main/deployment/chart/values.yaml#L6
-kubeVersion: ">=1.29 <=1.32"
+kubeVersion: ">=1.32 <=1.35"
 
 typha_replicas: 1
