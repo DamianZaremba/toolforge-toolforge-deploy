@@ -1,4 +1,4 @@
-chartVersion: 0.0.20-20261117165433-0248f343
+chartVersion: 0.0.21-20261117174404-df623e1a
 chartRepository: tools
 
 # These must be updated when the hosts are rebuilt.
