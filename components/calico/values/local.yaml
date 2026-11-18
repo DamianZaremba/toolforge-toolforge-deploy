@@ -1,5 +1,5 @@
 # Update to your mr version tag
-chartVersion: 0.0.20-20261117184447-af8f7bc6
+chartVersion: 0.0.20-20261117225244-194bb79d
 chartRepository: toolsbeta
 # When changing the chart version, make sure to update kubeVersion
 # See
