@@ -1,6 +1,9 @@
 chartVersion: 0.0.21-20261117174404-df623e1a
 chartRepository: tools
 
+certificates:
+  internalClusterDomain: tools.local
+
 # These must be updated when the hosts are rebuilt.
 # TODO: update from Hiera directly or set up DNS CNAMEs.
 prometheusUrls:
