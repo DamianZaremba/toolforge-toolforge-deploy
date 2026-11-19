@@ -1,0 +1,32 @@
+---
+environments:
+  local:
+    values:
+      # needed to use the chartVersion
+      - values/local.yaml*
+  toolsbeta:
+    values:
+      # needed to use the chartVersion
+      - values/toolsbeta.yaml*
+  tools:
+    values:
+      # needed to use the chartVersion
+      - values/tools.yaml*
+
+---
+repositories:
+  - name: toolsbeta
+    url: toolsbeta-harbor.wmcloud.org/toolforge
+    oci: true
+  - name: tools
+    url: tools-harbor.wmcloud.org/toolforge
+    oci: true
+
+releases:
+  - name: kube-container-updater
+    chart: "{{ .Values.chartRepository }}/kube-container-updater"
+    version: "{{ .Values.chartVersion }}"
+    namespace: kube-container-updater
+    createNamespace: true
+    values:
+      - values/{{ .Environment.Name }}.yaml*

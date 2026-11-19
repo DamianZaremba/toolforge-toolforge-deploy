@@ -38,6 +38,7 @@ declare -A NAME_TO_HELM_CHART=(
     ["istio-system"]="istio-base"
     ["jobs-api"]="jobs-api"
     ["jobs-emailer"]="jobs-emailer"
+    ["kube-container-updater"]="kube-container-updater"
     ["kyverno"]="kyverno"
     ["logs-api"]="logs-api"
     ["maintain-kubeusers"]="maintain-kubeusers"
