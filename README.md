@@ -232,14 +232,6 @@ users.
 
 [Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/ingress-admission)
 
-### Ingress nginx
-
-This is
-[ingress element of k8s](https://kubernetes.io/docs/concepts/services-networking/ingress/)
-that we use for http requests for tool webservices.
-
-We have no code for it as we use upstream charts.
-
 ### Jobs API
 
 Part of the jobs service, main API that users interact with, entry point for job
@@ -253,6 +245,13 @@ Part of the jobs service, this component takes care to email users when jobs
 finish or fail.
 
 [Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/jobs-emailer)
+
+### Kube Container Updater
+
+Program that will locate Kubernetes pods with 'latest' container references
+that are running outdated versions of those containers and restart them.
+
+[Source code here](https://gitlab.wikimedia.org/repos/cloud/toolforge/kube-container-updater)
 
 ### Maintain kubeusers
 
