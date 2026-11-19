@@ -31,6 +31,12 @@ backends:
       namespace: logs-api
       service: logs-api
       port: 8443
+  - name: alerts-api
+    path: /alerts
+    target:
+      namespace: alerts-api
+      service: alerts-api
+      port: 8443
 
 app:
   log_level: debug
@@ -44,6 +50,7 @@ app:
     envvars: "https://envvars-api.envvars-api.svc.toolsbeta.local:8443"
     components: "https://components-api.components-api.svc.toolsbeta.local:8443"
     logs: "https://logs-api.logs-api.svc.toolsbeta.local:8443"
+    alerts: "https://alerts-api.alerts-api.svc.toolsbeta.local:8443"
   openapi_docs:
     logs: true
     external_servers:
