@@ -1,2 +1,5 @@
 chartVersion: 0.0.20-20261120120134-1b4c192b
 chartRepository: tools
+
+cron:
+  dryRun: false
