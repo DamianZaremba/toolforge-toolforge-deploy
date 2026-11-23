@@ -19,7 +19,7 @@ setup_file() {
 
 
 @test "start webservice from template works" {
-    cat >service.template <<EOT
+    cat >"$HOME/service.template" <<EOT
 cpu: 500m
 mem: 512Mi
 # test that the type is not the last, see T379903
@@ -59,7 +59,7 @@ EOT
     # cleanup just in case
     toolforge webservice stop &>/dev/null || :
 
-    cat >service.template <<EOT
+    cat >"$HOME/service.template" <<EOT
 cpu: 500m
 some_stray_key: something
 mem: 512Mi
@@ -81,7 +81,7 @@ EOT
     # cleanup just in case
     toolforge webservice stop &>/dev/null || :
 
-    cat >service.template <<EOT
+    cat >"$HOME/service.template" <<EOT
 - I'm
 - an
 - array

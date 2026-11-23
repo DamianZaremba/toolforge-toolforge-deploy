@@ -8,7 +8,6 @@ setup() {
     _jobs_setup
 }
 
-
 @test "run a continuous job without port shows no port" {
     rand_string="test-$RANDOM"
     echo "Using job $rand_string"
@@ -63,12 +62,11 @@ setup() {
         --command "curl 'http://$rand_string.tool-$tool_name.svc.$CLUSTER_DOMAIN:1234/status'" \
         --wait 120 \
         --image python3.11 \
-        check-$rand_string
+        "check-$rand_string"
 
-    run --separate-stderr cat "check-$rand_string.out"
+    run --separate-stderr cat "$HOME/check-$rand_string.out"
     assert_line "OK"
 }
-
 
 teardown() {
     _jobs_teardown

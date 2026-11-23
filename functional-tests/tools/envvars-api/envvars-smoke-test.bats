@@ -46,7 +46,7 @@ setup_file() {
     run --separate-stderr toolforge jobs run --wait --image python3.11 --command env test1
     assert_success
 
-    run --separate-stderr cat test1.out
+    run --separate-stderr cat "$HOME/test1.out"
     assert_line "TEST_ENVVAR_1=test-envvar-1-contents"
 }
 
