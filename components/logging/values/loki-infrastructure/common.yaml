@@ -1,1 +1,48 @@
 nameOverride: loki-infrastructure
+
+gateway:
+  enabled: false
+
+networkPolicy:
+  enabled: true
+  # Only Alloy can write. There are no readers in the cluster: Toolforge
+  # roots read with "kubectl port-forward".
+  ingress:
+    podSelector:
+      matchLabels:
+        app.kubernetes.io/name: alloy
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: alloy
+  externalStorage:
+    cidrs:
+      # object.eqiad1.wikimediacloud.org
+      - 185.15.56.161/32
+      - 2a02:ec80:a000:4000::1/128
+    ports: [443]
+  metrics:
+    cidrs:
+      - 127.0.0.1/32
+
+extraObjects:
+  # loki-tools has the same policy in this namespace. This copy keeps the
+  # release independent of loki-tools.
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: loki-infrastructure-allow-dns
+    spec:
+      policyTypes:
+        - Egress
+      podSelector: {}
+      egress:
+        - to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: kube-system
+              podSelector:
+                matchLabels:
+                  k8s-app: kube-dns
+          ports:
+            - protocol: UDP
+              port: 53
