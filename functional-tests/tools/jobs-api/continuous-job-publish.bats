@@ -3,6 +3,13 @@
 
 set -o nounset
 
+setup_file() {
+    # making sure there's no leftovers that might not be reachable
+    # with jobs-api/webservice
+    kubectl delete services,httproutes --all
+}
+
+
 setup() {
     load "../../global-common"
     _global_setup
