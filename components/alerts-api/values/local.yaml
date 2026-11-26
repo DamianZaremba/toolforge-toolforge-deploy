@@ -1,4 +1,4 @@
-chartVersion: 0.0.21-20261117174404-df623e1a
+chartVersion: 0.0.22-20261126202630-7f2d3016
 chartRepository: toolsbeta
 
 prometheusUrls:
