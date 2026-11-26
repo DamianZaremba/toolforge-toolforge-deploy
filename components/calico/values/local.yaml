@@ -8,3 +8,7 @@ chartRepository: toolsbeta
 kubeVersion: ">=1.32 <=1.35"
 
 typha_replicas: 1
+# Use the upstream multi-arch images. The images in
+# docker-registry.svc.toolforge.org are amd64 only. On arm64 hosts, they
+# run under Rosetta, and calico-node v3.31.7 crashes there. See T446304.
+registry: quay.io
