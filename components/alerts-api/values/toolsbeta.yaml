@@ -1,6 +1,9 @@
 chartVersion: 0.0.22-20261126202630-7f2d3016
 chartRepository: toolsbeta
 
+certificates:
+  internalClusterDomain: toolsbeta.local
+
 # These must be updated when the hosts are rebuilt.
 # Note: toolsbeta currently has a single Prometheus host.
 # TODO: update from Hiera directly or set up DNS CNAMEs.
