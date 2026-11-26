@@ -21,23 +21,23 @@ flush_jobs() {
 
 flush_deployments() {
     local deploy_id
-    toolforge components deployment list --json 2>/dev/null | \
-    jq -r '.data.deployments[].deploy_id' |  \
-    while IFS= read -r deploy_id; do
-        toolforge components deployment delete --yes-im-sure "$deploy_id" &>/dev/null  || :
-    done
+    toolforge deploy list --json 2>/dev/null |
+        jq -r '.data.deployments[].deploy_id' |
+        while IFS= read -r deploy_id; do
+            toolforge deploy delete --yes-im-sure "$deploy_id" &>/dev/null || :
+        done
 }
 
 flush_everything() {
     flush_jobs
     flush_builds
     flush_deployments
-    toolforge components config delete --yes-im-sure &>/dev/null || :
-    toolforge components deploy-token delete --yes-im-sure &>/dev/null || :
+    toolforge config delete --yes-im-sure &>/dev/null || :
+    toolforge deploy token delete --yes-im-sure &>/dev/null || :
 }
 
 create_deployment() {
-    bats_pipe toolforge components deployment create --json \| jq -r .data.deploy_id
+    bats_pipe toolforge deploy create --json \| jq -r .data.deploy_id
     assert_success
 }
 
@@ -48,10 +48,10 @@ wait_for_successful_deployment() {
     assert_not_equal "${deployment_id}" ""
 
     # Wait for the deployment to transition into a final state
-    retry "toolforge components deployment show $deployment_id --json | jq -e '.status | IN (\"pending\", \"running\") | not'" 300
+    retry "toolforge deploy show $deployment_id --json | jq -e '.status | IN (\"pending\", \"running\") | not'" 300
 
     # Check the final state is successful
-    run --separate-stderr bash -c "toolforge components deployment show $deployment_id --json | jq -r .status"
+    run --separate-stderr bash -c "toolforge deploy show $deployment_id --json | jq -r .status"
     assert_success
     assert_line "successful"
 }

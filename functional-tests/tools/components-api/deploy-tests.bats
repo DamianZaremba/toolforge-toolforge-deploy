@@ -4,7 +4,6 @@
 # bats file_tags=tools,components-api,slow,deploy-tests
 set -o nounset
 
-
 setup_file() {
     load "components-common"
     export BATS_NO_PARALLELIZE_WITHIN_FILE=true
@@ -17,7 +16,7 @@ setup() {
     _components_setup
     export TOOL_NAME="${USER#*.}"
 
-    cat > "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml <<EOC
+    cat >"$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml <<EOC
 config_version: "v1beta1"
 components:
   component1:
@@ -29,7 +28,7 @@ components:
       command: web
 EOC
 
-    cat > "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config-with-scheduled.yaml <<EOC
+    cat >"$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config-with-scheduled.yaml <<EOC
 config_version: "v1beta1"
 components:
   component1:
@@ -50,33 +49,31 @@ EOC
 }
 
 @test "creating deploy with same ref reuses the build" {
-    toolforge components config delete --yes-im-sure &>/dev/null || :
-    toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
+    toolforge config delete --yes-im-sure &>/dev/null || :
+    toolforge config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config.yaml
     local deployment_id=$(create_deployment)
     wait_for_successful_deployment "${deployment_id}"
-    old_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
+    old_build_id=$(toolforge deploy list --json | jq '.data.deployment[0].builds.component1.build_id')
 
     local deployment_id=$(create_deployment)
     wait_for_successful_deployment "${deployment_id}"
-    new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
+    new_build_id=$(toolforge deploy list --json | jq '.data.deployment[0].builds.component1.build_id')
 
     assert_equal "$old_build_id" "$new_build_id"
 }
 
-
 @test "adding scheduled job that reuses existing component build reuses it" {
-    toolforge components config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config-with-scheduled.yaml
-    old_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
+    toolforge config create "$BATS_FILE_TMPDIR"/main-ref-sourcebuild-test-config-with-scheduled.yaml
+    old_build_id=$(toolforge deploy list --json | jq '.data.deployment[0].builds.component1.build_id')
 
     local deployment_id=$(create_deployment)
     wait_for_successful_deployment "${deployment_id}"
-    first_component_new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.component1.build_id')
-    second_component_new_build_id=$(toolforge components deployment list --json | jq '.data.deployment[0].builds.cron1.build_id')
+    first_component_new_build_id=$(toolforge deploy list --json | jq '.data.deployment[0].builds.component1.build_id')
+    second_component_new_build_id=$(toolforge deploy list --json | jq '.data.deployment[0].builds.cron1.build_id')
 
     assert_equal "$old_build_id" "$first_component_new_build_id"
     assert_equal "$old_build_id" "$second_component_new_build_id"
 }
-
 
 teardown() {
     _components_teardown
