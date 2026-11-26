@@ -30,6 +30,13 @@ do_curl() {
 }
 
 
+@test "get api-gateway health like the haproxy check does (HTTP/1.0 without Host)" {
+    run curl --include --insecure --http1.0 --header "Host:" "$TOOLFORGE_API_URL/healthz"
+    assert_success
+    assert_line --partial "200 OK"
+}
+
+
 @test "get envvars openapi definition without auth works" {
     run bash -c "curl --include --insecure '$TOOLFORGE_API_URL/envvars/openapi.json'"
     assert_success
