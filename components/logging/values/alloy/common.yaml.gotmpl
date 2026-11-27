@@ -32,11 +32,11 @@ alloy:
           regex         = sys.env("HOSTNAME")
         }
 
-        // These are too high-volume to be stored.
+        // Tools only.
         rule {
           source_labels = ["__meta_kubernetes_namespace"]
-          action        = "drop"
-          regex         = "^ingress-nginx-gen2$"
+          action        = "keep"
+          regex         = "^tool-[a-z0-9\\-]+"
         }
 
         rule {
@@ -84,7 +84,6 @@ alloy:
 
       loki.process "pod_logs" {
         forward_to = [
-          loki.process.pod_logs_infrastructure.receiver,
           loki.process.pod_logs_tools.receiver,
         ]
 
@@ -103,10 +102,11 @@ alloy:
       loki.process "pod_logs_tools" {
         forward_to = [loki.write.loki_tools.receiver]
 
-        stage.match {
-          selector = "{namespace!~\"tool-\"}"
-          action   = "drop"
-        }
+        // The "pods" discovery.relabel keeps only tool namespaces. The
+        // infrastructure pipeline below has its own discovery and file
+        // source. Do not add a namespace filter here: LogQL label
+        // matchers match the full value, so {namespace!~"tool-"} drops
+        // all tool logs.
 
         stage.limit {
           // there's ~40 pods per worker, so worst case scenario a pod gets 10 logs/s ensured
@@ -143,15 +143,6 @@ alloy:
         }
       }
 
-      loki.process "pod_logs_infrastructure" {
-        forward_to = [loki.write.loki_infrastructure.receiver]
-
-        stage.match {
-          selector = "{namespace=~\"tool-\"}"
-          action   = "drop"
-        }
-      }
-
       loki.write "loki_tools" {
         endpoint {
           url = "{{ .Values.alloy.lokiUrl.tools }}"
@@ -160,9 +151,105 @@ alloy:
         external_labels = {}
       }
 
+      // Infrastructure logs: all namespaces that are not tools. This
+      // pipeline has its own discovery and file source. Thus a slow or
+      // unavailable loki-infrastructure does not stop the tool logs.
+      discovery.relabel "infrastructure_pods" {
+        targets = discovery.kubernetes.pod.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_node_name"]
+          action        = "keep"
+          regex         = sys.env("HOSTNAME")
+        }
+
+        // Tool logs go to loki-tools. image-build has the build output
+        // of tools, which is tool data too.
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action        = "drop"
+          regex         = "tool-[a-z0-9\\-]+|image-build"
+        }
+
+        // Do not send the logs of loki-infrastructure to itself. Each
+        // write error makes more log lines to write.
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action        = "drop"
+          regex         = "loki-infrastructure"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action        = "replace"
+          target_label  = "namespace"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          action        = "replace"
+          target_label  = "pod"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          action        = "replace"
+          target_label  = "container"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action        = "replace"
+          target_label  = "job"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+          action        = "replace"
+          target_label  = "__path__"
+          separator     = "/"
+          replacement   = "/var/log/pods/*$1/*.log"
+        }
+
+        // The log directory of a static pod (for example kube-apiserver)
+        // has the config hash in its name, not the UID of the mirror pod.
+        rule {
+          source_labels = [
+            "__meta_kubernetes_pod_annotationpresent_kubernetes_io_config_hash",
+            "__meta_kubernetes_pod_annotation_kubernetes_io_config_hash",
+            "__meta_kubernetes_pod_container_name",
+          ]
+          action        = "replace"
+          target_label  = "__path__"
+          separator     = "/"
+          regex         = "true/(.*)"
+          replacement   = "/var/log/pods/*$1/*.log"
+        }
+      }
+
+      local.file_match "infrastructure_pods" {
+        path_targets = discovery.relabel.infrastructure_pods.output
+        sync_period = "1s"
+      }
+
+      loki.source.file "infrastructure_pod_logs" {
+        targets    = local.file_match.infrastructure_pods.targets
+        forward_to = [loki.process.infrastructure_pod_logs.receiver]
+      }
+
+      loki.process "infrastructure_pod_logs" {
+        forward_to = [loki.write.loki_infrastructure.receiver]
+
+        stage.cri {}
+        stage.decolorize {}
+      }
+
       loki.write "loki_infrastructure" {
         endpoint {
-          url = "{{ .Values.alloy.lokiUrl.infrastructure }}"
+          url       = "{{ .Values.alloy.lokiUrl.infrastructure }}"
+          // loki-infrastructure has multi-tenancy enabled. All the
+          // infrastructure logs go to one tenant.
+          tenant_id = "infrastructure"
         }
 
         external_labels = {}
@@ -173,14 +260,12 @@ configReloader:
   enabled: false
 
 controller:
-  # Node tolerations for server scheduling to nodes with taints
-  # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
   tolerations:
-    # Allow running on ingress nodes, for api-gateway pods.
-    - key: "ingressgen2"
-      operator: "Exists"
-      effect: "NoSchedule"
-    # Allow running on control place nodes, for kube-system logs.
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
+    # Run on the gateway nodes, for the istio-gateway logs.
+    - key: toolforge.org/gateway
+      operator: Exists
+      effect: NoSchedule
+    # Run on the control plane nodes, for the kube-system static pod logs.
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule

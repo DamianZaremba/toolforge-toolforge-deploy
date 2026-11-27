@@ -42,7 +42,7 @@ releases:
       - ../common/values/loki/common.yaml
       - ../common/values/loki/{{ .Environment.Name }}.yaml*
       - values/loki-infrastructure/common.yaml
-      - values/loki-infrastructure/{{ .Environment.Name }}.yaml
+      - values/loki-infrastructure/{{ .Environment.Name }}.yaml*
   - name: alloy
     # This needs a separate namespace for network policy reasons.
     namespace: alloy
